@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/09 14:11:31 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/09 14:53:25 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,17 +136,18 @@ int	check_pipes(t_pipe *pipe, char *line)
 	while (line[i])
 	{
 		if(line[i] == '|')
+		{
+			j = i;
 			j++;
+			while (line[j] == ' ')
+				j++;
+			if(line[j] == '\0')
+				return(0);
+			j = 0;
+		}
 		i++;
 	}
-	i = 0;
 	pipe->cmds = ft_split(line, '|');
-	while (pipe->cmds[i])
-		i++;
-	printf("%d\n", i);
-	printf("%d\n", j);
-	if(i == j)
-		return 0;
 	return(1);
 }
 
