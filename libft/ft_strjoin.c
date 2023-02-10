@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:02 by mradwan           #+#    #+#             */
-/*   Updated: 2022/08/02 22:28:44 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/10 16:38:14 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*str;
 	size_t	i;
 	size_t	len;
-	size_t	n;
 
-	n = 0;
 	i = 0;
 	if (s1 != NULL && s2 != NULL)
 	{

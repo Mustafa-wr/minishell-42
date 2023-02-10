@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 19:21:59 by mradwan           #+#    #+#             */
-/*   Updated: 2022/07/23 14:57:05 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/10 16:37:53 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
-	char	*x;
 
-	x = (char *)s;
 	i = 0;
 	while (i < n)
 	{
