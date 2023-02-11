@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/11 15:18:21 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/11 16:48:13 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,11 @@ int	check_redirect(t_pipe *cmd)
 					|| (cmd->cmds[j][i] == '<' && cmd->cmds[j][i + 1] == '<'))
 			{
 				i++;
-				if(cmd->cmds[j][i] == '<' || cmd->cmds[j][i] == '>')
+				if((cmd->cmds[j][i] == '<' && cmd->cmds[j][i - 1] == '<') \
+					|| (cmd->cmds[j][i] == '>' && cmd->cmds[j][i - 1] == '>'))
 					i++;
+				if (cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<')
+					return(0);
 				while (cmd->cmds[j][i] == ' ')
 					i++;
 				if (cmd->cmds[j][i] == '\0')
