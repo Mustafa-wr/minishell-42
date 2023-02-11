@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/09 12:07:46 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/10 19:09:06 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct t_pipe
 typedef struct s_env
 {
 	char **path;
+	char *user;
+	char *home;
 } t_env;
 
 

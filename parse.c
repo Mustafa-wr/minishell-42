@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/10 15:22:30 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/11 15:18:21 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ void	free_strings(char **av)
 	
 // }
 
-int	syntax(char c)
-{
-	return(c == '|' || c == 39 || c == 34 || \
-			c == '>' || c == '<');
-}
+// int	syntax(char *s)
+// {
+// 	return(c == '>' || c == '<' || (c == '>' && c == '>') || (c == '<' && cmd-c == '<'));
+// }
 
 
 
@@ -77,13 +76,13 @@ int check_string(char *str)
 			while (str[i] == ' ')
 				i++;
 			if (!str[i])
-				return 0;
+				return (0);
 		}
 		i++;
 	}
 	if (in_single_quote || in_double_quote)
-		return 0;
-    return 1;
+		return (0);
+    return (1);
 }
 
 
@@ -110,15 +109,26 @@ void parse_cd_command(char *input)
 		
 // }
 
-void	enviroments(char **envp, t_env *d_path)
+void	enviroments(char **envp, t_env *d_env)
 {
 	int i = 0;
-	char *path;
+	char *string;
 
 	while (envp[i][0] != 'P')
 		i++;
-	path = ft_strchr(envp[i], '/');
-	d_path->path = ft_split(path, ':');
+	string = ft_strchr(envp[i], '/');
+	d_env->path = ft_split(string, ':');
+	i = 0;
+	while (envp[i][0] != 'U')
+		i++;
+	string = ft_strchr(envp[i], '=');
+	string++;
+	d_env->user = string;
+	i = 0;
+	while (envp[i][0] != 'H')
+		i++;
+	string = ft_strchr(envp[i], '/');
+	d_env->home = string;
 	// i = 0;
 	// while (d_path->path[i])
 	// {
@@ -151,6 +161,36 @@ int	check_pipes(t_pipe *pipe, char *line)
 	return(1);
 }
 
+int	check_redirect(t_pipe *cmd)
+{
+	int i;
+
+	i = 0;
+	int j = 0;
+	while (cmd->cmds[j])
+	{
+		i = 0;
+		while (cmd->cmds[j][i])
+		{
+			if(cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<' || \
+				(cmd->cmds[j][i] == '>' && cmd->cmds[j][i + 1] == '>') \
+					|| (cmd->cmds[j][i] == '<' && cmd->cmds[j][i + 1] == '<'))
+			{
+				i++;
+				if(cmd->cmds[j][i] == '<' || cmd->cmds[j][i] == '>')
+					i++;
+				while (cmd->cmds[j][i] == ' ')
+					i++;
+				if (cmd->cmds[j][i] == '\0')
+					return(0);
+			}
+			i++;
+		}
+		j++;
+	}
+	return (1);
+}
+
 int main(int ac, char **av, char **envp)
 {
 	(void)av;
@@ -172,6 +212,8 @@ int main(int ac, char **av, char **envp)
 			printf("syntax error multiple line not allowed\n");
 		if(!check_pipes(&pipe, read))
 			printf("Error\n");
+		if(!check_redirect(&pipe))
+			printf("syntax error\n");
 		add_history(read);
 	}
 }
