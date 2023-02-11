@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/11 16:48:13 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/11 18:02:55 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,28 +137,38 @@ void	enviroments(char **envp, t_env *d_env)
 	// }
 }
 
-int	check_pipes(t_pipe *pipe, char *line)
+int check_pipes(t_pipe *pipe, char *line)
 {
-	int	i;
-	int j = 0;
+	int i;
+	int j;
+	int quotes;
+
 
 	i = 0;
+	quotes = 0;
 	while (line[i])
 	{
-		if(line[i] == '|')
+		if (line[i] == '\"' || line[i] == '\'')
 		{
-			j = i;
-			j++;
+			if (quotes == 0)
+				quotes = line[i];
+			else
+				quotes = 0;
+			i++;
+			continue ;
+		}
+		if (line[i] == '|' && !quotes)
+		{
+			j = i + 1;
 			while (line[j] == ' ')
 				j++;
-			if(line[j] == '\0' || line[j] == '|')
-				return(0);
-			j = 0;
+			if (line[j] == '\0' || line[j] == '|')
+				return (0);
 		}
 		i++;
 	}
 	pipe->cmds = ft_split(line, '|');
-	return(1);
+	return (1);
 }
 
 int	check_redirect(t_pipe *cmd)
@@ -206,7 +216,7 @@ int main(int ac, char **av, char **envp)
 	// printf("env[0] = %s\n", envp[2]);
 	while(1)
 	{
-		read = readline("minishell $");
+		read = readline("minishell$ ");
 		if(!read)
 			return(0);
 		if (is_space(read) == 0)
