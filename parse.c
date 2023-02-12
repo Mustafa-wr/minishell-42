@@ -6,21 +6,23 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/11 18:02:55 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/12 13:22:57 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <string.h>
 
-int is_space(char *str)
+int	is_space(char *str)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (str[i] && str[i] == ' ')
 		i++;
 	if (str[i] == '\0')
-		return(1);
-	return(0);
+		return (1);
+	return (0);
 }
 
 void	free_strings(char **av)
@@ -45,8 +47,6 @@ void	free_strings(char **av)
 // {
 // 	return(c == '>' || c == '<' || (c == '>' && c == '>') || (c == '<' && cmd-c == '<'));
 // }
-
-
 
 int check_string(char *str)
 {
@@ -84,7 +84,6 @@ int check_string(char *str)
 		return (0);
     return (1);
 }
-
 
 void parse_cd_command(char *input)
 {
@@ -143,9 +142,13 @@ int check_pipes(t_pipe *pipe, char *line)
 	int j;
 	int quotes;
 
-
 	i = 0;
 	quotes = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == '|')
+		return (0);
+	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\"' || line[i] == '\'')
@@ -173,29 +176,32 @@ int check_pipes(t_pipe *pipe, char *line)
 
 int	check_redirect(t_pipe *cmd)
 {
-	int i;
+	int	i;
+	int	j;
 
 	i = 0;
-	int j = 0;
+	j = 0;
 	while (cmd->cmds[j])
 	{
 		i = 0;
 		while (cmd->cmds[j][i])
 		{
-			if(cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<' || \
+			if (cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<' || \
 				(cmd->cmds[j][i] == '>' && cmd->cmds[j][i + 1] == '>') \
 					|| (cmd->cmds[j][i] == '<' && cmd->cmds[j][i + 1] == '<'))
 			{
 				i++;
-				if((cmd->cmds[j][i] == '<' && cmd->cmds[j][i - 1] == '<') \
+				if ((cmd->cmds[j][i] == '<' && cmd->cmds[j][i - 1] == '<') \
 					|| (cmd->cmds[j][i] == '>' && cmd->cmds[j][i - 1] == '>'))
 					i++;
+				while (cmd->cmds[j][i] == ' ')
+					i++;
 				if (cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<')
-					return(0);
+					return (0);
 				while (cmd->cmds[j][i] == ' ')
 					i++;
 				if (cmd->cmds[j][i] == '\0')
-					return(0);
+					return (0);
 			}
 			i++;
 		}
@@ -211,7 +217,7 @@ int main(int ac, char **av, char **envp)
 	t_pipe	pipe;
 	char *read;
 	if (ac != 1)
-		return(0);
+		return (0);
 	enviroments(envp, &path);
 	// printf("env[0] = %s\n", envp[2]);
 	while(1)
