@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/12 17:41:22 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/12 22:13:22 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void parse_cd_command(char *input)
 // void sigintHandler(int sig_num)
 // {
 // 	if(sig_num == SIGINT)
-		
+
 // }
 
 void	enviroments(char **envp, t_env *d_env)
@@ -113,9 +113,10 @@ void	enviroments(char **envp, t_env *d_env)
 	int i = 0;
 	char *string;
 
-	while (envp[i][0] != 'P')
+	while (ft_strncmp(envp[i], "PATH=", 5) != 0 && envp[i])
 		i++;
 	string = ft_strchr(envp[i], '/');
+	printf("%s\n", string);
 	d_env->path = ft_split(string, ':');
 	i = 0;
 	while (envp[i][0] != 'U')
@@ -171,6 +172,9 @@ int check_pipes(t_pipe *pipe, char *line)
 		i++;
 	}
 	pipe->cmds = ft_split(line, '|');
+	i = 0;
+	while (pipe->cmds[i])
+		printf("%s\n", pipe->cmds[i++]);
 	return (1);
 }
 
@@ -178,22 +182,31 @@ int	check_redirect(t_pipe *cmd)
 {
 	int	i;
 	int	j;
-	int in_quotes; 
+	int	in_quotes;
+	int	in_d_quotes;
 
 	i = 0;
 	j = 0;
+	in_d_quotes = 0;
 	in_quotes = 0;
 	while (cmd->cmds[j])
 	{
 		i = 0;
 		while (cmd->cmds[j][i])
 		{
-			if (cmd->cmds[j][i] == '\'' || cmd->cmds[j][i] == '\"')
+			if (cmd->cmds[j][i] == '\'')
 			{
 				if (!in_quotes)
 					in_quotes = 1;
 				else
 					in_quotes = 0;
+			}
+			if (cmd->cmds[j][i] == '\"')
+			{
+				if (!in_d_quotes)
+					in_d_quotes = 1;
+				else
+					in_d_quotes = 0;
 			}
 			if (cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<' || \
 				(cmd->cmds[j][i] == '>' && cmd->cmds[j][i + 1] == '>') \
@@ -206,7 +219,7 @@ int	check_redirect(t_pipe *cmd)
 				while (cmd->cmds[j][i] == ' ')
 					i++;
 				if ((cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<') \
-					&& !in_quotes)
+					&& (!in_quotes && !in_d_quotes))
 					return (0);
 				while (cmd->cmds[j][i] == ' ')
 					i++;
@@ -235,8 +248,8 @@ int	main(int ac, char **av, char **envp)
 		read = readline("minishell$ ");
 		if(!read)
 			return(0);
-		if (is_space(read) == 0)
-			printf("%s\n", read);
+		// if (is_space(read) == 0)
+		// 	printf("%s\n", read);
 		if(!check_string(read))
 			printf("syntax error multiple line not allowed\n");
 		if(!check_pipes(&pipe, read))

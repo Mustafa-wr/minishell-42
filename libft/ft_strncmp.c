@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:44:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/06 15:36:02 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/12 22:14:28 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 	ss1 = (unsigned char *)s1;
 	ss2 = (unsigned char *)s2;
 	i = 0;
+	if (!s1 || !s2)
+		return (0);
 	while (ss1[i] != '\0' && ss2[i] != '\0' && i < n)
 	{
 		if (ss1[i] != ss2[i])
