@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/12 13:22:57 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/12 17:41:22 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,14 +178,23 @@ int	check_redirect(t_pipe *cmd)
 {
 	int	i;
 	int	j;
+	int in_quotes; 
 
 	i = 0;
 	j = 0;
+	in_quotes = 0;
 	while (cmd->cmds[j])
 	{
 		i = 0;
 		while (cmd->cmds[j][i])
 		{
+			if (cmd->cmds[j][i] == '\'' || cmd->cmds[j][i] == '\"')
+			{
+				if (!in_quotes)
+					in_quotes = 1;
+				else
+					in_quotes = 0;
+			}
 			if (cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<' || \
 				(cmd->cmds[j][i] == '>' && cmd->cmds[j][i + 1] == '>') \
 					|| (cmd->cmds[j][i] == '<' && cmd->cmds[j][i + 1] == '<'))
@@ -196,7 +205,8 @@ int	check_redirect(t_pipe *cmd)
 					i++;
 				while (cmd->cmds[j][i] == ' ')
 					i++;
-				if (cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<')
+				if ((cmd->cmds[j][i] == '>' || cmd->cmds[j][i] == '<') \
+					&& !in_quotes)
 					return (0);
 				while (cmd->cmds[j][i] == ' ')
 					i++;
@@ -210,7 +220,7 @@ int	check_redirect(t_pipe *cmd)
 	return (1);
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	(void)av;
 	t_env path;
