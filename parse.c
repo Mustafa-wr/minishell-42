@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/12 22:13:22 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:53:31 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,18 @@ void	enviroments(char **envp, t_env *d_env)
 	while (ft_strncmp(envp[i], "PATH=", 5) != 0 && envp[i])
 		i++;
 	string = ft_strchr(envp[i], '/');
-	printf("%s\n", string);
 	d_env->path = ft_split(string, ':');
 	i = 0;
-	while (envp[i][0] != 'U')
-		i++;
-	string = ft_strchr(envp[i], '=');
-	string++;
-	d_env->user = string;
-	i = 0;
-	while (envp[i][0] != 'H')
-		i++;
-	string = ft_strchr(envp[i], '/');
-	d_env->home = string;
+	// while (envp[i][0] != 'U')
+	// 	i++;
+	// string = ft_strchr(envp[i], '=');
+	// string++;
+	// d_env->user = string;
+	// i = 0;
+	// while (envp[i][0] != 'H')
+	// 	i++;
+	// string = ft_strchr(envp[i], '/');
+	// d_env->home = string;
 	// i = 0;
 	// while (d_path->path[i])
 	// {
@@ -139,9 +138,9 @@ void	enviroments(char **envp, t_env *d_env)
 
 int check_pipes(t_pipe *pipe, char *line)
 {
-	int i;
-	int j;
-	int quotes;
+	int	i;
+	int	j;
+	int	quotes;
 
 	i = 0;
 	quotes = 0;
@@ -172,9 +171,6 @@ int check_pipes(t_pipe *pipe, char *line)
 		i++;
 	}
 	pipe->cmds = ft_split(line, '|');
-	i = 0;
-	while (pipe->cmds[i])
-		printf("%s\n", pipe->cmds[i++]);
 	return (1);
 }
 
@@ -224,7 +220,11 @@ int	check_redirect(t_pipe *cmd)
 				while (cmd->cmds[j][i] == ' ')
 					i++;
 				if (cmd->cmds[j][i] == '\0')
+				{
+					free_strings(cmd->cmds);
+					free_strings(cmd->env->path);
 					return (0);
+				}
 			}
 			i++;
 		}
