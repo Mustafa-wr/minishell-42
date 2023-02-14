@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/14 17:57:13 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/14 21:07:21 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ typedef struct s_env
 	char *home;
 } t_env;
 
+// evecve(char)
 typedef struct t_pipe
 {
 	int		cmd_len;
 	char	**cmds;
+	char ***args;
+	int i;
 	t_env	*env;
 } t_pipe;
 

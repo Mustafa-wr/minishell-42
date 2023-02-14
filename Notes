@@ -13,4 +13,4 @@ while (path)
 if (cmd_path == NULL)
 	return (NULL);
 
-dont remove quotes if there is '>' or '<' between thim
+I want to remove just first and last quote when I find quote, for example input ("'") return (')
