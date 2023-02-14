@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/13 18:52:41 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:57:13 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct t_pipe
 	char	**cmds;
 	t_env	*env;
 } t_pipe;
-
-
 
 
 int	get_tokens(char **p_start, char *es, char **q, char **eq);

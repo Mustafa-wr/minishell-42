@@ -1,0 +1,14 @@
+Makefile
+Notes
+check_leaks.sh
+libft
+ls
+minishell
+minishell.h
+outfile
+parse.c
+parse.o
+test
+test.c
+test.o
+valgrind_readline_leaks_ignore.txt

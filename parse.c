@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/13 18:53:31 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:59:31 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,19 @@ void	enviroments(char **envp, t_env *d_env)
 	// }
 }
 
+void	clean_quotes(char *str)
+{
+	int i = 0;
+	int j = 0;
+	while (str[i])
+	{
+		if(str[i] != '\'' && str[i] != '"')
+			str[j++] = str[i];
+		++i;
+	}
+	str[j] = '\0';
+}
+
 int check_pipes(t_pipe *pipe, char *line)
 {
 	int	i;
@@ -170,6 +183,8 @@ int check_pipes(t_pipe *pipe, char *line)
 		}
 		i++;
 	}
+	if (!check_string(line))
+		return (0);
 	pipe->cmds = ft_split(line, '|');
 	return (1);
 }
@@ -222,7 +237,7 @@ int	check_redirect(t_pipe *cmd)
 				if (cmd->cmds[j][i] == '\0')
 				{
 					free_strings(cmd->cmds);
-					free_strings(cmd->env->path);
+					// free_strings(cmd->env->path);
 					return (0);
 				}
 			}
@@ -230,6 +245,12 @@ int	check_redirect(t_pipe *cmd)
 		}
 		j++;
 	}
+		i = 0;
+	while (cmd->cmds[i])
+		clean_quotes(cmd->cmds[i++]);
+	i = 0;
+	while (cmd->cmds[i])
+		printf("%s\n", cmd->cmds[i++]);
 	return (1);
 }
 
@@ -241,21 +262,30 @@ int	main(int ac, char **av, char **envp)
 	char *read;
 	if (ac != 1)
 		return (0);
-	enviroments(envp, &path);
+	
 	// printf("env[0] = %s\n", envp[2]);
 	while(1)
 	{
+		enviroments(envp, &path);
 		read = readline("minishell$ ");
 		if(!read)
 			return(0);
 		// if (is_space(read) == 0)
 		// 	printf("%s\n", read);
-		if(!check_string(read))
-			printf("syntax error multiple line not allowed\n");
+		// if(!check_string(read))
+		// 	printf("syntax error multiple line not allowed\n");
 		if(!check_pipes(&pipe, read))
+		{
 			printf("Error\n");
-		if(!check_redirect(&pipe))
+			free_strings(path.path);
+			// return(0);
+		}
+		else if(!check_redirect(&pipe))
+		{
 			printf("syntax error\n");
+			free_strings(path.path);
+			// return (0);
+		}
 		add_history(read);
 	}
 }
