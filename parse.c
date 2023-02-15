@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/14 22:00:29 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/15 18:54:19 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,16 +136,26 @@ void	enviroments(char **envp, t_env *d_env)
 	// }
 }
 
-void	clean_quotes(char *str)
+void clean_quotes(char *str)
 {
 	int i = 0;
 	int j = 0;
+	char quote = '\0';
 
 	while (str[i])
 	{
-		if (str[i] != '\'' && str[i] != '\"')
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (quote == '\0')
+				quote = str[i];
+			else if (quote == str[i])
+				quote = '\0';
+			else
+				str[j++] = str[i];
+		}
+		else
 			str[j++] = str[i];
-		++i;
+		i++;
 	}
 	str[j] = '\0';
 }
@@ -194,7 +204,6 @@ int check_pipes(t_pipe *pipe, char *line)
 	pipe->cmds = ft_split(line, '|');
 	return (1);
 }
-
 
 int	is_redirect(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 {
@@ -273,12 +282,12 @@ int	check_redirect(t_pipe *cmd)
 		}
 		j++;
 	}
-	// 	i = 0;
-	// while (cmd->cmds[i])
-	// 	clean_quotes(cmd->cmds[i++]);
-	// i = 0;
-	// while (cmd->cmds[i])
-	// 	printf("%s\n", cmd->cmds[i++]);
+		int i = 0;
+	while (cmd->cmds[i])
+		clean_quotes(cmd->cmds[i++]);
+	i = 0;
+	while (cmd->cmds[i])
+		printf("%s\n", cmd->cmds[i++]);
 	return (1);
 }
 

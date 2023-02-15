@@ -13,4 +13,16 @@ while (path)
 if (cmd_path == NULL)
 	return (NULL);
 
-I want to remove just first and last quote when I find quote, for example input ("'") return (')
+void	clean_quotes(char *str)
+{
+	int i = 0;
+	int j = 0;
+
+	while (str[i])
+	{
+		if (str[i] != '\'' && str[i] != '\"')
+			str[j++] = str[i];
+		i++;
+	}
+	str[j] = '\0';
+}
