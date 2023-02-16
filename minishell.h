@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/16 17:59:19 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/16 18:26:53 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ typedef struct t_pipe
 	int		i;
 	t_env	*env;
 } t_pipe;
+
+/***************    pipes_parse     ****************/
+int		check_pipes(t_pipe *pipe, char *line);
 
 /***************    redirection_parse     ****************/
 int		check_redirect(t_pipe *cmd);
