@@ -34,7 +34,8 @@ SRCS =	libft/ft_memset.c		\
 		libft/ft_putendl_fd.c	\
 		libft/ft_strmapi.c		\
 		parse.c					\
-		test.c
+		test.c					\
+		parse_redirect.c
 
 OBJS = $(SRCS:.c=.o)
 
