@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/15 18:54:19 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/16 17:50:25 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,7 @@ void	free_strings(char **av)
 	free(av);
 }
 
-// int	get_tokens(char **p_start, char *es, char **q, char **eq)
-// {
-	
-// }
-
-// int	syntax(char *s)
-// {
-// 	return(c == '>' || c == '<' || (c == '>' && c == '>') || (c == '<' && cmd-c == '<'));
-// }
-
-int check_string(char *str)
+int	check_string(char *str)
 {
     int i = 0;
     // char **split;
@@ -82,31 +72,8 @@ int check_string(char *str)
 	}
 	if (in_single_quote || in_double_quote)
 		return (0);
-    return (1);
+	return (1);
 }
-
-void parse_cd_command(char *input)
-{
-  char **token;
-  token = ft_split(input, ' ');
-  if(!token || token[0] == NULL)
-	return;
-  if (strcmp(token[0], "cd") != 0 || strcmp(token[0], "ls") != 0) {
-    printf("Error: Not a valid command\n");
-    return ;
-  }
-  token = ft_split(NULL, ' ');
-  if (token == NULL) {
-    printf("Error: Missing argument\n");
-    return ;
-  }
-}
-
-// void sigintHandler(int sig_num)
-// {
-// 	if(sig_num == SIGINT)
-
-// }
 
 void	enviroments(char **envp, t_env *d_env)
 {
@@ -138,10 +105,13 @@ void	enviroments(char **envp, t_env *d_env)
 
 void clean_quotes(char *str)
 {
-	int i = 0;
-	int j = 0;
-	char quote = '\0';
+	int		i;
+	int		j;
+	char	quote;
 
+	j = 0;
+	i = 0;
+	quote = '\0';
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -160,24 +130,26 @@ void clean_quotes(char *str)
 	str[j] = '\0';
 }
 
-int check_pipes(t_pipe *pipe, char *line)
+int	pipe_helper(char *line)
 {
+	int	len;
 	int	i;
-	int	j;
-	int	quotes;
-	int len = ft_strlen(line);
-	len--;
+
+	len = ft_strlen(line) - 1;
 	while (line[len] == ' ')
 		len--;
-	if(line[len] == '|')
-		return 0;
+	if (line[len] == '|')
+		return (0);
 	i = 0;
-	quotes = 0;
 	while (line[i] == ' ')
 		i++;
 	if (line[i] == '|')
 		return (0);
-	i = 0;
+	return (1);
+}
+
+int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
+{
 	while (line[i])
 	{
 		if (line[i] == '\"' || line[i] == '\'')
@@ -199,6 +171,22 @@ int check_pipes(t_pipe *pipe, char *line)
 		}
 		i++;
 	}
+	return (1);
+}
+
+int check_pipes(t_pipe *pipe, char *line)
+{
+	int	i;
+	int	j;
+	int	quotes;
+
+	quotes = 0;
+	i = 0;
+	j = 0;
+	if (!pipe_helper(line))
+		return (0);
+	if (!check_pipe_in_quotes(line, i, quotes, j))
+		return (0);
 	if (!check_string(line))
 		return (0);
 	pipe->cmds = ft_split(line, '|');
@@ -234,15 +222,43 @@ int	is_redirect(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 
 int	check_from_back(char *s)
 {
-	int i;
-	
+	int	i;
+
 	i = ft_strlen(s);
 	i--;
 	while (s[i] == ' ')
 		i--;
-	if(s[i] == '>' || s[i] == '<')
-		return(0);
-	return 1;
+	if (s[i] == '>' || s[i] == '<')
+		return (0);
+	return (1);
+}
+
+int	redirect_helper(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
+{
+	if(!check_from_back(cmd->cmds[j]))
+		return (0);
+	cmd->i = 0;
+	while (cmd->cmds[j][cmd->i])
+	{
+		if (cmd->cmds[j][cmd->i] == '\'')
+		{
+			if (!in_quotes)
+				in_quotes = 1;
+			else
+				in_quotes = 0;
+		}
+		if (cmd->cmds[j][cmd->i] == '\"')
+		{
+			if (!in_d_quotes)
+				in_d_quotes = 1;
+			else
+				in_d_quotes = 0;
+		}
+		if (!is_redirect(cmd, j, in_quotes, in_d_quotes))
+			return (0);
+		cmd->i++;
+	}
+	return (1);
 }
 
 int	check_redirect(t_pipe *cmd)
@@ -257,32 +273,34 @@ int	check_redirect(t_pipe *cmd)
 	in_quotes = 0;
 	while (cmd->cmds[j])
 	{
-		if(!check_from_back(cmd->cmds[j]))
+		if(!redirect_helper(cmd, j, in_quotes, in_d_quotes))
 			return (0);
-		cmd->i = 0;
-		while (cmd->cmds[j][cmd->i])
-		{
-			if (cmd->cmds[j][cmd->i] == '\'')
-			{
-				if (!in_quotes)
-					in_quotes = 1;
-				else
-					in_quotes = 0;
-			}
-			if (cmd->cmds[j][cmd->i] == '\"')
-			{
-				if (!in_d_quotes)
-					in_d_quotes = 1;
-				else
-					in_d_quotes = 0;
-			}
-			if (!is_redirect(cmd, j, in_quotes, in_d_quotes))
-				return (0);
-			cmd->i++;
-		}
+	// 	if(!check_from_back(cmd->cmds[j]))
+	// 		return (0);
+	// 	cmd->i = 0;
+	// 	while (cmd->cmds[j][cmd->i])
+	// 	{
+	// 		if (cmd->cmds[j][cmd->i] == '\'')
+	// 		{
+	// 			if (!in_quotes)
+	// 				in_quotes = 1;
+	// 			else
+	// 				in_quotes = 0;
+	// 		}
+	// 		if (cmd->cmds[j][cmd->i] == '\"')
+	// 		{
+	// 			if (!in_d_quotes)
+	// 				in_d_quotes = 1;
+	// 			else
+	// 				in_d_quotes = 0;
+	// 		}
+	// 		if (!is_redirect(cmd, j, in_quotes, in_d_quotes))
+	// 			return (0);
+	// 		cmd->i++;
+	// 	}
 		j++;
 	}
-		int i = 0;
+	int i = 0;
 	while (cmd->cmds[i])
 		clean_quotes(cmd->cmds[i++]);
 	i = 0;
