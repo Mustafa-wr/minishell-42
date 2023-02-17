@@ -6,12 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/16 18:33:52 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/17 18:14:57 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <string.h>
 
 void	enviroments(char **envp, t_env *d_env)
 {
@@ -43,21 +42,21 @@ void	enviroments(char **envp, t_env *d_env)
 
 void	clean_quotes(char *str)
 {
-	int		i;
-	int		j;
-	char	quote;
+	int	i;
+	int	j;
+	int	quote;
 
 	j = 0;
 	i = 0;
-	quote = '\0';
+	quote = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (quote == '\0')
+			if (!quote)
 				quote = str[i];
 			else if (quote == str[i])
-				quote = '\0';
+				quote = 0;
 			else
 				str[j++] = str[i];
 		}

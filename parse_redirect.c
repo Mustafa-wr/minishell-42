@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/16 17:55:47 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/17 19:08:28 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static int	redirect_helper(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 int	check_redirect(t_pipe *cmd)
 {
 	int	j;
+	int	i;
 	int	in_quotes;
 	int	in_d_quotes;
 
@@ -96,7 +97,7 @@ int	check_redirect(t_pipe *cmd)
 			return (0);
 		j++;
 	}
-	int i = 0;
+	i = 0;
 	while (cmd->cmds[i])
 		clean_quotes(cmd->cmds[i++]);
 	i = 0;
