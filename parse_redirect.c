@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/17 19:08:28 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/19 19:46:36 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ static int	is_redirect(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 		while (cmd->cmds[j][cmd->i] == ' ')
 			cmd->i++;
 		if (cmd->cmds[j][cmd->i] == '\0')
-		{
-			free_strings(cmd->cmds);
-			// free_strings(cmd->env->path);
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -80,13 +76,36 @@ static int	redirect_helper(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 	return (1);
 }
 
+#include <stdio.h>
+#include <ctype.h>
+
+void skip_spaces(char *str)
+{
+	char quote = '\0'; // Initialize quote to null character
+	while (*str != '\0')
+	{
+		if (quote == '\0' && isspace(*str))
+			str++; // Skip whitespace outside quotes
+		else if (*str == '\'' || *str == '\"')
+		{
+			if (quote == '\0')
+				quote = *str; // Set the current quote type
+			else if (quote == *str)
+				quote = '\0'; // End the current quote block
+			str++; // Skip the opening/closing quote
+		}
+		else
+			str++; // Skip non-whitespace and non-quote characters
+	}
+}
+
 int	check_redirect(t_pipe *cmd)
 {
 	int	j;
 	int	i;
 	int	in_quotes;
 	int	in_d_quotes;
-
+	cmd->args=NULL;
 	cmd->i = 0;
 	j = 0;
 	in_d_quotes = 0;
@@ -94,14 +113,25 @@ int	check_redirect(t_pipe *cmd)
 	while (cmd->cmds[j])
 	{
 		if (!redirect_helper(cmd, j, in_quotes, in_d_quotes))
-			return (0);
+			return (free_strings(cmd->cmds), 0);
 		j++;
 	}
 	i = 0;
+	// while (cmd->cmds[i])
+	// 	clean_quotes(cmd->cmds[i++]);
+	// i = 0;
+	// while (cmd->cmds[i])
+	// 	printf("%s\n", cmd->cmds[i++]);
+	j = 0;
+	cmd->args = malloc(sizeof(char **) * 100);
 	while (cmd->cmds[i])
-		clean_quotes(cmd->cmds[i++]);
-	i = 0;
-	while (cmd->cmds[i])
-		printf("%s\n", cmd->cmds[i++]);
+	{
+		j = 0;
+		cmd->args[i] = ft_split(cmd->cmds[i], ' ');
+		while (cmd->args[i][j])
+			printf("%s\n", cmd->args[i][j++]);
+		i++;
+	}
+	cmd->args[i] = NULL;
 	return (1);
 }

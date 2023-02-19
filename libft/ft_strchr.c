@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:24:18 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/12 22:13:55 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/19 17:48:16 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	}
 	if ((char)c == '\0')
-	{
 		return ((char *)&s[i]);
-	}
 	return (NULL);
 }
 /*

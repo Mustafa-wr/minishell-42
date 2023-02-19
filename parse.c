@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/17 18:14:57 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/19 18:30:28 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,18 @@ void	clean_quotes(char *str)
 
 int main(int ac, char **av, char **envp)
 {
+	// t_env	path;
+	t_pipe	pipe;
+	char	*read;
+
 	(void)av;
-	t_env path;
-	t_pipe pipe;
-	char *read;
+	(void)envp;
 	if (ac != 1)
 		return (0);
-
 	// printf("env[0] = %s\n", envp[2]);
 	while (1)
 	{
-		enviroments(envp, &path);
+		// enviroments(envp, &path);
 		read = readline("minishell$ ");
 		if (!read)
 			return (0);
@@ -90,13 +91,13 @@ int main(int ac, char **av, char **envp)
 		if (!check_pipes(&pipe, read))
 		{
 			printf("Error\n");
-			free_strings(path.path);
+			// free_strings(path.path);
 			// return(0);
 		}
 		else if (!check_redirect(&pipe))
 		{
 			printf("syntax error\n");
-			free_strings(path.path);
+			// free_strings(path.path);
 			// return (0);
 		}
 		add_history(read);

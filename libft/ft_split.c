@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 14:46:37 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/16 18:56:13 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/19 20:12:39 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	ft_worddet(char const *s, char c)
 			else if (quote == s[i])
 				quote = 0;
 		}
-		if (!quote && s[i] == c)
+		if (!quote && s[i] == c && i > 0 && s[i - 1] != c)
 			count++;
 		i++;
 	}
@@ -105,7 +105,6 @@ char	**ft_split(char const *s, char c)
 	split[i] = NULL;
 	return (split);
 }
-
 /*
 int	main(void)
 {
