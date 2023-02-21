@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 02:22:06 by mradwan           #+#    #+#             */
-/*   Updated: 2023/01/11 06:42:29 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/20 17:22:31 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,4 @@ void	ft_putnbr_fd(int n, int fd)
 			ft_putnbr_fd(n % 10, fd);
 		}
 	}
-}
-int main(void)
-{
-  int a = 99;
-
-  ft_putnbr_fd(a, 1);
 }

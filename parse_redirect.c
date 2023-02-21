@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/19 19:46:36 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/21 16:24:58 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,36 +76,13 @@ static int	redirect_helper(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 	return (1);
 }
 
-#include <stdio.h>
-#include <ctype.h>
-
-void skip_spaces(char *str)
-{
-	char quote = '\0'; // Initialize quote to null character
-	while (*str != '\0')
-	{
-		if (quote == '\0' && isspace(*str))
-			str++; // Skip whitespace outside quotes
-		else if (*str == '\'' || *str == '\"')
-		{
-			if (quote == '\0')
-				quote = *str; // Set the current quote type
-			else if (quote == *str)
-				quote = '\0'; // End the current quote block
-			str++; // Skip the opening/closing quote
-		}
-		else
-			str++; // Skip non-whitespace and non-quote characters
-	}
-}
-
 int	check_redirect(t_pipe *cmd)
 {
 	int	j;
 	int	i;
 	int	in_quotes;
 	int	in_d_quotes;
-	cmd->args=NULL;
+
 	cmd->i = 0;
 	j = 0;
 	in_d_quotes = 0;
@@ -128,8 +105,12 @@ int	check_redirect(t_pipe *cmd)
 	{
 		j = 0;
 		cmd->args[i] = ft_split(cmd->cmds[i], ' ');
-		while (cmd->args[i][j])
+		while (cmd->args[i][j]){
+			clean_quotes(cmd->args[i][j]);
+			// cmd->args[i][j] = ft_add_spaces(cmd->args[i][j]);
+			// skip_spaces(cmd->args[i][j]);
 			printf("%s\n", cmd->args[i][j++]);
+		}
 		i++;
 	}
 	cmd->args[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/19 17:52:09 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/21 21:06:57 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,46 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "libft/libft.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <signal.h>
-#include <readline/history.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <readline/history.h>
 
 typedef struct s_env
 {
 	char	**path;
 	char	*user;
 	char	*home;
-} t_env;
+}	t_env;
 
 // evecve(char)
 typedef struct t_redirect
 {
 	char		**file;
 	char		**cmd;
-} t_redirect;
+}	t_redirect;
 
 typedef struct t_pipe
 {
 	int			cmd_len;
 	char		**cmds;
-	char		***args;
+	char		***args; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
 	int			i;
 	t_redirect	*line;
 	t_env		*env;
-} t_pipe;
+}	t_pipe;
 
 /***************      pipes_parse         ****************/
 int		check_pipes(t_pipe *pipe, char *line);
+void	skip_spaces(char *str);
 
 /***************    redirection_parse     ****************/
 int		check_redirect(t_pipe *cmd);
+char	*ft_add_spaces(char *str);
 
 /***************      free_functions      ****************/
 void	free_strings(char **av);
+void	free_3d(char ***av);
 
 /***************      quotes_parse        ****************/
 void	clean_quotes(char *str);

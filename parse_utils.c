@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/16 18:19:59 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/19 23:44:33 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,26 @@ void	free_strings(char **av)
 	{
 		free(av[i]);
 		i++;
+	}
+	free(av);
+}
+
+void	free_3d(char ***av)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (av[j])
+	{
+		i = 0;
+		while (av[j][i])
+		{
+			free(av[j][i]);
+			i++;
+		}
+		j++;
 	}
 	free(av);
 }

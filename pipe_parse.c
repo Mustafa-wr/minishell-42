@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/16 22:08:50 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/21 20:08:19 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,9 @@ int	check_pipes(t_pipe *pipe, char *line)
 	if (!check_string(line))
 		return (0);
 	pipe->cmds = ft_split(line, '|');
+	i = 0;
+	while (pipe->cmds[i]){
+		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
+		i++;}
 	return (1);
 }
