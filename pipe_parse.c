@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/21 20:08:19 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/22 16:54:14 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ static int	pipe_from_back(char *line)
 	int	len;
 	int	i;
 
-	len = ft_strlen(line) - 1;
-	while (line[len] == ' ')
+	len = ft_strlen(line);
+	if (!len)
+		return (1);
+	len--;
+	while (line[len] == ' ' && len > 0)
 		len--;
 	if (line[len] == '|')
 		return (0);
@@ -120,8 +123,15 @@ int	check_pipes(t_pipe *pipe, char *line)
 		return (0);
 	pipe->cmds = ft_split(line, '|');
 	i = 0;
+	// if (!check_redirect(pipe))
+	// {
+	// 	printf("syntax error\n");
+	// 	// free_strings(path.path);
+	// 	return (0);
+	// }
 	while (pipe->cmds[i]){
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
-		i++;}
+		i++;
+	}
 	return (1);
 }

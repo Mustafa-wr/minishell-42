@@ -6,12 +6,12 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/21 20:39:49 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/22 17:00:35 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <string.h>
+
 void	enviroments(char **envp, t_env *d_env)
 {
 	int i = 0;
@@ -40,22 +40,44 @@ void	enviroments(char **envp, t_env *d_env)
 	// }
 }
 
-void	for_less_than(char *str, int j, int i, char *new_str)
+static void	add_spaes(int *j, char **new_str, int var)
 {
-	if (str[i] == '<' && str[i + 1] != '<')
+	(*new_str)[(*j)++] = ' ';
+	if (var == 0)
+		(*new_str)[(*j)++] = '<';
+	else if (var == 1)
 	{
-		new_str[j++] = ' ';
-		new_str[j++] = '<';
-		new_str[j++] = ' ';
+		(*new_str)[(*j)++] = '<';
+		(*new_str)[(*j)++] = '<';
 	}
-	else if (str[i] == '<' && str[i + 1] == '<')
+	else if (var == 2)
+		(*new_str)[(*j)++] = '>';
+	else if (var == 3)
 	{
-		i++;
-		new_str[j++] = ' ';
-		new_str[j++] = '<';
-		new_str[j++] = '<';
-		new_str[j++] = ' ';
+		(*new_str)[(*j)++] = '>';
+		(*new_str)[(*j)++] = '>';
 	}
+	(*new_str)[(*j)++] = ' ';
+}
+
+void	add_spaces_helper(char **str, int *i, int *j, char **new_str)
+{
+	if ((*str)[*i] == '<' && (*str)[*i + 1] != '<')
+		add_spaes(j, new_str, 0);
+	else if ((*str)[*i] == '<' && (*str)[*i + 1] == '<')
+	{
+		(*i)++;
+		add_spaes(j, new_str, 1);
+	}
+	else if ((*str)[*i] == '>' && (*str)[*i + 1] != '>')
+		add_spaes(j, new_str, 2);
+	else if ((*str)[*i] == '>' && (*str)[*i + 1] == '>')
+	{
+		(*i)++;
+		add_spaes(j, new_str, 3);
+	}
+	else
+		(*new_str)[(*j)++] = (*str)[(*i)];
 }
 
 char *ft_add_spaces(char *str)
@@ -66,12 +88,12 @@ char *ft_add_spaces(char *str)
 	int		single_q;
 	int		double_q;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	single_q = 0;
 	double_q = 0;
-	new_str = malloc(ft_strlen(str) * 3);
-	while (str[i])
+	new_str = malloc(ft_strlen(str) * 3 + 2);
+	while (str[++i])
 	{
 		if (str[i] == '\'' && double_q == 0)
 			single_q = !single_q;
@@ -80,40 +102,25 @@ char *ft_add_spaces(char *str)
 		if (!single_q && !double_q)
 		{
 			// if (str[i] == '<' && str[i + 1] != '<')
-			// {
-			// 	new_str[j++] = ' ';
-			// 	new_str[j++] = '<';
-			// 	new_str[j++] = ' ';
-			// }
+			// 	add_spaes(&j, &new_str, 0);
 			// else if (str[i] == '<' && str[i + 1] == '<')
 			// {
 			// 	i++;
-			// 	new_str[j++] = ' ';
-			// 	new_str[j++] = '<';
-			// 	new_str[j++] = '<';
-			// 	new_str[j++] = ' ';
+			// 	add_spaes(&j, &new_str, 1);
 			// }
-			for_less_than(str, j, i, new_str);
-			if (str[i] == '>' && str[i + 1] != '>')
-			{
-				new_str[j++] = ' ';
-				new_str[j++] = '>';
-				new_str[j++] = ' ';
-			}
-			else if (str[i] == '>' && str[i + 1] == '>')
-			{
-				i++;
-				new_str[j++] = ' ';
-				new_str[j++] = '>';
-				new_str[j++] = '>';
-				new_str[j++] = ' ';
-			}
-			else
-				new_str[j++] = str[i];
+			// else if (str[i] == '>' && str[i + 1] != '>')
+			// 	add_spaes(&j, &new_str, 2);
+			// else if (str[i] == '>' && str[i + 1] == '>')
+			// {
+			// 	i++;
+			// 	add_spaes(&j, &new_str, 3);
+			// }
+			// else
+			// 	new_str[j++] = str[i];
+			add_spaces_helper(&str, &i, &j, &new_str);
 		}
 		else
 			new_str[j++] = str[i];
-		i++;
 	}
 	new_str[j] = '\0';
 	free(str);

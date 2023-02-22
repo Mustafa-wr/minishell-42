@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/21 16:24:58 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/22 16:55:41 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_from_back(char *s)
 
 	i = ft_strlen(s);
 	i--;
-	while (s[i] == ' ')
+	while (s[i] == ' ' && i > 0)
 		i--;
 	if (s[i] == '>' || s[i] == '<')
 		return (0);
@@ -110,6 +110,7 @@ int	check_redirect(t_pipe *cmd)
 			// cmd->args[i][j] = ft_add_spaces(cmd->args[i][j]);
 			// skip_spaces(cmd->args[i][j]);
 			printf("%s\n", cmd->args[i][j++]);
+			
 		}
 		i++;
 	}
