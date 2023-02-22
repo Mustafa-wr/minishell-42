@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 14:46:37 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/19 20:12:39 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/22 19:06:52 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,3 @@ char	**ft_split(char const *s, char c)
 	split[i] = NULL;
 	return (split);
 }
-/*
-int	main(void)
-{
-	int i = 0;
-	char a[] = "   this";
-	char **split = ft_split(a, ' ');
-	while (split[i])
-	{
-		printf("%s\n", split[i]);
-		i++;
-	}
-}
-*/

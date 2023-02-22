@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/22 16:55:41 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/22 18:39:08 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int	check_redirect(t_pipe *cmd)
 			// cmd->args[i][j] = ft_add_spaces(cmd->args[i][j]);
 			// skip_spaces(cmd->args[i][j]);
 			printf("%s\n", cmd->args[i][j++]);
-			
 		}
 		i++;
 	}

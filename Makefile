@@ -33,10 +33,11 @@ SRCS =	libft/ft_memset.c		\
 		libft/ft_itoa.c			\
 		libft/ft_putendl_fd.c	\
 		libft/ft_strmapi.c		\
-		parse.c					\
-		parse_redirect.c		\
-		pipe_parse.c			\
-		parse_utils.c
+		ms_parse.c				\
+		ms_parse_redirect.c		\
+		ms_pipe_parse.c			\
+		ms_parse_utils.c		\
+		ms_add_spaces.c
 
 OBJS = $(SRCS:.c=.o)
 
