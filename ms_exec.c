@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/24 00:45:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 01:44:24 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	ms_exec(t_pipe *p)
 				ft_pwd(p);
 			else if (ft_strncmp(p->args[x][j], "env", 3) == 0 && ft_strlen(p->args[x][j]) == 3)
 			{
-				printf("hh");
-				execve("/usr/bin/env", *p->args, 0);
+				// execve("/usr/bin/env", *p->args, 0);
 			}
 			j++;
 		}
