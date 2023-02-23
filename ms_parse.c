@@ -235,6 +235,7 @@ int main(int ac, char **av, char **envp)
 			// free_strings(path.path);
 			// return (0);
 		}
+		
 		// free_3d(pipe.args);
 		add_history(read);
 	}

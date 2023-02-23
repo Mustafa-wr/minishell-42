@@ -109,7 +109,8 @@ int	check_redirect(t_pipe *cmd)
 			clean_quotes(cmd->args[i][j]);
 			// cmd->args[i][j] = ft_add_spaces(cmd->args[i][j]);
 			// skip_spaces(cmd->args[i][j]);
-			// printf("%s\n", cmd->args[i][j++]);
+			// printf("%s\n", cmd->args[i][]);
+			j++;
 		}
 		i++;
 	}
