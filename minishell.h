@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/22 18:51:32 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/24 01:27:33 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,9 @@ void	clean_quotes(char *str);
 // int	get_tokens(char **p_start, char *es, char **q, char **eq);
 // int	peek(char **ps, char *es, char *toks); //this function to retun 1 if the ps is not '\n' and strchr
 
+/***************      exec_part       ****************/
+
+void	ms_exec(t_pipe *pipe);
+void	ft_echo(t_pipe *p, int x, int y);
+void	ft_pwd(t_pipe *p);
 #endif

@@ -1,0 +1,11 @@
+
+/***************** echo ********************/
+
+ECHO   "gfeyjgf"
+Echo   "gfeyjgf"
+ECho   "gfeyjgf"
+ECHo   "gfeyjgf"
+
+
+
+/******************             ****************/
