@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/24 01:44:24 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 01:56:41 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ void	ms_exec(t_pipe *p)
 			else if (ft_strncmp(p->args[x][j], "pwd", 3) == 0 && ft_strlen(p->args[x][j]) == 3)
 				ft_pwd(p);
 			else if (ft_strncmp(p->args[x][j], "env", 3) == 0 && ft_strlen(p->args[x][j]) == 3)
-			{
-				// execve("/usr/bin/env", *p->args, 0);
-			}
+				ft_env(p);
+			else if ()
 			j++;
 		}
 		x++;

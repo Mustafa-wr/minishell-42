@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/24 01:45:54 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 01:56:18 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,25 @@ void	ft_pwd(t_pipe *p)
 	}
 	waitpid(i, NULL, 0);
 	return ;
+}
+
+void	ft_env(t_pipe *p)
+{
+	// int		i;
+
+	// i = fork();
+	(void)p;
+	// if (i == 0)
+	// {
+	// 	if (execve("/usr/bin/env", p->args[0], 0) < 0)
+	// 	{
+	// 		perror("not found");
+	// 		return ;
+	// 	}
+	// }
+	// waitpid(i, NULL, 0);
+	// return ;
+	printf("HOME :%s\n", getenv("HOME"));
+	printf("PATH :%s\n", getenv("PATH"));
+	printf("ROOT :%s\n", getenv("ROOT"));
 }

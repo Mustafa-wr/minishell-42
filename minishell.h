@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/24 01:27:33 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 01:48:21 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ void	clean_quotes(char *str);
 void	ms_exec(t_pipe *pipe);
 void	ft_echo(t_pipe *p, int x, int y);
 void	ft_pwd(t_pipe *p);
+void	ft_env(t_pipe *p);
 #endif
