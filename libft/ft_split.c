@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 14:46:37 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/22 19:06:52 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/23 17:37:54 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	**ft_split(char const *s, char c)
 	j = 0;
 	while (i < count)
 	{
-		while (s[j] == c)
+		while (s[j] && (s[j] == c || s[j] == '\t'))
 			j++;
 		split[i] = ft_cpystr(s + j, c);
 		if (!split[i])
