@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/24 19:44:58 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 22:20:03 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct t_redirect
 typedef struct t_pipe
 {
 	int			cmd_len;
+	int			env_count;
 	char		**cmds;
 	char		***args; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
 	int			i;
@@ -72,5 +73,6 @@ void	ft_env(t_pipe *p);
 void	get_env(t_pipe *p, char **envp);
 void	ft_cd(t_pipe *p);
 void	ft_export(t_pipe *p);
-void	ft_unset(t_pipe *p);
+void	ft_unset(t_pipe *p, int i, int j);
+int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
 #endif

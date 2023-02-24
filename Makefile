@@ -40,7 +40,8 @@ SRCS =	libft/ft_memset.c		\
 		ms_add_spaces.c         \
 		ms_exec.c               \
 		ms_builtins.c           \
-		utils.com.c
+		utils.com.c             \
+		ms_extra_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

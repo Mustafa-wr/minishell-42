@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/24 20:37:13 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 22:34:55 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,10 @@ void	ft_env(t_pipe *p)
 
 	i = 0;
 	(void)p;
-	// if (i == 0)
-	// {
-	// 	if (execve("/usr/bin/env", p->args[0], 0) < 0)
-	// 	{
-	// 		perror("not found");
-	// 		return ;
-	// 	}
-	// }
-	// waitpid(i, NULL, 0);
-	// return ;
-	while (p->m_env[i])
+	while (i < p->env_count)
 	{
+		if (p->m_env[i] == NULL)
+			i++;
 		printf("%s\n", p->m_env[i]);
 		i++;
 	}
@@ -94,13 +86,39 @@ void	ft_cd(t_pipe *p)
 void	ft_export(t_pipe *p)
 {
 	(void)p;
-	// if (execve("export", *p->args, p->m_env) < 0)
-	// {
-	// 	printf("Error");
-	// }
+	getenv("export");
 }
 
-void	ft_unset(t_pipe *p)
+void	ft_unset(t_pipe *p, int i, int j)
 {
-	(void)p;
+	int		counter;
+
+	counter = 0;
+	if (!p->args[i][j + 1])
+		return ;
+	// printf("p = %s\n", p->args[i][j + 1]);
+	while (p->m_env[counter])
+	{
+		if (strncmp_orginal(p->m_env[counter], p->args[i][j + 1],
+			ft_strlen(p->args[i][j + 1])) == 0)
+		{
+			p->m_env[counter] = NULL;
+			p->env_count -= 1;
+			return ;
+		}
+		// printf("env = %s\n", p->m_env[counter]);
+		// printf("p = %s\n", p->args[i][j + 1]);
+		counter++;
+	}
+	// printf("\n\n");
+	// printf("c =  %d", counter);
+	// i = 0;
+	// while (i < p->env_count)
+	// {
+	// 	if (p->m_env[i] == NULL)
+	// 		i++;
+	// 	printf("%s\n", p->m_env[i]);
+	// 	i++;
+	// }
+	// printf("unset: `%s': Not Valid identifier", p->args[i][j + 1]);
 }

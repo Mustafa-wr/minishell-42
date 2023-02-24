@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/24 19:51:44 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 21:28:12 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ms_exec(t_pipe *p)
 			else if (ft_strncmp(p->args[x][j], "export", 6) == 0)
 				ft_export(p);
 			else if (ft_strncmp(p->args[x][j], "unset", 5) == 0)
-				ft_unset(p);
+				ft_unset(p, x, j);
 			else
 			{
 				ft_tolower(p->args[x][j]);
