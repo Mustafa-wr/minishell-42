@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:44:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/23 21:46:43 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 19:36:02 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	if (i != n)
 		return (ns1[c] - ns2[k]);
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (1);
 	return (0);
 }
 

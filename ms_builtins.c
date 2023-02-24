@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/24 01:56:18 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/24 20:37:13 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	ft_pwd(t_pipe *p)
 
 void	ft_env(t_pipe *p)
 {
-	// int		i;
+	int		i;
 
-	// i = fork();
+	i = 0;
 	(void)p;
 	// if (i == 0)
 	// {
@@ -76,7 +76,31 @@ void	ft_env(t_pipe *p)
 	// }
 	// waitpid(i, NULL, 0);
 	// return ;
-	printf("HOME :%s\n", getenv("HOME"));
-	printf("PATH :%s\n", getenv("PATH"));
-	printf("ROOT :%s\n", getenv("ROOT"));
+	while (p->m_env[i])
+	{
+		printf("%s\n", p->m_env[i]);
+		i++;
+	}
+	// printf("HOME :%s\n", getenv("HOME"));
+	// printf("PATH :%s\n", getenv("PATH"));
+	// printf("ROOT :%s\n", getenv("ROOT"));
+}
+
+void	ft_cd(t_pipe *p)
+{
+	(void)p;
+}
+
+void	ft_export(t_pipe *p)
+{
+	(void)p;
+	// if (execve("export", *p->args, p->m_env) < 0)
+	// {
+	// 	printf("Error");
+	// }
+}
+
+void	ft_unset(t_pipe *p)
+{
+	(void)p;
 }
