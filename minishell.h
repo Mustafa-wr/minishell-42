@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/23 14:50:15 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/25 14:10:51 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ typedef struct s_env
 // evecve(char)
 typedef struct t_redirect
 {
-	char		**file;
-	char		**cmd;
+	char		*file;
 }	t_redirect;
 
 typedef struct t_pipe
@@ -41,7 +40,8 @@ typedef struct t_pipe
 	char		**cmds;
 	char		***args; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
 	int			i;
-	t_redirect	*line;
+	int			ibq[100];
+	t_redirect	*redirect;
 	t_env		*env;
 }	t_pipe;
 
