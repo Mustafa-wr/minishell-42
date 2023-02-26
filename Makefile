@@ -1,6 +1,9 @@
 NAME = minishell
 
 SRCS =	libft/ft_memset.c		\
+		libft/ft_lstnew.c       \
+		libft/ft_lstadd_back.c  \
+		libft/ft_lstlast.c      \
 		libft/ft_bzero.c		\
 		libft/ft_memcpy.c		\
 		libft/ft_memmove.c 		\
@@ -41,7 +44,9 @@ SRCS =	libft/ft_memset.c		\
 		ms_exec.c               \
 		ms_builtins.c           \
 		utils.com.c             \
-		ms_extra_utils.c
+		ms_extra_utils.c        \
+		libft/ft_lstadd_front.c \
+		ms_exec_utils.c         
 
 OBJS = $(SRCS:.c=.o)
 

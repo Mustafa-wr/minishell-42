@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:36:08 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/24 22:21:59 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/26 15:34:02 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	get_env(t_pipe *p, char **envp)
 	while (envp[i])
 	{
 		p->m_env[i] = ft_strdup(envp[i]);
+		// printf("i = %s\n", envp[i]);
 		i++;
 	}
 	p->m_env[i] = NULL;

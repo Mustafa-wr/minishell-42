@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/24 22:20:03 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:48:31 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ typedef struct t_pipe
 	int			cmd_len;
 	int			env_count;
 	char		**cmds;
-	char		***args; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
+	char		***args;
+	char		**m_path; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
 	int			i;
+	int			j;
 	char		**m_env;
+	char		**tmp_env;
+	t_list		*m_export;
 	t_redirect	*line;
 	t_env		*env;
 }	t_pipe;
@@ -75,4 +79,16 @@ void	ft_cd(t_pipe *p);
 void	ft_export(t_pipe *p);
 void	ft_unset(t_pipe *p, int i, int j);
 int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
+int		found_first(char **m_env, int k, t_pipe *p);
+void	fill_export_list(t_pipe *p);
+void	fill_tmp_env(t_pipe *p);
+void	check_builtin(t_pipe *p);
+int		check_for_redirction(t_pipe *p);
+int		count_cmds(char ***str);
+void	check_other(t_pipe *p);
+void	normal_exec(t_pipe *p);
+char	**check_env_for_path(char **env);
+char	*check_command_existence(char *av, char **path);
+char	*check_with_access(char **path, char *str);
+char	*backslash_case(char *av, int i);
 #endif
