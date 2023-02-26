@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/26 18:14:57 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/26 19:21:36 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,43 +52,48 @@ int	found_first(char **m_env, int k, t_pipe *p)
 	// (void)p;
 	(void)k;
 	k = p->env_count;
-	// while (m_env[i])
-	// {
-	// 	c = 0;
-	// 	f = i + 1;
-	// 	k = p->env_count;
-	// 	// n1 = m_env[i][j];
-	// 	// // if (m_env[f + 1])
-	// 	// n2 = m_env[i + 1][j];
-	// 	// printf("n1 = %d\n", n1);
-	// 	// printf("n2 = %d\n", n2);
-	// 	if (m_env[i + 1] != NULL && m_env[i] != NULL)
-	// 	{
-	// 		while ((int)m_env[i][j] >= (int)m_env[f][j] && k > 0)
-	// 		{
-	// 			// printf("i = %d && c = %c ", i, m_env[i][j]);
-	// 			// printf("f = %d && c = %c\n", f, m_env[f][j]);
-	// 			if ((int)m_env[i][j] == (int)m_env[f][j])
-	// 				if (ft_strncmp(m_env[i], m_env[f], ft_strlen(m_env[i])) < 0)
-	// 					return (i);
-	// 			c++;
-	// 			f++;
-	// 			// j--;
-	// 			if (m_env[f] == NULL)
-	// 				break ;
-	// 			k--;
-	// 		}
-	// 		// printf("k = %d", k);
-	// 		// printf("en = %d", env_count);
-	// 		// printf("c = %d", c);
-	// 		// printf("n = %s\n", m_env[f]);
-	// 		if (!m_env[f + 1])
-	// 		{
-	// 			// printf("it = %d", i);
-	// 			return (i);
-	// 		}
-	// 	}
-	// 	i++;
+	while (m_env[i])
+	{
+		c = 0;
+		f = i + 1;
+		k = p->env_count;
+		// n1 = m_env[i][j];
+		// // if (m_env[f + 1])
+		// n2 = m_env[i + 1][j];
+		// printf("n1 = %d\n", n1);
+		// printf("n2 = %d\n", n2);
+		if (m_env[i + 1] != NULL && m_env[i] != NULL)
+		{
+			while ((int)m_env[i][j] > (int)m_env[f][j])
+			{
+				// printf("i = %d && c = %c ", i, m_env[i][j]);
+				// printf("f = %d && c = %c\n", f, m_env[f][j]);
+				if ((int)m_env[i][j] == (int)m_env[f][j])
+				{
+						// printf("iff = %d\n", strncmp_orginal(m_env[i], m_env[f], ft_strlen(m_env[i])));
+					if (strncmp_orginal(m_env[i], m_env[f + 1], ft_strlen(m_env[i])) > 0)
+					{
+						return (i);
+					}
+				}
+				c++;
+				f++;
+				// j--;
+				if (m_env[f] == NULL)
+					break ;
+				k--;
+			}
+			// printf("k = %d", k);
+			// printf("en = %d", env_count);
+			// printf("c = %d", c);
+			// printf("n = %s\n", m_env[f]);
+			if (!m_env[f + 1])
+			{
+				// printf("it = %d", i);
+				return (i);
+			}
+		}
+		i++;
 	}
 	return (0);
 }
