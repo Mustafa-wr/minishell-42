@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/25 14:13:04 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:57:06 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ static int	is_redirect(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 	return (1);
 }
 
-int	the_redirect_is_between_q(char *str)
+static int	the_redirect_is_between_q(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if ((str[i] == '"' || str[i] == '\'') && str[i + 1])
 		{
 			i++;
-			while (str[i] == ' ' || str[i] == '\t')
+			while ((str[i] == ' ' || str[i] == '\t') && str[i + 1])
 				i++;
 			if (str[i] == '>' || str[i] == '<')
 				return (1);
@@ -96,28 +96,6 @@ static int	redirect_helper(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 	return (1);
 }
 
-// void	redrection_slot(t_pipe *slot)
-// {
-// 	int i = 0;
-// 	slot->redirect = malloc(sizeof(t_redirect));
-	
-// }
-// int	redirect_in_quotes(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (str[i] == '"' || str[i] == '\'')
-// 	{
-// 		i++;
-// 		while ((str[i] && str[i] == ' ') || (str[i] && str[i] == '\t'))
-// 			i++;
-// 		if (str[i] == '>' || str[i] == '<')
-// 			return (0);
-// 	}
-// 	return (1);
-// }
-
 int	check_redirect(t_pipe *cmd)
 {
 	int	j;
@@ -136,32 +114,31 @@ int	check_redirect(t_pipe *cmd)
 		j++;
 	}
 	i = 0;
-	// while (cmd->cmds[i])
-	// 	clean_quotes(cmd->cmds[i++]);
-	// i = 0;
-	// while (cmd->cmds[i])
-	// 	printf("%s\n", cmd->cmds[i++]);
+	while (cmd->cmds[i])
+		i++;
+	cmd->num_of_pipes = i;
 	j = 0;
 	int b = 0;
-	ft_bzero(cmd->ibq, 100);
-	cmd->args = malloc(sizeof(char **) * 100);
+	cmd->ibq = malloc(sizeof(int) * OPEN_MAX);
+	cmd->args = malloc(sizeof(char **) * i * 3 + 1);
+	i = 0;
 	while (cmd->cmds[i])
 	{
 		j = 0;
 		cmd->args[i] = ft_split(cmd->cmds[i], ' ');
 		while (cmd->args[i][j])
 		{
-			// if (redirect_in_quotes(cmd->args[i][j]))
+			// puts(cmd->args[i][j]);
 			cmd->ibq[b] = the_redirect_is_between_q(cmd->args[i][j]);
 			clean_quotes(cmd->args[i][j]);
-			printf("the value is %d\n", cmd->ibq[b]);
+			// printf("the value is %d\n", cmd->ibq[b]);
 			printf("%s\n", cmd->args[i][j]);
 			j++;
 			b++;
 		}
+		printf("\n");
 		i++;
 	}
-	// cmd->files_num = i;
 	cmd->args[i] = NULL;
 	return (1);
 }

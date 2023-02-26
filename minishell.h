@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/25 14:10:51 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/26 19:10:32 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include <stdio.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <readline/history.h>
@@ -29,19 +30,52 @@ typedef struct s_env
 }	t_env;
 
 // evecve(char)
-typedef struct t_redirect
+// typedef struct t_redirect
+// {
+// 	char		*file;
+// }	t_redirect;
+
+enum e_types
 {
-	char		*file;
+	IN_FILE,
+	OUTFILE,
+	APPEND_OUT,
+	APPEND_IN,
+};
+
+typedef struct s_redirect
+{
+	int		flag;
+	char	*file_name;
 }	t_redirect;
+
+typedef struct s_cmds
+{
+	//< pwd ls < lsss < out > outfile -la | pwd cat | grep -n hello | cat -e
+	int red_len;// = 4
+	char **cmd;// [0]-ls.. [1] -la
+	t_redirect  *outs;
+	/**
+	 * [0]->flag = 1
+	 * [0]->red_name = pwd
+	 * 	 * [0]->flag = 1
+	 * [0]->red_name = lsss
+	 * 	 * [0]->flag = 1
+	 * [0]->red_name = out
+	 * 	 * [0]->flag = 2
+	 * [0]->red_name = outfile
+	 */
+}	t_cmds;
+
 
 typedef struct t_pipe
 {
 	int			cmd_len;
-	char		**cmds;
+	char		**cmds;//
 	char		***args; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
 	int			i;
-	int			ibq[100];
-	t_redirect	*redirect;
+	int			num_of_pipes;
+	int			*ibq;
 	t_env		*env;
 }	t_pipe;
 

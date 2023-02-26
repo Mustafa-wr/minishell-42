@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/24 19:48:00 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/26 17:46:28 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int main(int ac, char **av, char **envp)
 		}
 		else if (!check_redirect(&pipe))
 		{
-			printf("syntax error\n");
+			printf("syntax error near unexpected token \n");
 			// free_strings(path.path);
 			// return (0);
 		}
