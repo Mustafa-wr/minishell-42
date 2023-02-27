@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/26 19:21:36 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:32:04 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	found_first(char **m_env, int k, t_pipe *p)
 						// printf("iff = %d\n", strncmp_orginal(m_env[i], m_env[f], ft_strlen(m_env[i])));
 					if (strncmp_orginal(m_env[i], m_env[f + 1], ft_strlen(m_env[i])) > 0)
 					{
-						return (i);
+						break ;
 					}
 				}
 				c++;
@@ -87,6 +87,9 @@ int	found_first(char **m_env, int k, t_pipe *p)
 			// printf("en = %d", env_count);
 			// printf("c = %d", c);
 			// printf("n = %s\n", m_env[f]);
+			// if ()
+			// if (strncmp_orginal(m_env[i], m_env[f + 1], ft_strlen(m_env[i])) > 0)
+			// 	return (i);
 			if (!m_env[f + 1])
 			{
 				// printf("it = %d", i);

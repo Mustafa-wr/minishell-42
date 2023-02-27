@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/26 16:48:24 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:51:31 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,29 @@ char	*backslash_case(char *av, int i)
 	}
 	join[j] = '\0';
 	return (join);
+}
+
+void	last_sorting(t_pipe *p)
+{
+	t_list	*tmp;
+	char	*str;
+	char	*s1;
+	char	*s2;
+
+	tmp = p->m_export;
+	while (tmp)
+	{
+		if (tmp->next)
+		{
+			s1 = tmp->content;
+			s2 = tmp->next->content;
+			if (strncmp_orginal(s1, s2, 10) > 0)
+			{
+				str = tmp->content;
+				tmp->content = tmp->next->content;
+				tmp->next->content = str;
+			}
+		}
+		tmp = tmp->next;
+	}
 }

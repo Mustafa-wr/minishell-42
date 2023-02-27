@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/26 19:21:40 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:51:37 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,19 @@ void	ft_export(t_pipe *p)
 	int		index;
 
 	i = 0;
+	p->m_export = NULL;
 	index = p->env_count;
 	j = p->env_count;
 	(void)p;
 	fill_tmp_env(p);
-	while (p->m_env[i])
+	while (p->m_env[i + 1])
 	{
 		// char *s = "abcdefg";
 		// printf("len = %zu", ft_strlen(s + 2));
 		// exit (0);
 		index = found_first(p->tmp_env, index, p);
 		// printf("i = %d\n", index);
-		ft_lstadd_front(&p->m_export,  ft_lstnew(p->m_env[index]));
+		ft_lstadd_front(&p->m_export, ft_lstnew(p->m_env[index]));
 		// printf("declare -x %s\n", p->m_env[index]);
 		p->tmp_env[index][0] = '0';
 		// p->env_count--;
@@ -117,13 +118,16 @@ void	ft_export(t_pipe *p)
 		// printf("declare -x %s\n", p->m_env[index]);
 		i++;
 	}
+	last_sorting(p);
 	i = 0;
-	while (i < 28)
+	while (i < 27)
 	{
 		printf("declare -x %s\n", p->m_export->content);
 		p->m_export = p->m_export->next;
 		i++;
 	}
+	free_strings(p->tmp_env);
+	// printf("declare -x %s\n", p->m_export->content);
 }
 
 void	ft_unset(t_pipe *p, int i, int j)

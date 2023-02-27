@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/26 17:44:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:05:12 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	check_other(t_pipe *p)
 	len = count_cmds(p->args);
 	if (flag == 0)
 		normal_exec(p);
+	else
+		ms_redirection(p);
 }
 
 int	check_for_redirction(t_pipe *p)

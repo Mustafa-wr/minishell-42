@@ -43,7 +43,7 @@ SRCS =	libft/ft_memset.c		\
 		ms_add_spaces.c         \
 		ms_exec.c               \
 		ms_builtins.c           \
-		utils.com.c             \
+		ms_utils2.c             \
 		ms_extra_utils.c        \
 		libft/ft_lstadd_front.c \
 		ms_exec_utils.c         

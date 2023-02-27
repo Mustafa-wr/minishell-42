@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/26 16:48:31 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:04:58 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,6 @@ char	**check_env_for_path(char **env);
 char	*check_command_existence(char *av, char **path);
 char	*check_with_access(char **path, char *str);
 char	*backslash_case(char *av, int i);
+void	last_sorting(t_pipe *p);
+void	ms_redirection(t_pipe *p);
 #endif
