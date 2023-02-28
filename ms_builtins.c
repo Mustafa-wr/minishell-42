@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/27 14:51:37 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 22:57:50 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,51 +83,24 @@ void	ft_cd(t_pipe *p)
 	(void)p;
 }
 
-void	ft_export(t_pipe *p)
+void	ft_export(t_pipe *p, int i, int j)
 {
-	int		i;
-	int		j;
-	int		index;
+	t_list	*tmp;
 
-	i = 0;
-	p->m_export = NULL;
-	index = p->env_count;
-	j = p->env_count;
-	(void)p;
-	fill_tmp_env(p);
-	while (p->m_env[i + 1])
+	tmp = p->m_export;
+	j += 1;
+	if (p->args[i][j])
 	{
-		// char *s = "abcdefg";
-		// printf("len = %zu", ft_strlen(s + 2));
-		// exit (0);
-		index = found_first(p->tmp_env, index, p);
-		// printf("i = %d\n", index);
-		ft_lstadd_front(&p->m_export, ft_lstnew(p->m_env[index]));
-		// printf("declare -x %s\n", p->m_env[index]);
-		p->tmp_env[index][0] = '0';
-		// p->env_count--;
-		// index = found_first(p, p->env_count);
-		// printf("i = %d\n", index);
-		// printf("declare -x %s\n", p->m_env[index]);
-		// p->m_env[index][0] = '0';
-		// p->env_count--;
-		// index = found_first(p, p->env_count);
-		// printf("i = %d\n", index);
-		// printf("declare -x %s\n", p->m_env[index]);
-		// index = found_first(p, index);
-		// printf("declare -x %s\n", p->m_env[index]);
-		i++;
+		add_to_export(p, p->args[i][j]);
 	}
-	last_sorting(p);
-	i = 0;
-	while (i < 27)
+	else
 	{
-		printf("declare -x %s\n", p->m_export->content);
-		p->m_export = p->m_export->next;
-		i++;
+		while (tmp)
+		{
+			printf("declare -x %s\n", tmp->content);
+			tmp = tmp->next;
+		}
 	}
-	free_strings(p->tmp_env);
-	// printf("declare -x %s\n", p->m_export->content);
 }
 
 void	ft_unset(t_pipe *p, int i, int j)
@@ -137,7 +110,6 @@ void	ft_unset(t_pipe *p, int i, int j)
 	counter = 0;
 	if (!p->args[i][j + 1])
 		return ;
-	// printf("p = %s\n", p->args[i][j + 1]);
 	while (p->m_env[counter])
 	{
 		if (strncmp_orginal(p->m_env[counter], p->args[i][j + 1],
@@ -147,19 +119,6 @@ void	ft_unset(t_pipe *p, int i, int j)
 			p->env_count -= 1;
 			return ;
 		}
-		// printf("env = %s\n", p->m_env[counter]);
-		// printf("p = %s\n", p->args[i][j + 1]);
 		counter++;
 	}
-	// printf("\n\n");
-	// printf("c =  %d", counter);
-	// i = 0;
-	// while (i < p->env_count)
-	// {
-	// 	if (p->m_env[i] == NULL)
-	// 		i++;
-	// 	printf("%s\n", p->m_env[i]);
-	// 	i++;
-	// }
-	// printf("unset: `%s': Not Valid identifier", p->args[i][j + 1]);
 }

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/27 15:04:58 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:56:08 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <readline/history.h>
+# include <fcntl.h>
 
 typedef struct s_env
 {
@@ -76,7 +77,7 @@ void	ft_pwd(t_pipe *p);
 void	ft_env(t_pipe *p);
 void	get_env(t_pipe *p, char **envp);
 void	ft_cd(t_pipe *p);
-void	ft_export(t_pipe *p);
+void	ft_export(t_pipe *p, int i, int j);
 void	ft_unset(t_pipe *p, int i, int j);
 int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
 int		found_first(char **m_env, int k, t_pipe *p);
@@ -93,4 +94,11 @@ char	*check_with_access(char **path, char *str);
 char	*backslash_case(char *av, int i);
 void	last_sorting(t_pipe *p);
 void	ms_redirection(t_pipe *p);
+int		is_space(char *str);
+int		cmd_index(t_pipe *p);
+int		check_and_create(t_pipe *p, int i);
+void	fill_export(t_pipe *p);
+void	add_to_export(t_pipe *p, char *add);
+void	insert_the_node(t_pipe *p, t_list *tmp, char *add, int i);
+// int	check_and_create(t_pipe *p, int i)
 #endif

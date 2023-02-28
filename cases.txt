@@ -8,4 +8,7 @@ ECHo   "gfeyjgf"
 
 
 
-/******************             ****************/
+/******************   export          ****************/
+
+export t = hjhdjhdg
+/will add the string after the = sign but it will print a error/

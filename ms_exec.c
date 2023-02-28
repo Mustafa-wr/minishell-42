@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/27 15:05:12 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 23:25:47 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void	check_builtin(t_pipe *p)
 				exit(0);
 			else if (ft_strncmp(p->args[x][j], "cd", 2) == 0)
 				ft_cd(p);
-			else if (ft_strncmp(p->args[x][j], "export", 6) == 0)
-				ft_export(p);
+			else if (strncmp_orginal(p->args[x][j], "export", 6) == 0)
+				ft_export(p, x, j);
 			else if (ft_strncmp(p->args[x][j], "unset", 5) == 0)
 				ft_unset(p, x, j);
 			else
 			{
-				ft_tolower(p->args[x][j]);
+				ft_tolower(p->args[x][j - 1]);
 				if (ft_strncmp(p->args[x][j], "echo", 4) == 0)
 					ft_echo(p, x, j);
 				else if (ft_strncmp(p->args[x][j], "pwd", 3) == 0)
@@ -76,13 +76,11 @@ void	check_other(t_pipe *p)
 	p->i = 0;
 	p->j = 0;
 	p->m_path = check_env_for_path(p->m_env);
-	// printf("p->p = %s", check_env_for_path(p->m_env));
-	// exit(0);
 	flag = check_for_redirction(p);
 	len = count_cmds(p->args);
 	if (flag == 0)
 		normal_exec(p);
-	else
+	else if (flag == 1)
 		ms_redirection(p);
 }
 
@@ -132,5 +130,4 @@ void	normal_exec(t_pipe *p)
 		}
 	}
 	wait(NULL);
-
 }

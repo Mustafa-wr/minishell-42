@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/27 15:08:58 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:51:11 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,36 +209,37 @@ int main(int ac, char **av, char **envp)
 	char	*read;
 
 	(void)av;
-	(void)envp;
 	if (ac != 1)
 		return (0);
 	// printf("env[0] = %s\n", envp[2]);
 	get_env(&pipe, envp);
+	fill_export(&pipe);
 	while (1)
 	{
 		// enviroments(envp, &path);
 		read = readline("minishell$ ");
 		if (!read)
 			return (0);
-		// if (is_space(read) == 0)
+		if (is_space(read))
+			continue ;
 		// 	printf("%s\n", read);
 		// if(!check_string(read))
 		// 	printf("syntax error multiple line not allowed\n");
 		if (!check_pipes(&pipe, read))
 		{
 			printf("Error\n");
+			continue;
 			// free_strings(path.path);
 			// return(0);
 		}
 		else if (!check_redirect(&pipe))
 		{
-			printf("syntax error\n");
+			printf("syntax error near unexpected token \n");
 			// free_strings(path.path);
 			// return (0);
+			continue;
 		}
-		// get_env(&pipe, envp);
 		ms_exec(&pipe);
-		// free_3d(pipe.args);
 		add_history(read);
 	}
 }
