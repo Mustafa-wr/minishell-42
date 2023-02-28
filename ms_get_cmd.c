@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 20:21:07 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/28 20:49:13 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char *remove_substr(char *s, unsigned int start, size_t len)
         i++;
     }
     str[j] = '\0';
-	free(s);
     return (str);
 }
 
@@ -107,6 +106,7 @@ void	files_saving(t_pipe *pipe, t_cmds *cmds)
 	j = 0;
 	int start = 0;
 	int x = 0;
+	char *tmp;
 	while (pipe->cmds[i])
 		i++;
 	cmds = malloc(sizeof(t_cmds) * i);
@@ -149,7 +149,8 @@ void	files_saving(t_pipe *pipe, t_cmds *cmds)
 				}
 				store_the_file_name(pipe->cmds[j], &cmds[j].outs[xy].file_name, x + 1, &var);
 				// printf("flag	  : %d\n", var.i);
-				pipe->cmds[j] = remove_substr(pipe->cmds[j], start, var.i);
+				// pipe->cmds[j] = remove_substr(pipe->cmds[j], start, var.i);
+				tmp = remove_substr(pipe->cmds[j], start, var.i);
 				// printf("file name : %s\n", pipe->cmds[j]);
 				// printf("file name : %s\n", cmds[j].outs[xy].file_name);
 				// printf("flag	  : %d\n", cmds[j].outs[xy].flag);
@@ -157,7 +158,7 @@ void	files_saving(t_pipe *pipe, t_cmds *cmds)
 			}
 			x++;
 		}
-		cmds[j].cmd = ft_split(pipe->cmds[j], ' ');
+		cmds[j].cmd = ft_split(tmp, ' ');
 		// printf("file name : %s\n", cmds[j].cmd[0]);
 		// printf("file name : %s\n", cmds[j].cmd[1]);
 		j++;
