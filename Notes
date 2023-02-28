@@ -26,3 +26,16 @@ void	clean_quotes(char *str)
 	}
 	str[j] = '\0';
 }
+
+typedef struct s_redirect
+{
+	int		flag;
+	char	*file_name;
+}	t_redirect;
+
+typedef struct s_cmds
+{
+	int red_len;// = 4
+	char **cmd;// [0]-ls.. [1] -la
+	t_redirect  *outs;
+}	t_cmds;

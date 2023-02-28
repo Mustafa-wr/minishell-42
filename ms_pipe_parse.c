@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/24 19:58:52 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:29:40 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
 	return (1);
 }
 
-int	check_pipes(t_pipe *pipe, char *line)
+int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 {
 	int	i;
 	int	j;
@@ -126,8 +126,12 @@ int	check_pipes(t_pipe *pipe, char *line)
 	while (pipe->cmds[i])
 	{
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
+		replace_spaces_tabs(pipe->cmds[i]);
+		// clean_quotes(pipe->cmds[i]);
+		// printf("%s\n", pipe->cmds[i]);
 		i++;
 	}
 	pipe->cmd_len = i;
+	files_saving(pipe, cmds);
 	return (1);
 }

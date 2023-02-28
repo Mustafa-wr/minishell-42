@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/26 18:57:06 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:39:26 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,14 @@ int	check_redirect(t_pipe *cmd)
 			cmd->ibq[b] = the_redirect_is_between_q(cmd->args[i][j]);
 			clean_quotes(cmd->args[i][j]);
 			// printf("the value is %d\n", cmd->ibq[b]);
-			printf("%s\n", cmd->args[i][j]);
+			// printf("%s\n", cmd->args[i][j]);
 			j++;
 			b++;
 		}
-		printf("\n");
+		// printf("\n");
 		i++;
 	}
 	cmd->args[i] = NULL;
+	free_3d(cmd->args);
 	return (1);
 }
