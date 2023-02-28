@@ -27,15 +27,48 @@ void	clean_quotes(char *str)
 	str[j] = '\0';
 }
 
-typedef struct s_redirect
+static void increment(char *str, t_vars *vars)
 {
-	int		flag;
-	char	*file_name;
-}	t_redirect;
+	if (str[vars->i] == ' ')
+	{
+		if (!vars->space_found)
+		{
+			str[vars->j++] = ' ';
+			vars->space_found = 1;
+		}
+	}
+	else
+	{
+		str[vars->j++] = str[vars->i];
+		vars->space_found = 0;
+	}
+}
 
-typedef struct s_cmds
+void replace_spaces_tabs(char *str)
 {
-	int red_len;// = 4
-	char **cmd;// [0]-ls.. [1] -la
-	t_redirect  *outs;
-}	t_cmds;
+	t_vars vars;
+
+	vars.i = 0;
+	vars.j = 0;
+	vars.space_found = 0;
+	vars.quote_char = 0;
+    while (str[vars.i] != '\0')
+    {
+        if (str[vars.i] == '"' || str[vars.i] == '\'')
+        {
+            if (vars.quote_char == 0)
+                vars.quote_char = str[vars.i];
+            else if (vars.quote_char == str[vars.i])
+                vars.quote_char = 0;
+            str[vars.j++] = str[vars.i];
+        }
+        else if (vars.quote_char == 0)
+			increment(str, &vars);
+        else
+            str[vars.j++] = str[vars.i];
+        vars.i++;
+    }
+    str[vars.j] = '\0';
+}
+
+i want exactly same behaviour but there is a problem .

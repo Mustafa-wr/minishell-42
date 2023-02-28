@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 16:41:44 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:55:06 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ int	is_between_quotes(char *str, int x)
 	return (0);
 }
 
-void	files_saving(t_pipe *pipe, t_cmds	*cmds)
+void	files_saving(t_pipe *pipe, t_cmds *cmds)
 {
 	int	i;
 	int j;
 	int xy;
 
+	int quote_char = 0;
 	i = 0;
 	j = 0;
 	int x = 0;
@@ -98,8 +99,15 @@ void	files_saving(t_pipe *pipe, t_cmds	*cmds)
 		x = 0;
 		while (pipe->cmds[j][x])
 		{
+			if (pipe->cmds[j][x] == '"' || pipe->cmds[j][x] == '\'')
+			{
+				if (quote_char == 0)
+					quote_char = pipe->cmds[j][x];
+				else if (quote_char == pipe->cmds[j][x])
+					quote_char = 0;
+			}
 			if ((pipe->cmds[j][x] == '>' || pipe->cmds[j][x] == '<') \
-				&& is_between_quotes(pipe->cmds[j], x))
+				&& is_between_quotes(pipe->cmds[j], x) && !quote_char)
 			{
 				if (pipe->cmds[j][x + 1] == '>' || pipe->cmds[j][x + 1] == '<')
 				{
@@ -121,6 +129,7 @@ void	files_saving(t_pipe *pipe, t_cmds	*cmds)
 				}
 				store_the_file_name(pipe->cmds[j], &cmds[j].outs[xy].file_name, x + 1);
 				printf("file name : %s\n", cmds[j].outs[xy].file_name);
+				printf("flag	  : %d\n", cmds[j].outs[xy].flag);
 				xy++;
 			}
 			x++;

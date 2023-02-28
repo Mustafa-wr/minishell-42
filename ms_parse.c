@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/27 15:50:02 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/28 16:57:14 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int main(int ac, char **av, char **envp)
 {
 	// t_env	path;
 	t_pipe	pipe;
+	t_cmds	cmds;
 	char	*read;
 
 	(void)av;
@@ -89,7 +90,7 @@ int main(int ac, char **av, char **envp)
 		// 	printf("%s\n", read);
 		// if(!check_string(read))
 		// 	printf("syntax error multiple line not allowed\n");
-		if (!check_pipes(&pipe, read))
+		if (!check_pipes(&pipe, read, &cmds))
 		{
 			printf("Error\n");
 			// free_strings(path.path);
@@ -103,6 +104,7 @@ int main(int ac, char **av, char **envp)
 			// return (0);
 			continue ;
 		}
+		files_saving(&pipe, &cmds);
 		add_history(read);
 	}
 }
