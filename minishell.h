@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 16:36:02 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/28 21:12:27 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ typedef struct s_vars
     int j;
     int space_found;
     int quote_char;
+	int x;
+	int start;
+	int xy;
 }	t_vars;
 
 enum e_types
