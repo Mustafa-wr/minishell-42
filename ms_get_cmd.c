@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 16:55:06 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/02/28 20:21:07 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,27 @@ int	num_of_redirects(char *str)
 	return (num);
 }
 
-void	store_the_file_name(char *str, char **file_name, int i)
+void	store_the_file_name(char *str, char **file_name, int i, t_vars *var)
 {
 	int start;
 	int	in_quote;
-	int	in_d_quote;
 
 	start = i;
 	in_quote = 0;
-	in_d_quote = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-			if (in_quote)
+			if (!in_quote)
+				in_quote = str[i];
+			else if (in_quote == str[i])
 				in_quote = 0;
-			else if (!in_d_quote)
-				in_quote = 1;
 		}
-		else if (str[i] == '\"')
-		{
-			if (in_d_quote)
-				in_d_quote = 0;
-			else if (!in_quote)
-				in_d_quote = 1;
-		}
-		while ((str[i] && str[i] != ' ') || (str[i] && (in_d_quote || in_quote)))
-			i++;
-		if(str[i])
-			i++;
+		if (str[i] == ' ' && !in_quote)
+			break;
+		i++;
 	}
-	// while (str[i] && str[i] != ' ')
-	// 	i++;
+	var->i = i;
 	(*file_name) = ft_substr(str, start, i - start);
 }
 
@@ -78,15 +67,45 @@ int	is_between_quotes(char *str, int x)
 	return (0);
 }
 
+
+char *remove_substr(char *s, unsigned int start, size_t len)
+{
+	// printf("start :%d\n", start);
+	// printf("len :%zu\n", len);
+	size_t	i;
+	size_t	j;
+    char *str;
+	
+	str = malloc(sizeof(char) * (ft_strlen(s) - (len - start)) + 1);
+    if (!str || !s)
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (s[i])
+    {
+        if (i < start || i >= len)
+        {
+            str[j] = s[i];
+            j++;
+        }
+        i++;
+    }
+    str[j] = '\0';
+	free(s);
+    return (str);
+}
+
 void	files_saving(t_pipe *pipe, t_cmds *cmds)
 {
 	int	i;
 	int j;
 	int xy;
+	t_vars var;
 
 	int quote_char = 0;
 	i = 0;
 	j = 0;
+	int start = 0;
 	int x = 0;
 	while (pipe->cmds[i])
 		i++;
@@ -109,6 +128,7 @@ void	files_saving(t_pipe *pipe, t_cmds *cmds)
 			if ((pipe->cmds[j][x] == '>' || pipe->cmds[j][x] == '<') \
 				&& is_between_quotes(pipe->cmds[j], x) && !quote_char)
 			{
+				start = x - 1;
 				if (pipe->cmds[j][x + 1] == '>' || pipe->cmds[j][x + 1] == '<')
 				{
 					if(pipe->cmds[j][x + 1] == '>')
@@ -127,34 +147,19 @@ void	files_saving(t_pipe *pipe, t_cmds *cmds)
 					cmds[j].outs[xy].flag = OUT_FILE;
 					x++;
 				}
-				store_the_file_name(pipe->cmds[j], &cmds[j].outs[xy].file_name, x + 1);
-				printf("file name : %s\n", cmds[j].outs[xy].file_name);
-				printf("flag	  : %d\n", cmds[j].outs[xy].flag);
+				store_the_file_name(pipe->cmds[j], &cmds[j].outs[xy].file_name, x + 1, &var);
+				// printf("flag	  : %d\n", var.i);
+				pipe->cmds[j] = remove_substr(pipe->cmds[j], start, var.i);
+				// printf("file name : %s\n", pipe->cmds[j]);
+				// printf("file name : %s\n", cmds[j].outs[xy].file_name);
+				// printf("flag	  : %d\n", cmds[j].outs[xy].flag);
 				xy++;
 			}
 			x++;
 		}
+		cmds[j].cmd = ft_split(pipe->cmds[j], ' ');
+		// printf("file name : %s\n", cmds[j].cmd[0]);
+		// printf("file name : %s\n", cmds[j].cmd[1]);
 		j++;
 	}
 }
-
-// if (strcmp(token, "<") == 0)
-// 			{
-// 				flag = IN_FILE;
-// 				file_name = strtok_r(NULL, token_delim, &save_token_ptr);
-// 			}
-// 			else if (strcmp(token, ">") == 0)
-// 			{
-// 				flag = OUTFILE;
-// 				file_name = strtok_r(NULL, token_delim, &save_token_ptr);
-// 			}
-// 			else if (strcmp(token, ">>") == 0)
-// 			{
-// 				flag = APPEND_OUT;
-// 				file_name = strtok_r(NULL, token_delim, &save_token_ptr);
-// 			}
-// 			else if (strcmp(token, "<<") == 0)
-// 			{
-// 				flag = APPEND_IN;
-// 				file_name = strtok_r(NULL, token_delim, &save_token_ptr);
-// 			}

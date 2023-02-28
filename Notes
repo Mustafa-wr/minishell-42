@@ -27,48 +27,34 @@ void	clean_quotes(char *str)
 	str[j] = '\0';
 }
 
-static void increment(char *str, t_vars *vars)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	if (str[vars->i] == ' ')
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	if (!s)
+		return (NULL);
+	if (ft_strlen(s) < len)
+		len = ft_strlen(s);
+	str = (char *)malloc(sizeof(*s) * (len + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
 	{
-		if (!vars->space_found)
+		if (i >= start && j < len)
 		{
-			str[vars->j++] = ' ';
-			vars->space_found = 1;
+			str[j] = s[i];
+			j++;
 		}
+		i++;
 	}
-	else
-	{
-		str[vars->j++] = str[vars->i];
-		vars->space_found = 0;
-	}
+	str[j] = 0;
+	return (str);
 }
 
-void replace_spaces_tabs(char *str)
-{
-	t_vars vars;
 
-	vars.i = 0;
-	vars.j = 0;
-	vars.space_found = 0;
-	vars.quote_char = 0;
-    while (str[vars.i] != '\0')
-    {
-        if (str[vars.i] == '"' || str[vars.i] == '\'')
-        {
-            if (vars.quote_char == 0)
-                vars.quote_char = str[vars.i];
-            else if (vars.quote_char == str[vars.i])
-                vars.quote_char = 0;
-            str[vars.j++] = str[vars.i];
-        }
-        else if (vars.quote_char == 0)
-			increment(str, &vars);
-        else
-            str[vars.j++] = str[vars.i];
-        vars.i++;
-    }
-    str[vars.j] = '\0';
-}
 
-i want exactly same behaviour but there is a problem .
+i want to make similar behaviour... i want to remove the characters from start to len and return the string
