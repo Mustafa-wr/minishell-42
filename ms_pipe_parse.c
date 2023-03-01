@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 20:21:32 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:48:49 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	pipe_from_back(char *line)
 	if (line[len] == '|')
 		return (0);
 	i = 0;
-	while (line[i] == ' ')
+	while (line[i] == ' ' || line[i] =='\t')
 		i++;
 	if (line[i] == '|')
 		return (0);
@@ -96,7 +96,7 @@ static int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
 		if (line[i] == '|' && !quotes)
 		{
 			j = i + 1;
-			while (line[j] == ' ')
+			while (line[j] == ' ' || line[j] == '\t')
 				j++;
 			if (line[j] == '\0' || line[j] == '|')
 				return (0);

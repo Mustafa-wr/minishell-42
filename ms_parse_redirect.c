@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/27 16:39:26 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:46:09 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static int	check_from_back(char *s)
 	int	i;
 
 	i = ft_strlen(s);
-	i--;
+	if(i)
+		i--;
 	while (s[i] == ' ' && i > 0)
 		i--;
 	if (s[i] == '>' || s[i] == '<')
