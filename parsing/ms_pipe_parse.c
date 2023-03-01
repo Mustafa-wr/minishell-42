@@ -6,11 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 14:48:49 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 19:50:19 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	check_string_helper(char *str, int in_quote, int in_d_quote, int i)
 {

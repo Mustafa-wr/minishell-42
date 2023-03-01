@@ -6,11 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 18:46:03 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/23 17:30:20 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 19:49:52 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	add_spaes(int *j, char **new_str, int var)
 {

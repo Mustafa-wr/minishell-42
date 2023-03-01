@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 18:25:24 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 19:59:07 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@ typedef struct s_env
 	char	*user;
 	char	*home;
 }	t_env;
-
-// evecve(char)
-// typedef struct t_redirect
-// {
-// 	char		*file;
-// }	t_redirect;
 
 typedef struct s_vars
 {
@@ -69,18 +63,6 @@ typedef struct s_cmds
 	t_redirect  *outs;
 }	t_cmds;
 
-	/**
-	 * [0]->flag = 1
-	 * [0]->red_name = pwd
-	 * 	 * [0]->flag = 1
-	 * [0]->red_name = lsss
-	 * 	 * [0]->flag = 1
-	 * [0]->red_name = out
-	 * 	 * [0]->flag = 2
-	 * [0]->red_name = outfile
-	 */
-
-
 typedef struct t_pipe
 {
 	int			cmd_len;
@@ -93,14 +75,18 @@ typedef struct t_pipe
 	t_env		*env;
 }	t_pipe;
 
+/***************      parse_tool          ****************/
 int		is_space(char *str);
+char	*ft_add_spaces(char *str);
+void 	replace_spaces_tabs(char *str);
+
 /***************      pipes_parse         ****************/
 int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
 
 /***************    redirection_parse     ****************/
 int		check_redirect(t_pipe *cmd);
-char	*ft_add_spaces(char *str);
-void 	replace_spaces_tabs(char *str);
+int		num_of_redirects(char *str);
+void	remove_substr(char *s, unsigned int start, size_t len);
 
 /***************      free_functions      ****************/
 void	free_strings(char **av);
@@ -110,8 +96,5 @@ void	free_all(t_pipe *pipe, t_cmds *cmd);
 /***************      quotes_parse        ****************/
 void	clean_quotes(char *str);
 void	files_saving(t_pipe *pipe, t_cmds **tmp);
-
-// int	get_tokens(char **p_start, char *es, char **q, char **eq);
-// int	peek(char **ps, char *es, char *toks); //this function to retun 1 if the ps is not '\n' and strchr
 
 #endif

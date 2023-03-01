@@ -6,11 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:28:04 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 19:50:01 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	is_redirect(t_pipe *cmd, int j, int in_quotes, int in_d_quotes)
 {
