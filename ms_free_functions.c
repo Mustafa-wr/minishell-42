@@ -6,11 +6,24 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 18:23:34 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 19:25:40 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_strings(char **av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+	{
+		free(av[i]);
+		i++;
+	}
+	free(av);
+}
 
 void	free_all(t_pipe *pipe, t_cmds *cmd)
 {
@@ -39,3 +52,5 @@ void	free_all(t_pipe *pipe, t_cmds *cmd)
 	
 	free(cmd);
 }
+
+

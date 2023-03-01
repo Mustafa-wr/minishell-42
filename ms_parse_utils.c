@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 16:35:58 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 19:25:25 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ int	is_space(char *str)
 	if (str[i] == '\0')
 		return (1);
 	return (0);
-}
-
-void	free_strings(char **av)
-{
-	int	i;
-
-	i = 0;
-	while (av[i])
-	{
-		free(av[i]);
-		i++;
-	}
-	free(av);
 }
 
 void	free_3d(char ***av)
