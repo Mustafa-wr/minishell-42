@@ -47,7 +47,8 @@ SRCS =	libft/ft_memset.c		\
 		ms_extra_utils.c        \
 		libft/ft_lstadd_front.c \
 		ms_exec_utils.c         \
-		ms_utils3.c    
+		ms_utils3.c              \
+		ms_export.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/27 22:57:50 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:08:50 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,14 @@ void	ft_export(t_pipe *p, int i, int j)
 	j += 1;
 	if (p->args[i][j])
 	{
-		add_to_export(p, p->args[i][j]);
+		insert_the_node(p, NULL, NULL);
 	}
 	else
 	{
 		while (tmp)
 		{
 			printf("declare -x %s\n", tmp->content);
+			// sleep(1);
 			tmp = tmp->next;
 		}
 	}

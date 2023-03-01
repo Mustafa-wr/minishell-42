@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 18:56:08 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:22:11 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,11 @@ int		is_space(char *str);
 int		cmd_index(t_pipe *p);
 int		check_and_create(t_pipe *p, int i);
 void	fill_export(t_pipe *p);
-void	add_to_export(t_pipe *p, char *add);
-void	insert_the_node(t_pipe *p, t_list *tmp, char *add, int i);
+void	add_to_export(t_pipe *p, char *add, int i, int j);
+void	insert_the_node(t_pipe *p, t_list *tmp, t_list *tmp2);
+int		check_if_exist(t_pipe *p, int i, int j);
+int		len_till_equal(t_pipe *p, int i, int j);
+int		check_for_equal(t_pipe *p, int i, int j);
+void	changing_the_value(t_pipe *p, int i, int j);
 // int	check_and_create(t_pipe *p, int i)
 #endif
