@@ -1,0 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_free_functions.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
+/*   Updated: 2023/03/01 18:23:34 by mradwan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	free_all(t_pipe *pipe, t_cmds *cmd)
+{
+	int i = 0;
+	int j = 0;
+	while (i < pipe->cmd_len)
+	{
+		j = 0;
+		if(cmd[i].red_len > 0)
+		{
+			while (j < cmd[i].red_len)
+			{
+				if (cmd[i].outs[j].file_name)
+				{
+					free(cmd[i].outs[j].file_name);
+				}
+				j++;
+			}
+			if(cmd[i].outs)
+				free(cmd[i].outs);
+		}
+		free_strings(cmd[i].cmd);
+		i++;
+	}
+	free_strings(pipe->cmds);
+	
+	free(cmd);
+}

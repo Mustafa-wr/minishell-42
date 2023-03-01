@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 21:12:27 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 18:25:24 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,11 @@ void 	replace_spaces_tabs(char *str);
 /***************      free_functions      ****************/
 void	free_strings(char **av);
 void	free_3d(char ***av);
+void	free_all(t_pipe *pipe, t_cmds *cmd);
 
 /***************      quotes_parse        ****************/
 void	clean_quotes(char *str);
-void	files_saving(t_pipe *pipe, t_cmds	*cmds);
+void	files_saving(t_pipe *pipe, t_cmds **tmp);
 
 // int	get_tokens(char **p_start, char *es, char **q, char **eq);
 // int	peek(char **ps, char *es, char *toks); //this function to retun 1 if the ps is not '\n' and strchr

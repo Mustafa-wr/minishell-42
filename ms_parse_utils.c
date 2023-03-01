@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/28 17:38:19 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 16:35:58 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,32 +57,6 @@ void	free_3d(char ***av)
 	}
 	free(av);
 }
-
-// void replace_spaces_tabs(char *str)
-// {
-// 	int i = 0;
-// 	int j = 0;
-// 	int space_found = 0;
-
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] == ' ')
-// 		{
-// 			if (!space_found)
-// 			{
-// 				str[j++] = ' ';
-// 				space_found = 1;
-// 			}
-// 		}
-// 		else
-// 		{
-// 			str[j++] = str[i];
-// 			space_found = 0;
-// 		}
-// 		i++;
-// 	}
-// 	str[j] = '\0';
-// }
 
 static void increment(char *str, t_vars *vars)
 {
