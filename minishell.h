@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:59:07 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:19:08 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_vars
 	int x;
 	int start;
 	int xy;
+	int in_d_quotes;
+	int	in_quotes;
 }	t_vars;
 
 enum e_types
@@ -59,6 +61,7 @@ typedef struct s_redirect
 typedef struct s_cmds
 {
 	int red_len;// = 4
+	int			cmd_len;
 	char **cmd;// [0]-ls.. [1] -la
 	t_redirect  *outs;
 }	t_cmds;

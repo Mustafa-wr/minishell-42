@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:56:18 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:05:44 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,61 @@ int	is_space(char *str)
 	return (0);
 }
 
-int	num_of_redirects(char *str)
-{
-	int	i;
-	int	num;
+// int	num_of_redirects(char *str)
+// {
+// 	int	i;
+// 	int	num;
 
-	i = 0;
-	num = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == '>' || str[i] == '<')
-		{
-			if (str[i + 1] == '>' || str[i + 1] == '<')
-				i++;
-			num++;
-		}
-		i++;
-	}
-	return (num);
+// 	i = 0;
+// 	num = 0;
+// 	if (!str)
+// 		return (0);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '>' || str[i] == '<')
+// 		{
+// 			if (str[i + 1] == '>' || str[i + 1] == '<')
+// 				i++;
+// 			num++;
+// 		}
+// 		i++;
+// 	}
+// 	return (num);
+// }
+
+int num_of_redirects(char *str)
+{
+    int i;
+    int num;
+    int in_quote;
+    char quote_type;
+
+    i = 0;
+    num = 0;
+    in_quote = 0;
+    while (str[i])
+    {
+        if (str[i] == '\'' || str[i] == '\"')
+        {
+            if (in_quote && str[i] == quote_type)
+                in_quote = 0;
+            else if (!in_quote)
+            {
+                in_quote = 1;
+                quote_type = str[i];
+            }
+        }
+        else if (!in_quote && (str[i] == '>' || str[i] == '<'))
+        {
+            if (str[i + 1] == '>' || str[i + 1] == '<')
+                i++;
+            num++;
+        }
+        i++;
+    }
+    return (num);
 }
+
 
 void	free_3d(char ***av)
 {

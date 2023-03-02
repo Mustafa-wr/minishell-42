@@ -169,5 +169,4 @@ void	files_saving(t_pipe *pipe, t_cmds *cmds)
 	}
 }
 
-
-create a function that free everything allocated from there
+there is an error in the is redirect function with this case (> '>>>')
