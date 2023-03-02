@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_parse.c                                       :+:      :+:    :+:   */
+/*   ms_pipe_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/22 17:43:54 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:58:26 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	check_string_helper(char *str, int in_quote, int in_d_quote, int i)
 {
@@ -68,12 +68,12 @@ static int	pipe_from_back(char *line)
 	if (!len)
 		return (1);
 	len--;
-	while (line[len] == ' ' && len > 0)
+	while ((line[len] == ' ' || line[len] == '\t') && len > 0)
 		len--;
 	if (line[len] == '|')
 		return (0);
 	i = 0;
-	while (line[i] == ' ')
+	while (line[i] == ' ' || line[i] =='\t')
 		i++;
 	if (line[i] == '|')
 		return (0);
@@ -96,7 +96,7 @@ static int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
 		if (line[i] == '|' && !quotes)
 		{
 			j = i + 1;
-			while (line[j] == ' ')
+			while (line[j] == ' ' || line[j] == '\t')
 				j++;
 			if (line[j] == '\0' || line[j] == '|')
 				return (0);
@@ -106,13 +106,14 @@ static int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
 	return (1);
 }
 
-int	check_pipes(t_pipe *pipe, char *line)
+int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 {
 	int	i;
 	int	j;
 	int	quotes;
 
 	quotes = 0;
+	(void)cmds;
 	i = 0;
 	j = 0;
 	if (!pipe_from_back(line))
@@ -126,7 +127,11 @@ int	check_pipes(t_pipe *pipe, char *line)
 	while (pipe->cmds[i])
 	{
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
+		replace_spaces_tabs(pipe->cmds[i]);
+		// clean_quotes(pipe->cmds[i]);
+		// printf("%s\n", pipe->cmds[i]);
 		i++;
 	}
+	pipe->cmd_len = i;
 	return (1);
 }

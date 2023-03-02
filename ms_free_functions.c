@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parse_utils.c                                   :+:      :+:    :+:   */
+/*   ms_free_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/27 15:11:53 by abdamoha         ###   ########.fr       */
+/*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
+/*   Updated: 2023/03/02 14:38:57 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_space(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-	if (str[i] == '\0')
-		return (1);
-	return (0);
-}
 
 void	free_strings(char **av)
 {
@@ -37,23 +25,29 @@ void	free_strings(char **av)
 	free(av);
 }
 
-void	free_3d(char ***av)
+void	free_all(t_pipe *pipe, t_cmds *cmd)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (av[j])
+	int i = 0;
+	int j = 0;
+	while (i < pipe->cmd_len)
 	{
-		i = 0;
-		while (av[j][i])
+		j = 0;
+		if(cmd[i].red_len > 0)
 		{
-			free(av[j][i]);
-			i++;
+			while (j < cmd[i].red_len)
+			{
+				if (cmd[i].outs[j].file_name)
+				{
+					free(cmd[i].outs[j].file_name);
+				}
+				j++;
+			}
+			if(cmd[i].outs)
+				free(cmd[i].outs);
 		}
-		free(av[j]);
-		j++;
+		free_strings(cmd[i].cmd);
+		i++;
 	}
-	free(av);
+	free_strings(pipe->cmds);
+	free(cmd);
 }

@@ -6,11 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 18:46:03 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/22 19:10:06 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/01 19:49:52 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	add_spaes(int *j, char **new_str, int var)
 {
@@ -29,6 +29,8 @@ static void	add_spaes(int *j, char **new_str, int var)
 		(*new_str)[(*j)++] = '>';
 		(*new_str)[(*j)++] = '>';
 	}
+	else if (var == 4)
+		(*new_str)[(*j)++] = ' ';
 	(*new_str)[(*j)++] = ' ';
 }
 
@@ -48,6 +50,8 @@ static void	add_spaces_helper(char **str, int *i, int *j, char **new_str)
 		(*i)++;
 		add_spaes(j, new_str, 3);
 	}
+	else if ((*str)[*i] == '\t')
+		add_spaes(j, new_str, 4);
 	else
 		(*new_str)[(*j)++] = (*str)[(*i)];
 }

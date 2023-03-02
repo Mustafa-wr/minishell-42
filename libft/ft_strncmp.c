@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:44:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/24 19:36:02 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/02 21:33:29 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "libft.h"
 
 // int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 // {
@@ -34,6 +34,16 @@
 // 	return (0);
 // }
 
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}
+
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
@@ -42,7 +52,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned char	*ns1;
 	unsigned char	*ns2;
 
-	if (!*s1 || !*s2)
+	if (!s1 || !s2)
 		return (1);
 	ns1 = (unsigned char *)s1;
 	ns2 = (unsigned char *)s2;
@@ -58,22 +68,15 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		k--;
 	}
 	if (i != n)
-		return (ns1[c] - ns2[k]);
+	{
+		// printf("ns1 = %c\n", ns1[c]);
+		// printf("ns1 = %c", ns2[k]);
+		return (ns1[c] - ns2[c]);
+	}
 	if (ft_strlen(s1) != ft_strlen(s2))
 		return (1);
 	return (0);
 }
-
-// int	ft_strcmp(char *s1, char *s2)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-// 		i++;
-// 	return (s1[i] - s2[i]);
-// }
-
 // int	main(void)
 // {
 // 	char	*s;

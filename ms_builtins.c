@@ -6,51 +6,50 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/01 18:08:50 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:18:23 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(t_pipe *p, int x, int y)
+void	ft_echo(t_cmds *p, int x, int y)
 {
 	y += 1;
-	if (!p->args[x][y] || !p->args[x][y][0])
+	if (!p[x].cmd[y] || !p[x].cmd[y][0])
 		printf("\n");
-	else if (p->args[x][y][0] != '-' && p->args[x][y][1] != 'n' && !p->args[x][y - 1][4])
+	else if (p[x].cmd[y][0] != '-' && p[x].cmd[y][1] != 'n' && !p[x].cmd[y - 1][4])
 	{
-		while (p->args[x][y])
+		while (p[x].cmd[y])
 		{
-			printf("%s ", p->args[x][y]);
+			printf("%s ", p[x].cmd[y]);
 			y++;
 		}
 		printf("\n");
 	}
-	else if (p->args[x][y][0] == '-' && p->args[x][y][1] == 'n')
+	else if (p[x].cmd[y][0] == '-' && p[x].cmd[y][1] == 'n')
 	{
 		y += 1;
-		if (!p->args[x][y])
+		if (!p[x].cmd[y])
 			return ;
-		while (p->args[x][y + 1])
+		while (p[x].cmd[y + 1])
 		{
-			printf("%s ", p->args[x][y]);
+			printf("%s ", p[x].cmd[y]);
 			y++;
 		}
-		printf("%s", p->args[x][y]);
+		printf("%s", p[x].cmd[y]);
 	}
 	else
-		printf("%s: command not found\n", p->args[x][y - 1]);
+		printf("%s: command not found\n", p[x].cmd[y - 1]);
 }
 
-void	ft_pwd(t_pipe *p)
+void	ft_pwd(t_cmds *p)
 {
 	int		i;
 
 	i = fork();
-	(void)p;
 	if (i == 0)
 	{
-		if (execve("/bin/pwd", p->args[0], 0) < 0)
+		if (execve("/bin/pwd", p[0].cmd, 0) < 0)
 		{
 			perror("not found");
 			return ;
@@ -60,17 +59,17 @@ void	ft_pwd(t_pipe *p)
 	return ;
 }
 
-void	ft_env(t_pipe *p)
+void	ft_env(t_cmds *p, t_pipe *c)
 {
 	int		i;
 
 	i = 0;
 	(void)p;
-	while (i < p->env_count)
+	while (i < c->env_count)
 	{
-		if (p->m_env[i] == NULL)
+		if (c->m_env[i] == NULL)
 			i++;
-		printf("%s\n", p->m_env[i]);
+		printf("%s\n", c->m_env[i]);
 		i++;
 	}
 	// printf("HOME :%s\n", getenv("HOME"));
@@ -78,20 +77,20 @@ void	ft_env(t_pipe *p)
 	// printf("ROOT :%s\n", getenv("ROOT"));
 }
 
-void	ft_cd(t_pipe *p)
-{
-	(void)p;
-}
+// void	ft_cd(t_pipe *p)
+// {
+// 	(void)p;
+// }
 
-void	ft_export(t_pipe *p, int i, int j)
+void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 {
 	t_list	*tmp;
 
-	tmp = p->m_export;
+	tmp = c->m_export;
 	j += 1;
-	if (p->args[i][j])
+	if (p[i].cmd[j])
 	{
-		insert_the_node(p, NULL, NULL);
+		insert_the_node(p, c);
 	}
 	else
 	{
@@ -104,20 +103,20 @@ void	ft_export(t_pipe *p, int i, int j)
 	}
 }
 
-void	ft_unset(t_pipe *p, int i, int j)
+void	ft_unset(t_cmds *p, int i, int j, t_pipe *c)
 {
 	int		counter;
 
 	counter = 0;
-	if (!p->args[i][j + 1])
+	if (!p[i].cmd[j + 1])
 		return ;
-	while (p->m_env[counter])
+	while (c->m_env[counter])
 	{
-		if (strncmp_orginal(p->m_env[counter], p->args[i][j + 1],
-			ft_strlen(p->args[i][j + 1])) == 0)
+		if (strncmp_orginal(c->m_env[counter], p[i].cmd[j + 1],
+				len_till_equal(p[i].cmd[j + 1])) == 0)
 		{
-			p->m_env[counter] = NULL;
-			p->env_count -= 1;
+			c->m_env[counter] = NULL;
+			c->env_count -= 1;
 			return ;
 		}
 		counter++;

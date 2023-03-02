@@ -6,27 +6,27 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/01 21:34:54 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/02 20:29:10 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_for_equal(t_pipe *p, int i, int j)
+int	check_for_equal(t_cmds *p, int i, int j)
 {
 	int		k;
 
 	k = 0;
-	while (p->args[i][j][k])
+	while (p[i].cmd[j][k])
 	{
-		if (p->args[i][j][k] == '=')
+		if (p[i].cmd[j][k] == '=')
 			return (1);
 		k++;
 	}
 	return (0);
 }
 
-void	changing_the_value(t_pipe *p, int i, int j)
+void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 {
 	int		k;
 	int		len;
@@ -35,15 +35,15 @@ void	changing_the_value(t_pipe *p, int i, int j)
 	t_list	*tmp3;
 
 	k = 0;
-	len = len_till_equal(p, i, j);
-	tmp = p->m_export;
+	len = len_till_equal(p[i].cmd[j]);
+	tmp = c->m_export;
 	tmp2 = tmp;
 	tmp3 = NULL;
 	while (tmp)
 	{
-		if (strncmp_orginal(tmp->content, p->args[i][j], len + 1) == 0)
+		if (strncmp_orginal(tmp->content, p[i].cmd[j], len + 1) == 0)
 		{
-			tmp3 = ft_lstnew(p->args[i][j]);
+			tmp3 = ft_lstnew(p[i].cmd[j]);
 			tmp3->next = tmp->next;
 			// free(tmp->content);
 			break ;
@@ -56,7 +56,7 @@ void	changing_the_value(t_pipe *p, int i, int j)
 		tmp2 = tmp2->next;
 		k--;
 	}
-	printf("tmp2 = %s", tmp2->content);
+	// printf("tmp2 = %s", tmp2->content);
 	tmp2->next = tmp3;
 	// free(tmp2->content);
 	// while (tmp3)
