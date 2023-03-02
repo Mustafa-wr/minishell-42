@@ -33,13 +33,23 @@ SRCS =	libft/ft_memset.c				\
 		libft/ft_itoa.c					\
 		libft/ft_putendl_fd.c			\
 		libft/ft_strmapi.c				\
+		libft/ft_lstnew.c               \
+		libft/ft_lstadd_back.c          \
+		libft/ft_lstadd_front.c         \
 		parsing/ms_parse.c				\
 		parsing/ms_parse_redirect.c		\
 		parsing/ms_pipe_parse.c			\
 		parsing/ms_parse_utils.c		\
 		parsing/ms_add_spaces.c			\
 		parsing/ms_get_cmd.c			\
-		ms_free_functions.c
+		ms_free_functions.c             \
+		ms_exec.c                       \
+		ms_builtins.c                   \
+		ms_utils2.c                     \
+		ms_extra_utils.c                \
+		ms_utils3.c                     \
+		ms_export.c                     \
+		ms_exec_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

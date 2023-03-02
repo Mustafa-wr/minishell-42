@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:50:19 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:58:26 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,9 @@ int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 	int	i;
 	int	j;
 	int	quotes;
-	(void)cmds;
+
 	quotes = 0;
+	(void)cmds;
 	i = 0;
 	j = 0;
 	if (!pipe_from_back(line))

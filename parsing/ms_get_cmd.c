@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:56:01 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:58:02 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	utils_saving(t_pipe *pipe, t_cmds *cmds, t_vars *var)
 			/*pipe->cmds[var->j] = */remove_substr(pipe->cmds[var->j], var->start, var->i);
 			var->x = var->start - 1;
 			// printf("file name : %s\n", pipe->cmds[var->j]);
-			printf("file name : %s\n", cmds[var->j].outs[var->xy].file_name);
-			printf("flag	  : %d\n", cmds[var->j].outs[var->xy].flag);
+			// printf("file name : %s\n", cmds[var->j].outs[var->xy].file_name);
+			// printf("flag	  : %d\n", cmds[var->j].outs[var->xy].flag);
 			var->xy++;
 		}
 		var->x++;
@@ -117,6 +117,7 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 		i++;
 	*tmp = malloc(sizeof(t_cmds) * i);
 	cmds = *tmp;
+	cmds->cmd_len = i;
 	cmds->red_len = 0;
 	while (var.j < i)
 	{

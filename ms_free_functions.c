@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_free_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:25:40 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:38:57 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,5 @@ void	free_all(t_pipe *pipe, t_cmds *cmd)
 		i++;
 	}
 	free_strings(pipe->cmds);
-	
 	free(cmd);
 }
-
-

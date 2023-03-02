@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:50:14 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 20:30:35 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int main(int ac, char **av, char **envp)
 	if (ac != 1)
 		return (0);
 	// printf("env[0] = %s\n", envp[2]);
+	get_env(&pipe, envp);
+	fill_export(&pipe);
 	while (1)
 	{
 		// enviroments(envp, &path);
@@ -107,6 +109,7 @@ int main(int ac, char **av, char **envp)
 			continue ;
 		}
 		files_saving(&pipe, &cmds);
+		ms_exec(cmds, &pipe);
 		// printf("val: %d\n", cmds.red_len);
 		// free_all(&pipe, cmds);
 		add_history(read);
