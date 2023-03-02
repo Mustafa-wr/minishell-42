@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 20:32:16 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/02 21:50:16 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_pwd(t_cmds *p);
 void	ft_env(t_cmds *p, t_pipe *c);
 void	get_env(t_pipe *p, char **envp);
 void	ft_cd(t_pipe *p);
-void	ft_export(t_pipe *c, t_cmds *p, int i, int j);
+void	ft_export(t_pipe *c, t_cmds  int i, int j);
 void	ft_unset(t_cmds *p, int i, int j, t_pipe *c);
 int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
 int		found_first(char **m_env, int k, t_pipe *p);
@@ -131,12 +131,12 @@ void	ms_redirection(t_pipe *p);
 int		is_space(char *str);
 int		cmd_index(t_pipe *p);
 int		check_and_create(t_pipe *p, int i);
-void	fill_export(t_pipe *c);
-void	add_to_export(t_cmds *p, t_pipe *c, int i, int j);
+void	fill_export(t_pipe *p);
+void	add_to_export(t_pipe *p, char *add, int i, int j);
 void	insert_the_node(t_cmds *p, t_pipe *c);
-int		check_if_exist(t_cmds *p, int i, int j, t_pipe *c);
+int		check_if_exist(t_pipe *p, int i, int j);
 int		len_till_equal(char *str);
-int		check_for_equal(t_cmds *p, int i, int j);
-void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c);
+int		check_for_equal(t_pipe *p, int i, int j);
+void	changing_the_value(t_pipe *p, int i, int j);
 
 #endif

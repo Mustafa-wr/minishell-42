@@ -1,5 +1,6 @@
 {
 	"files.associations": {
+<<<<<<< HEAD
 		"__bit_reference": "c",
 		"algorithm": "c",
 		"bitset": "c",
@@ -9,5 +10,9 @@
 		"sstream": "c",
 		"__locale": "c",
 		"ios": "c"
+=======
+		"minishell.h": "c",
+		"chrono": "c"
+>>>>>>> e9c7e44755aaf7c7d479131a17b1a69d194f0a36
 	}
 }

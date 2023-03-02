@@ -116,6 +116,19 @@ int	check_redirect(t_pipe *cmd)
 	}
 	i = 0;
 	while (cmd->cmds[i])
+<<<<<<< HEAD:parsing/ms_parse_redirect.c
+=======
+	{
+		j = 0;
+		cmd->args[i] = ft_split(cmd->cmds[i], ' ');
+		while (cmd->args[i][j]){
+			clean_quotes(cmd->args[i][j]);
+			// cmd->args[i][j] = ft_add_spaces(cmd->args[i][j]);
+			// skip_spaces(cmd->args[i][j]);
+			// printf("%s\n", cmd->args[i][]);
+			j++;
+		}
+>>>>>>> e9c7e44755aaf7c7d479131a17b1a69d194f0a36:ms_parse_redirect.c
 		i++;
 	cmd->num_of_pipes = i;
 	j = 0;

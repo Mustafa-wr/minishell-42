@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/02 21:43:17 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/02 21:52:14 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,20 @@ void	check_builtin(t_cmds *p, t_pipe *c)
 		// else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
 		// 	ft_cd(p);
 		else if (ft_strncmp(p[x].cmd[0], "export", 6) == 0)
-			ft_export(c, p, x, j);
+			ft_export(c, p, x, 0);
 		else if (ft_strncmp(p[x].cmd[0], "unset", 5) == 0)
-			ft_unset(p, x, j, c);
+			ft_unset(p, x, 0, c);
 		else
 		{
 			ft_tolower(p[x].cmd[0]);
 			if (ft_strncmp(p[x].cmd[0], "echo", 4) == 0)
-				ft_echo(p, x, j);
+				ft_echo(p, x, 0);
 			else if (ft_strncmp(p[x].cmd[0], "pwd", 3) == 0)
 				ft_pwd(p);
 			else if (ft_strncmp(p[x].cmd[0], "env", 3) == 0)
 				ft_env(p, c);
 		}
-		// j++;
+		// 0++;
 		x++;
 		// }
 		// x++;
