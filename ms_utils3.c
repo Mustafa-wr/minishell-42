@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/02 21:03:54 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:45:20 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 	tmp3 = tmp;
 	if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 0)
 	{
-		// printf("sheeeel\n\n");
+		printf("sheeeel\n\n");
 		return ;
 	}
 	else if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 1)
 	{
-		// printf("hina");
+		printf("hina\n");
 		changing_the_value(p, i, j, c);
 		return ;
 	}

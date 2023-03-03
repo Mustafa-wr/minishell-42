@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/02 21:43:17 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:56:36 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	check_builtin(t_cmds *p, t_pipe *c)
 	while (x < p->cmd_len && p[x].cmd[0])
 	{
 		// j = 0;
-		printf("iii");
+		// printf("iii");
 		// while (p[x].cmd[0] && x < p->cmd_len)
 		// {
 		// printf("p = %s\n", p[x].cmd[j]);
@@ -53,8 +53,8 @@ void	check_builtin(t_cmds *p, t_pipe *c)
 		// printf("x = %d\n", x);
 		if (ft_strncmp(p[x].cmd[0], "exit", 4) == 0)
 			exit(0);
-		// else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
-		// 	ft_cd(p);
+		else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
+			ft_cd(p, x, j);
 		else if (ft_strncmp(p[x].cmd[0], "export", 6) == 0)
 			ft_export(c, p, x, j);
 		else if (ft_strncmp(p[x].cmd[0], "unset", 5) == 0)

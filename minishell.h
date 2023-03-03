@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 20:32:16 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:24:21 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_vars
 	int x;
 	int start;
 	int xy;
+	int in_d_quotes;
+	int	in_quotes;
 }	t_vars;
 
 enum e_types
@@ -110,7 +112,7 @@ void	ft_echo(t_cmds *p, int x, int y);
 void	ft_pwd(t_cmds *p);
 void	ft_env(t_cmds *p, t_pipe *c);
 void	get_env(t_pipe *p, char **envp);
-void	ft_cd(t_pipe *p);
+void	ft_cd(t_cmds *p, int x, int y);
 void	ft_export(t_pipe *c, t_cmds *p, int i, int j);
 void	ft_unset(t_cmds *p, int i, int j, t_pipe *c);
 int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);

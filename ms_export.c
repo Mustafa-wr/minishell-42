@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/02 20:29:10 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:47:16 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 	tmp3 = NULL;
 	while (tmp)
 	{
-		if (strncmp_orginal(tmp->content, p[i].cmd[j], len + 1) == 0)
+		if (strncmp_orginal(tmp->content, p[i].cmd[j], len) == 0)
 		{
+			// printf("now\n");
 			tmp3 = ft_lstnew(p[i].cmd[j]);
 			tmp3->next = tmp->next;
 			// free(tmp->content);

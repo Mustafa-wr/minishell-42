@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/02 20:18:23 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:20:18 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,13 @@ void	ft_env(t_cmds *p, t_pipe *c)
 	// printf("ROOT :%s\n", getenv("ROOT"));
 }
 
-// void	ft_cd(t_pipe *p)
-// {
-// 	(void)p;
-// }
+void	ft_cd(t_cmds *p, int x, int y)
+{
+	y += 1;
+	if (chdir(p[x].cmd[y]) < 0)
+		printf("ERROR\n");
+	return ;
+}
 
 void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 {
