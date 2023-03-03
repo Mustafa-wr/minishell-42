@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 17:07:06 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/03 14:27:06 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,27 +105,27 @@ int main(int ac, char **av, char **envp)
 		read = readline("minishell$ ");
 		if (!read)
 			return (0);
-		if (is_space(read))
-			continue ;
-		if (!check_pipes(&pipe, read, cmds))
-		{
-			printf("Error\n");
-			add_history(read);
-			continue ;
-		}
-		else if (!check_redirect(&pipe))
-		{
-			printf("syntax error near unexpected token \n");
-			// free_strings(path.path);
-			// return (0);
-			add_history(read);
-			continue ;
-		}
-		// if (ms_main_helper(&pipe, cmds, read))
+		// if (is_space(read))
 		// 	continue ;
+		// if (!check_pipes(&pipe, read, cmds))
+		// {
+		// 	printf("Error\n");
+		// 	add_history(read);
+		// 	continue ;
+		// }
+		// else if (!check_redirect(&pipe))
+		// {
+		// 	printf("syntax error near unexpected token \n");
+		// 	// free_strings(path.path);
+		// 	// return (0);
+		// 	add_history(read);
+		// 	continue ;
+		// }
+		if (ms_main_helper(&pipe, cmds, read))
+			continue ;
 		files_saving(&pipe, &cmds);
 		// printf("val: %d\n", cmds.red_len);
-		free_all(&pipe, cmds);
+		// free_all(&pipe, cmds);
 		add_history(read);
 	}
 }

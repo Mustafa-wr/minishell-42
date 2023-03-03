@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 17:55:11 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/02 18:07:17 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 static int	is_redirect(t_pipe *cmd, t_vars *vars)
 {
-	if (cmd->cmds[vars->j][cmd->i] == '>' || cmd->cmds[vars->j][cmd->i] == '<')/* || \
-		(cmd->cmds[vars->j][cmd->i] == '>' && cmd->cmds[vars->j][cmd->i + 1] == '>') \
-			|| (cmd->cmds[vars->j][cmd->i] == '<' && cmd->cmds[vars->j][cmd->i + 1] == '<'))*/
+	if (cmd->cmds[vars->j][cmd->i] == '>' || cmd->cmds[vars->j][cmd->i] == '<')
 	{
 		cmd->i++;
 		if ((cmd->cmds[vars->j][cmd->i] == '<' && cmd->cmds[vars->j][cmd->i - 1] == '<') \
@@ -24,9 +22,8 @@ static int	is_redirect(t_pipe *cmd, t_vars *vars)
 			cmd->i++;
 		while (cmd->cmds[vars->j][cmd->i] == ' ')
 			cmd->i++;
-		printf("%d\n", vars->in_quotes);
 		if ((cmd->cmds[vars->j][cmd->i] == '>' || cmd->cmds[vars->j][cmd->i] == '<') \
-			&& (!vars->in_quotes ))//&& !vars->in_d_quotes))
+			&& (!vars->in_quotes ))
 			return (0);
 		while (cmd->cmds[vars->j][cmd->i] == ' ')
 			cmd->i++;
@@ -59,20 +56,14 @@ static int	redirect_helper(t_pipe *cmd, t_vars *vars)
 	cmd->i = 0;
 	while (cmd->cmds[vars->j][cmd->i])
 	{
-		if (cmd->cmds[vars->j][cmd->i] == '\'' || cmd->cmds[vars->j][cmd->i] == '\"')
+		if (cmd->cmds[vars->j][cmd->i] == '\'' || \
+			cmd->cmds[vars->j][cmd->i] == '\"')
 		{
 			if (!vars->in_quotes)
 				vars->in_quotes = cmd->cmds[vars->j][cmd->i];
 			else if (vars->in_quotes == cmd->cmds[vars->j][cmd->i])
 				vars->in_quotes = 0;
 		}
-		// if (cmd->cmds[vars->j][cmd->i] == '\"')
-		// {
-		// 	if (!vars->in_d_quotes)
-		// 		vars->in_d_quotes = 1;
-		// 	else
-		// 		vars->in_d_quotes = 0;
-		// }
 		if (!is_redirect(cmd, vars))
 			return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 17:05:44 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/03 14:22:21 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int num_of_redirects(char *str)
     int i;
     int num;
     int in_quote;
-    char quote_type;
 
     i = 0;
     num = 0;
@@ -60,13 +59,10 @@ int num_of_redirects(char *str)
     {
         if (str[i] == '\'' || str[i] == '\"')
         {
-            if (in_quote && str[i] == quote_type)
-                in_quote = 0;
-            else if (!in_quote)
-            {
-                in_quote = 1;
-                quote_type = str[i];
-            }
+			if (!in_quote)
+				in_quote = str[i];
+			else if (in_quote == str[i])
+				in_quote = 0;
         }
         else if (!in_quote && (str[i] == '>' || str[i] == '<'))
         {
