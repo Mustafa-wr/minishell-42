@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 17:19:08 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 15:35:23 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_vars
 {
 	int i;
     int j;
+	int	h;
     int space_found;
     int quote_char;
 	int x;

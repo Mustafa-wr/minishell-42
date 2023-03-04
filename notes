@@ -1,0 +1,12 @@
+void handle_sigint(int sig)
+{
+    if (sig == SIGINT)
+    {
+        printf("\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+}
+
+i want to hide ^C when user press ctrl+c

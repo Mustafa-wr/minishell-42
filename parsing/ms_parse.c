@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/03 14:27:06 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 16:39:23 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ms_main_helper(t_pipe *pipe, t_cmds *cmds, char *read)
 	{
 		printf("Error\n");
 		add_history(read);
-		return 1;
+		return (1);
 	}
 	else if (!check_redirect(pipe))
 	{
@@ -83,14 +83,24 @@ int	ms_main_helper(t_pipe *pipe, t_cmds *cmds, char *read)
 		// free_strings(path.path);
 		// return (0);
 		add_history(read);
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
+}
+
+void handle_sigint(int sig)
+{
+    if (sig == SIGINT)
+    {
+		write(1, "\n", 1);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
 }
 
 int main(int ac, char **av, char **envp)
 {
-	// t_env	path;
 	t_pipe	pipe;
 	t_cmds	*cmds;
 	char	*read;
@@ -99,33 +109,22 @@ int main(int ac, char **av, char **envp)
 	(void)envp;
 	if (ac != 1)
 		return (0);
-	// printf("env[0] = %s\n", envp[2]);
 	while (1)
 	{
+		signal(SIGINT, handle_sigint);
+		// signal(SIGQUIT, SIG_IGN);
 		read = readline("minishell$ ");
 		if (!read)
+		{
+			printf("exit\n");
 			return (0);
-		// if (is_space(read))
-		// 	continue ;
-		// if (!check_pipes(&pipe, read, cmds))
-		// {
-		// 	printf("Error\n");
-		// 	add_history(read);
-		// 	continue ;
-		// }
-		// else if (!check_redirect(&pipe))
-		// {
-		// 	printf("syntax error near unexpected token \n");
-		// 	// free_strings(path.path);
-		// 	// return (0);
-		// 	add_history(read);
-		// 	continue ;
-		// }
+		}
 		if (ms_main_helper(&pipe, cmds, read))
 			continue ;
 		files_saving(&pipe, &cmds);
-		// printf("val: %d\n", cmds.red_len);
-		// free_all(&pipe, cmds);
+		free_all(&pipe, cmds);
 		add_history(read);
 	}
 }
+
+

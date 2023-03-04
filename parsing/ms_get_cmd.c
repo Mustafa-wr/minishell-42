@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 15:00:25 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 16:08:26 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,36 +102,31 @@ void	utils_saving(t_pipe *pipe, t_cmds *cmds, t_vars *var)
 
 void	files_saving(t_pipe *pipe, t_cmds **tmp)
 {
-	int		i;
-	int		h;
 	t_cmds *cmds;
 	t_vars	var;
 
 	var.start = 0;
 	var.quote_char = 0;
-	h = 0;
-	i = 0;
-	var.j = 0;
+	var.h = 0;
+	var.j = -1;
 	var.x = 0;
-	while (pipe->cmds[i])
-		i++;
-	*tmp = malloc(sizeof(t_cmds) * i);
+	*tmp = malloc(sizeof(t_cmds) * pipe->cmd_len);
 	cmds = *tmp;
-	cmds->cmd_len = i;
 	cmds->red_len = 0;
-	while (var.j < i)
+	while (++var.j < pipe->cmd_len)
 	{
 		cmds[var.j].red_len = num_of_redirects(pipe->cmds[var.j]);
 		if(cmds[var.j].red_len)
 			cmds[var.j].outs = malloc(sizeof(t_redirect) * cmds[var.j].red_len);
 		utils_saving(pipe, cmds, &var);
 		cmds[var.j].cmd = ft_split(pipe->cmds[var.j], ' ');
-		h = 0;
-		while (cmds[var.j].cmd[h])
-			clean_quotes(cmds[var.j].cmd[h++]);
-		h = 0;
-		// while (cmds[var.j].cmd[h])
-		// 	puts(cmds[var.j].cmd[h++]);
-		var.j++;
+		var.h = 0;
+		while (cmds[var.j].cmd[var.h])
+			clean_quotes(cmds[var.j].cmd[var.h++]);
+		// var.h = 0;
+		// while (cmds[var.j].cmd[var.h])
+		// 	puts(cmds[var.j].cmd[var.h++]);
+		// h = 0;
+		// var.j++;
 	}
 }
