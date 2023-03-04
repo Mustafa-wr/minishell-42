@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/03 14:22:21 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 19:50:19 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,80 +24,36 @@ int	is_space(char *str)
 	return (0);
 }
 
-// int	num_of_redirects(char *str)
-// {
-// 	int	i;
-// 	int	num;
-
-// 	i = 0;
-// 	num = 0;
-// 	if (!str)
-// 		return (0);
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '>' || str[i] == '<')
-// 		{
-// 			if (str[i + 1] == '>' || str[i + 1] == '<')
-// 				i++;
-// 			num++;
-// 		}
-// 		i++;
-// 	}
-// 	return (num);
-// }
-
-int num_of_redirects(char *str)
+int	num_of_redirects(char *str)
 {
-    int i;
-    int num;
-    int in_quote;
+	int	i;
+	int	num;
+	int	in_quote;
 
-    i = 0;
-    num = 0;
-    in_quote = 0;
-    while (str[i])
-    {
-        if (str[i] == '\'' || str[i] == '\"')
-        {
+	i = 0;
+	num = 0;
+	in_quote = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
 			if (!in_quote)
 				in_quote = str[i];
 			else if (in_quote == str[i])
 				in_quote = 0;
-        }
-        else if (!in_quote && (str[i] == '>' || str[i] == '<'))
-        {
-            if (str[i + 1] == '>' || str[i + 1] == '<')
-                i++;
-            num++;
-        }
-        i++;
-    }
-    return (num);
-}
-
-
-void	free_3d(char ***av)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (av[j])
-	{
-		i = 0;
-		while (av[j][i])
-		{
-			free(av[j][i]);
-			i++;
 		}
-		free(av[j]);
-		j++;
+		else if (!in_quote && (str[i] == '>' || str[i] == '<'))
+		{
+			if (str[i + 1] == '>' || str[i + 1] == '<')
+				i++;
+			num++;
+		}
+		i++;
 	}
-	free(av);
+	return (num);
 }
 
-static void increment(char *str, t_vars *vars)
+static void	increment(char *str, t_vars *vars)
 {
 	if (str[vars->i] == ' ')
 	{
@@ -114,32 +70,32 @@ static void increment(char *str, t_vars *vars)
 	}
 }
 
-void replace_spaces_tabs(char *str)
+void	replace_spaces_tabs(char *str)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	vars.i = 0;
 	vars.j = 0;
 	vars.space_found = 0;
 	vars.quote_char = 0;
-    while (str[vars.i] != '\0')
-    {
-        if (str[vars.i] == '"' || str[vars.i] == '\'')
-        {
-            if (vars.quote_char == 0)
-                vars.quote_char = str[vars.i];
-            else if (vars.quote_char == str[vars.i])
-                vars.quote_char = 0;
+	while (str[vars.i] != '\0')
+	{
+		if (str[vars.i] == '"' || str[vars.i] == '\'')
+		{
+			if (vars.quote_char == 0)
+				vars.quote_char = str[vars.i];
+			else if (vars.quote_char == str[vars.i])
+				vars.quote_char = 0;
 			vars.space_found = 0;
-            str[vars.j++] = str[vars.i];
-        }
-        else if (vars.quote_char == 0)
+			str[vars.j++] = str[vars.i];
+		}
+		else if (vars.quote_char == 0)
 			increment(str, &vars);
-        else
-            str[vars.j++] = str[vars.i];
-        vars.i++;
-    }
-    str[vars.j] = '\0';
+		else
+			str[vars.j++] = str[vars.i];
+		vars.i++;
+	}
+	str[vars.j] = '\0';
 }
 
 void	remove_substr(char *s, unsigned int start, size_t len)
@@ -148,23 +104,23 @@ void	remove_substr(char *s, unsigned int start, size_t len)
 	// printf("len :%zu\n", len);
 	size_t	i;
 	size_t	j;
-    // /char *str;
-	
+	// /char *str;
+
 	// str = malloc(sizeof(char) * (ft_strlen(s) - (len - start)) + 2);
-    // if (!str || !s)
-    //     return (NULL);
-    i = 0;
-    j = 0;
-    while (s[i])
-    {
-        if (i < start || i >= len)
-        {
-            s[j] = s[i];
-            j++;
-        }
-        i++;
-    }
-    s[j] = '\0';
+	// if (!str || !s)
+	//     return (NULL);
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (i < start || i >= len)
+		{
+			s[j] = s[i];
+			j++;
+		}
+		i++;
+	}
+	s[j] = '\0';
 	// free(s);
-    // return (str);
+	// return (str);
 }

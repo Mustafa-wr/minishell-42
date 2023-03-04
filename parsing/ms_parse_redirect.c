@@ -6,28 +6,30 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 18:07:17 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 19:29:53 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	is_redirect(t_pipe *cmd, t_vars *vars)
+static int	is_redirect(t_pipe *cmd, t_vars *v)
 {
-	if (cmd->cmds[vars->j][cmd->i] == '>' || cmd->cmds[vars->j][cmd->i] == '<')
+	if (cmd->cmds[v->j][cmd->i] == '>' || cmd->cmds[v->j][cmd->i] == '<')
 	{
 		cmd->i++;
-		if ((cmd->cmds[vars->j][cmd->i] == '<' && cmd->cmds[vars->j][cmd->i - 1] == '<') \
-			|| (cmd->cmds[vars->j][cmd->i] == '>' && cmd->cmds[vars->j][cmd->i - 1] == '>'))
+		if ((cmd->cmds[v->j][cmd->i] == '<' && \
+			cmd->cmds[v->j][cmd->i - 1] == '<') \
+			|| (cmd->cmds[v->j][cmd->i] == '>' && \
+				cmd->cmds[v->j][cmd->i - 1] == '>'))
 			cmd->i++;
-		while (cmd->cmds[vars->j][cmd->i] == ' ')
+		while (cmd->cmds[v->j][cmd->i] == ' ')
 			cmd->i++;
-		if ((cmd->cmds[vars->j][cmd->i] == '>' || cmd->cmds[vars->j][cmd->i] == '<') \
-			&& (!vars->in_quotes ))
+		if ((cmd->cmds[v->j][cmd->i] == '>' || cmd->cmds[v->j][cmd->i] == '<') \
+			&& (!v->in_quotes))
 			return (0);
-		while (cmd->cmds[vars->j][cmd->i] == ' ')
+		while (cmd->cmds[v->j][cmd->i] == ' ')
 			cmd->i++;
-		if (cmd->cmds[vars->j][cmd->i] == '\0')
+		if (cmd->cmds[v->j][cmd->i] == '\0')
 			return (0);
 	}
 	else
@@ -40,7 +42,7 @@ static int	check_from_back(char *s)
 	int	i;
 
 	i = ft_strlen(s);
-	if(i)
+	if (i)
 		i--;
 	while (s[i] == ' ' && i > 0)
 		i--;
@@ -72,11 +74,7 @@ static int	redirect_helper(t_pipe *cmd, t_vars *vars)
 
 int	check_redirect(t_pipe *cmd)
 {
-	// int	j;
-	int	i;
-	// int	in_quotes;
-	// int	in_d_quotes;
-	t_vars vars;
+	t_vars	vars;
 
 	cmd->i = 0;
 	vars.j = 0;
@@ -88,10 +86,5 @@ int	check_redirect(t_pipe *cmd)
 			return (free_strings(cmd->cmds), 0);
 		vars.j++;
 	}
-	i = 0;
-	while (cmd->cmds[i])
-		i++;
-	cmd->num_of_pipes = i;
-	vars.j = 0;
 	return (1);
 }

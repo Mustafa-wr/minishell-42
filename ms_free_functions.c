@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/03 14:24:42 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 19:45:00 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	free_strings(char **av)
 
 void	free_all(t_pipe *pipe, t_cmds *cmd)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
 	j = -1;
 	while (++i < pipe->cmd_len)
 	{
 		j = -1;
-		if(cmd[i].red_len > 0)
+		if (cmd[i].red_len > 0)
 		{
 			printf("%d\n", cmd[i].red_len);
 			while (++j < cmd[i].red_len)
@@ -43,7 +43,7 @@ void	free_all(t_pipe *pipe, t_cmds *cmd)
 				if (cmd[i].outs[j].file_name)
 					free(cmd[i].outs[j].file_name);
 			}
-			if(cmd[i].outs)
+			if (cmd[i].outs)
 				free(cmd[i].outs);
 		}
 		free_strings(cmd[i].cmd);

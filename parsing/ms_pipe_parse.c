@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 15:00:04 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 19:42:14 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	pipe_from_back(char *line)
 	if (line[len] == '|')
 		return (0);
 	i = 0;
-	while (line[i] == ' ' || line[i] =='\t')
+	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '|')
 		return (0);
@@ -111,8 +111,8 @@ int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 	int	i;
 	int	j;
 	int	quotes;
-	(void)cmds;
 
+	(void)cmds;
 	quotes = 0;
 	i = 0;
 	j = 0;

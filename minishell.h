@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 15:35:23 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/04 19:40:53 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ typedef struct s_env
 
 typedef struct s_vars
 {
-	int i;
-    int j;
+	int	i;
+	int	j;
 	int	h;
-    int space_found;
-    int quote_char;
-	int x;
-	int start;
-	int xy;
-	int in_d_quotes;
+	int	space_found;
+	int	quote_char;
+	int	x;
+	int	start;
+	int	xy;
+	int	in_d_quotes;
 	int	in_quotes;
 }	t_vars;
 
@@ -61,31 +61,26 @@ typedef struct s_redirect
 
 typedef struct s_cmds
 {
-	int red_len;// = 4
+	int			red_len;
 	int			cmd_len;
-	char **cmd;// [0]-ls.. [1] -la
-	t_redirect  *outs;
+	char		**cmd;
+	t_redirect	*outs;
 }	t_cmds;
 
 typedef struct t_pipe
 {
 	int			cmd_len;
-	char		**cmds;//
-	char		**tmp;
-	char		***args; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
+	char		**cmds;
 	int			i;
-	int			num_of_pipes;
-	int			*ibq;
-	t_env		*env;
 }	t_pipe;
 
 /***************      parse_tool          ****************/
 int		is_space(char *str);
 char	*ft_add_spaces(char *str);
-void 	replace_spaces_tabs(char *str);
+void	replace_spaces_tabs(char *str);
 
 /***************      pipes_parse         ****************/
-int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
+int		check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
 
 /***************    redirection_parse     ****************/
 int		check_redirect(t_pipe *cmd);
