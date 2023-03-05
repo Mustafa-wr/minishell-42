@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 17:57:46 by mradwan           #+#    #+#             */
-/*   Updated: 2022/08/02 17:13:59 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/05 19:44:51 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,26 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	dst[c] = '\0';
 	return (ft_strlen(dst) + ft_strlen(&src[d]));
 }
+
+char	*ft_strcat(char *dest, const char *src)
+{
+	int	y;
+	int	i;
+
+	y = 0;
+	i = 0;
+	while (dest[y] != '\0')
+		y++;
+	while (src[i] != '\0')
+	{
+		dest[y] = src[i];
+		y++;
+		i++;
+	}
+	dest[y] = src[i];
+	return (dest);
+}
+
 /*
 int main()
 {

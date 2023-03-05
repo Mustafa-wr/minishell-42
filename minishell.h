@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 19:40:53 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/05 18:25:23 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ typedef struct s_cmds
 
 typedef struct t_pipe
 {
-	int			cmd_len;
-	char		**cmds;
-	int			i;
+	int		cmd_len;
+	char	**cmds;
+	char	**m_env;
+	int		env_count;
+	int		i;
 }	t_pipe;
 
 /***************      parse_tool          ****************/
@@ -81,6 +83,7 @@ void	replace_spaces_tabs(char *str);
 
 /***************      pipes_parse         ****************/
 int		check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
+void	dollar_expansion(char **str);
 
 /***************    redirection_parse     ****************/
 int		check_redirect(t_pipe *cmd);
@@ -89,11 +92,12 @@ void	remove_substr(char *s, unsigned int start, size_t len);
 
 /***************      free_functions      ****************/
 void	free_strings(char **av);
-void	free_3d(char ***av);
 void	free_all(t_pipe *pipe, t_cmds *cmd);
 
 /***************      quotes_parse        ****************/
 void	clean_quotes(char *str);
 void	files_saving(t_pipe *pipe, t_cmds **tmp);
+
+void	get_env(t_pipe *p, char **envp);
 
 #endif

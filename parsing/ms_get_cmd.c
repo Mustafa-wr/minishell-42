@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 20:10:46 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/05 19:48:55 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	utils_saving(t_pipe *pipe, t_cmds *cmds, t_vars *v)
 			files_fellings(pipe, cmds, v);
 			store_the_file_name(pipe->cmds[v->j], \
 				&cmds[v->j].outs[v->xy].file_name, v->x + 1, v);
+			dollar_expansion(&cmds[v->j].outs[v->xy].file_name);
 			clean_quotes(cmds[v->j].outs[v->xy].file_name);
 			remove_substr(pipe->cmds[v->j], v->start, v->i);
 			v->x = v->start - 1;
@@ -112,7 +113,10 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 		cmds[var.j].cmd = ft_split(pipe->cmds[var.j], ' ');
 		var.h = 0;
 		while (cmds[var.j].cmd[var.h])
+		{
+			dollar_expansion(&cmds[var.j].cmd[var.h]);
 			clean_quotes(cmds[var.j].cmd[var.h++]);
+		}
 		// var.h = 0;
 		// while (cmds[var.j].cmd[var.h])
 		// 	puts(cmds[var.j].cmd[var.h++]);

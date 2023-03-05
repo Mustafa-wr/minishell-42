@@ -9,4 +9,4 @@ void handle_sigint(int sig)
     }
 }
 
-i want to hide ^C when user press ctrl+c
+ 

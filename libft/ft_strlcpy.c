@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:13:47 by mradwan           #+#    #+#             */
-/*   Updated: 2022/08/05 09:51:44 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/05 19:40:00 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,24 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	while (src[i] != '\0')
 		i++;
 	return (i);
+}
+
+char	*ft_strncpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int	x;
+
+	x = 0;
+	while (src[x] != '\0' && x < n)
+	{
+		dest[x] = src[x];
+		x++;
+	}
+	while (x < n)
+	{
+		dest[x] = '\0';
+		x++;
+	}
+	return (dest);
 }
 
 // int    main(void)

@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 16:39:23 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/05 19:48:10 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,24 @@ int	ms_main_helper(t_pipe *pipe, t_cmds *cmds, char *read)
 	else if (!check_redirect(pipe))
 	{
 		printf("syntax error near unexpected token \n");
-		// free_strings(path.path);
-		// return (0);
 		add_history(read);
 		return (1);
 	}
 	return (0);
 }
 
-void handle_sigint(int sig)
+void	handle_sigint(int sig)
 {
-    if (sig == SIGINT)
-    {
+	if (sig == SIGINT)
+	{
 		write(1, "\n", 1);
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_pipe	pipe;
 	t_cmds	*cmds;
@@ -109,22 +107,18 @@ int main(int ac, char **av, char **envp)
 	(void)envp;
 	if (ac != 1)
 		return (0);
+	// get_env(&pipe, envp);
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);
-		// signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		read = readline("minishell$ ");
 		if (!read)
-		{
-			printf("exit\n");
-			return (0);
-		}
+			return (printf("exit\n"), 0);
 		if (ms_main_helper(&pipe, cmds, read))
 			continue ;
 		files_saving(&pipe, &cmds);
-		free_all(&pipe, cmds);
+		// free_all(&pipe, cmds);
 		add_history(read);
 	}
 }
-
-
