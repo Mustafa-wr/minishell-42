@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 14:58:02 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:59:01 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 		// 		else if (var.quote_char == pipe->cmds[var.j][var.x])
 		// 			var.quote_char = 0;
 		// 	}
-		// 	if ((pipe->cmds[var.j][var.x] == '>' || pipe->cmds[var.j][var.x] == '<') \
+			// if ((pipe->cmds[var.j][var.x] == '>' || pipe->cmds[var.j][var.x] == '<') 
 		// 		&& is_between_quotes(pipe->cmds[var.j], var.x) && !var.quote_char)
 		// 	{
 		// 		files_fellings(pipe, cmds, &var);

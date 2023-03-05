@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/03 14:47:16 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/04 20:23:04 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,21 @@ int	check_for_equal(t_cmds *p, int i, int j)
 void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 {
 	int		k;
-	int		len;
 	t_list	*tmp;
 	t_list	*tmp2;
 	t_list	*tmp3;
 
 	k = 0;
-	len = len_till_equal(p[i].cmd[j]);
 	tmp = c->m_export;
 	tmp2 = tmp;
 	tmp3 = NULL;
 	while (tmp)
 	{
-		if (strncmp_orginal(tmp->content, p[i].cmd[j], len) == 0)
+		if (strncmp_orginal(tmp->content, p[i].cmd[j],
+				len_till_equal(p[i].cmd[j])) == 0)
 		{
-			// printf("now\n");
 			tmp3 = ft_lstnew(p[i].cmd[j]);
 			tmp3->next = tmp->next;
-			// free(tmp->content);
 			break ;
 		}
 		tmp = tmp->next;
@@ -57,14 +54,71 @@ void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 		tmp2 = tmp2->next;
 		k--;
 	}
-	// printf("tmp2 = %s", tmp2->content);
 	tmp2->next = tmp3;
-	// free(tmp2->content);
-	// while (tmp3)
-	// {
-	// 	printf("tmp3 = %s\n", tmp3->content);
-	// 	tmp3 = tmp3->next;
-	// }
-	// exit(0);
-	// p->m_export = tmp3;
+}
+
+char	*env_index(int index, t_list *env)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	tmp = env;
+	while (i < index && tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	if (tmp)
+		return (tmp->content);
+	else
+		return (NULL);
+}
+
+void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
+{
+	int		k;
+	t_list	*tmp;
+	t_list	*tmp2;
+	t_list	*tmp3;
+
+	k = 0;
+	tmp = c->m_env;
+	tmp2 = tmp;
+	tmp3 = NULL;
+	while (tmp)
+	{
+		if (strncmp_orginal(tmp->content, p[i].cmd[j],
+				len_till_equal(p[i].cmd[j])) == 0)
+		{
+			tmp3 = ft_lstnew(p[i].cmd[j]);
+			tmp3->next = tmp->next;
+			break ;
+		}
+		tmp = tmp->next;
+		k++;
+	}
+	while (k - 1 > 0 && tmp2)
+	{
+		tmp2 = tmp2->next;
+		k--;
+	}
+	tmp2->next = tmp3;
+}
+
+void	unset_cmp(t_cmds *p, t_list *lst, int i, int j)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		if (strncmp_orginal(tmp->content, p[i].cmd[j + 1],
+				len_till_equal(p[i].cmd[j + 1])) == 0)
+		{
+			tmp->content = NULL;
+			return ;
+		}
+		tmp = tmp->next;
+	}
 }

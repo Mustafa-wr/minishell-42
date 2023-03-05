@@ -49,13 +49,15 @@ SRCS =	libft/ft_memset.c				\
 		ms_extra_utils.c                \
 		ms_utils3.c                     \
 		ms_export.c                     \
-		ms_exec_utils.c
+		ms_exec_utils.c                 \
+		ms_exit.c                       \
+		ms_multiple_pipe.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -g3 -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -g3 -Wall -Wextra -Werror #-fsanitize=address
 
 all : $(NAME)
 
@@ -69,3 +71,6 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+leaks:
+	valgrind --suppressions=$(PWD)/valgrind_readline_leaks_ignore.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell

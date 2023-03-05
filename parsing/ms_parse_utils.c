@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/01 19:56:18 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/03 16:31:52 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,33 @@ int	is_space(char *str)
 	return (0);
 }
 
-int	num_of_redirects(char *str)
+int num_of_redirects(char *str)
 {
-	int	i;
-	int	num;
+    int i;
+    int num;
+    int in_quote;
 
-	i = 0;
-	num = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == '>' || str[i] == '<')
-		{
-			if (str[i + 1] == '>' || str[i + 1] == '<')
-				i++;
-			num++;
-		}
-		i++;
-	}
-	return (num);
+    i = 0;
+    num = 0;
+    in_quote = 0;
+    while (str[i])
+    {
+        if (str[i] == '\'' || str[i] == '\"')
+        {
+			if (!in_quote)
+				in_quote = str[i];
+			else if (in_quote == str[i])
+				in_quote = 0;
+        }
+        else if (!in_quote && (str[i] == '>' || str[i] == '<'))
+        {
+            if (str[i + 1] == '>' || str[i + 1] == '<')
+                i++;
+            num++;
+        }
+        i++;
+    }
+    return (num);
 }
 
 void	free_3d(char ***av)

@@ -6,18 +6,19 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/03 15:20:18 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/04 20:51:35 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(t_cmds *p, int x, int y)
+void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 {
 	y += 1;
+	(void)c;
 	if (!p[x].cmd[y] || !p[x].cmd[y][0])
 		printf("\n");
-	else if (p[x].cmd[y][0] != '-' && p[x].cmd[y][1] != 'n' && !p[x].cmd[y - 1][4])
+	else if (check_for_flag(p[x].cmd[y])&& !p[x].cmd[y - 1][4])
 	{
 		while (p[x].cmd[y])
 		{
@@ -26,7 +27,7 @@ void	ft_echo(t_cmds *p, int x, int y)
 		}
 		printf("\n");
 	}
-	else if (p[x].cmd[y][0] == '-' && p[x].cmd[y][1] == 'n')
+	else if (check_for_flag(p[x].cmd[y]) == 0)
 	{
 		y += 1;
 		if (!p[x].cmd[y])
@@ -40,12 +41,14 @@ void	ft_echo(t_cmds *p, int x, int y)
 	}
 	else
 		printf("%s: command not found\n", p[x].cmd[y - 1]);
+	free_all(c, p);
 }
 
-void	ft_pwd(t_cmds *p)
+void	ft_pwd(t_cmds *p, t_pipe *c)
 {
 	int		i;
 
+	(void)c;
 	i = fork();
 	if (i == 0)
 	{
@@ -56,32 +59,39 @@ void	ft_pwd(t_cmds *p)
 		}
 	}
 	waitpid(i, NULL, 0);
+	free_all(c, p);
 	return ;
 }
 
 void	ft_env(t_cmds *p, t_pipe *c)
 {
 	int		i;
+	t_list	*tmp;
 
 	i = 0;
 	(void)p;
+	(void)c;
+	tmp = c->m_env;
+	// printf("c = %d\n", c->env_count);
+	// exit(0);
 	while (i < c->env_count)
 	{
-		if (c->m_env[i] == NULL)
+		if (!tmp->content)
 			i++;
-		printf("%s\n", c->m_env[i]);
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
 		i++;
 	}
-	// printf("HOME :%s\n", getenv("HOME"));
-	// printf("PATH :%s\n", getenv("PATH"));
-	// printf("ROOT :%s\n", getenv("ROOT"));
+	free_all(c, p);
 }
 
-void	ft_cd(t_cmds *p, int x, int y)
+void	ft_cd(t_cmds *p, int x, int y, t_pipe *c)
 {
+	(void)c;
 	y += 1;
 	if (chdir(p[x].cmd[y]) < 0)
 		printf("ERROR\n");
+	free_all(c, p);
 	return ;
 }
 
@@ -99,29 +109,19 @@ void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 	{
 		while (tmp)
 		{
-			printf("declare -x %s\n", tmp->content);
-			// sleep(1);
+			if (tmp->content != NULL)
+				printf("declare -x %s\n", (char *)tmp->content);
 			tmp = tmp->next;
 		}
 	}
+	free_all(c, p);
 }
 
 void	ft_unset(t_cmds *p, int i, int j, t_pipe *c)
 {
-	int		counter;
-
-	counter = 0;
 	if (!p[i].cmd[j + 1])
 		return ;
-	while (c->m_env[counter])
-	{
-		if (strncmp_orginal(c->m_env[counter], p[i].cmd[j + 1],
-				len_till_equal(p[i].cmd[j + 1])) == 0)
-		{
-			c->m_env[counter] = NULL;
-			c->env_count -= 1;
-			return ;
-		}
-		counter++;
-	}
+	unset_cmp(p, c->m_env, i, j);
+	unset_cmp(p, c->m_export, i, j);
+	c->env_count -= 1;
 }

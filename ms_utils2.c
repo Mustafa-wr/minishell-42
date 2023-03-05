@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:36:08 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/02 20:33:15 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/04 17:01:19 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,13 @@ void	get_env(t_pipe *p, char **envp)
 	int		i;
 
 	i = 0;
-	while (envp[i])
-		i++;
-	p->m_env = malloc((i + 1) * sizeof(char *));
-	i = 0;
+	p->m_env = NULL;
 	while (envp[i])
 	{
-		p->m_env[i] = ft_strdup(envp[i]);
-		// printf("i = %s\n", envp[i]);
+		ft_lstadd_back(&p->m_env, ft_lstnew(envp[i]));
 		i++;
 	}
-	p->m_env[i] = NULL;
+	// p->m_env[i] = NULL;
 	p->env_count = i;
 }
 
@@ -113,28 +109,24 @@ void	get_env(t_pipe *p, char **envp)
 void	fill_export(t_pipe *c)
 {
 	int		i;
-	int		j;
+	// int		j;
+	t_list	*tmp;
 	int		index;
 
 	i = 0;
 	c->m_export = NULL;
+	tmp = c->m_env;
 	index = c->env_count;
-	j = c->env_count;
+	// j = c->env_count;
 	fill_tmp_env(c);
-	while (c->m_env[i + 1])
+	while (tmp->next)
 	{
 		index = found_first(c->tmp_env, index, c);
-		ft_lstadd_front(&c->m_export, ft_lstnew(c->m_env[index]));
+		// printf("index = %d\n", index);
+		ft_lstadd_front(&c->m_export, ft_lstnew(env_index(index, c->m_env)));
 		c->tmp_env[index][0] = '0';
+		tmp = tmp->next;
 		i++;
 	}
 	last_sorting(c);
-	// i = 0;
-	// while (i < 27)
-	// {
-	// 	printf("declare -x %s\n", c->m_export->content);
-	// 	p->m_export = p->m_export->next;
-	// 	i++;
-	// }
-	free_strings(c->tmp_env);
 }

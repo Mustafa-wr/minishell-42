@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/03 15:23:39 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/04 18:07:04 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	check_from_back(char *s)
 	int	i;
 
 	i = ft_strlen(s);
-	if(i)
+	if (i)
 		i--;
 	while (s[i] == ' ' && i > 0)
 		i--;

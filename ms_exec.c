@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/03 14:56:36 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:48:15 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,128 +14,99 @@
 
 void	ms_exec(t_cmds *p, t_pipe *c)
 {
-	// int		j;
-	// int		x;
+	t_vars	vars;
 
-	// x = 0;
-	// j = 0;
-	// while (x < p->cmd_len)
-	// {
-	// 	j = 0;
-	// 	while (p[x].cmd[j])
-	// 	{
-	// 		printf("%s\n", p[x].cmd[j]);
-	// 		j++;
-	// 	}
-	// 	x++;
-	// }
-	// exit(0);
-	check_builtin(p, c);
-	// check_other(p);
+	vars.i = 0;
+	check_builtin(p, c, &vars);
+	// printf("v = %d", vars.i);
+	// if (vars.i == 0)
+	check_other(p, c);
 }
 
-void	check_builtin(t_cmds *p, t_pipe *c)
+void	check_builtin(t_cmds *p, t_pipe *c, t_vars *vars)
 {
-	int		j;
 	int		x;
 
 	x = 0;
-	j = 0;
-	// exit(0);
-	while (x < p->cmd_len && p[x].cmd[0])
+	(void)vars;
+	if (ft_strncmp(p[x].cmd[0], "exit", 4) == 0)
+		free_and_exit(c, p);
+	else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
+		ft_cd(p, x, 0, c);
+	else if (ft_strncmp(p[x].cmd[0], "export", 6) == 0)
+		ft_export(c, p, x, 0);
+	else if (ft_strncmp(p[x].cmd[0], "unset", 5) == 0)
+		ft_unset(p, x, 0, c);
+	else
 	{
-		// j = 0;
-		// printf("iii");
-		// while (p[x].cmd[0] && x < p->cmd_len)
-		// {
-		// printf("p = %s\n", p[x].cmd[j]);
-		// printf("p = %d\n", p->cmd_len);
-		// printf("x = %d\n", x);
-		if (ft_strncmp(p[x].cmd[0], "exit", 4) == 0)
-			exit(0);
-		else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
-			ft_cd(p, x, j);
-		else if (ft_strncmp(p[x].cmd[0], "export", 6) == 0)
-			ft_export(c, p, x, j);
-		else if (ft_strncmp(p[x].cmd[0], "unset", 5) == 0)
-			ft_unset(p, x, j, c);
-		else
-		{
-			ft_tolower(p[x].cmd[0]);
-			if (ft_strncmp(p[x].cmd[0], "echo", 4) == 0)
-				ft_echo(p, x, j);
-			else if (ft_strncmp(p[x].cmd[0], "pwd", 3) == 0)
-				ft_pwd(p);
-			else if (ft_strncmp(p[x].cmd[0], "env", 3) == 0)
-				ft_env(p, c);
-		}
-		// j++;
-		x++;
-		// }
-		// x++;
+		ft_tolower(p[x].cmd[0]);
+		if (ft_strncmp(p[x].cmd[0], "echo", 4) == 0)
+			ft_echo(p, x, 0, c);
+		else if (ft_strncmp(p[x].cmd[0], "pwd", 3) == 0)
+			ft_pwd(p, c);
+		else if (ft_strncmp(p[x].cmd[0], "env", 3) == 0)
+			ft_env(p, c);
 	}
 }
 
-// void	check_other(t_pipe *p)
-// {
-// 	int		flag;
-// 	int		len;
+void	check_other(t_cmds *p, t_pipe *c)
+{
+	// int		flag;
 
-// 	p->i = 0;
-// 	p->j = 0;
-// 	p->m_path = check_env_for_path(p->m_env);
-// 	flag = check_for_redirction(p);
-// 	len = count_cmds(p->args);
-// 	if (flag == 0)
-// 		normal_exec(p);
-// 	else if (flag == 1)
-// 		ms_redirection(p);
-// }
+	c->i = 0;
+	c->j = 0;
+	// printf("cmd_len = %d\n", p->cmd_len);
+	c->m_path = check_env_for_path(c->m_env);
+	if (p->cmd_len == 1)
+		normal_exec(p, c);
+	else if (p->cmd_len > 1)
+		multiple_pipes(p, c);
+}
 
-// int	check_for_redirction(t_pipe *p)
-// {
-// 	int		c;
+int	check_for_redirction(t_cmds *p, t_pipe *c)
+{
+	int		counter;
 
-// 	c = 0;
-// 	p->i = 0;
-// 	p->j = 0;
-// 	while (p->args[p->i])
-// 	{
-// 		p->j = 0;
-// 		while (p->args[p->i][p->j])
-// 		{
-// 			c = 0;
-// 			while (p->args[p->i][p->j][c])
-// 			{
-// 				if (p->args[p->i][p->j][c] == '>'
-// 				|| p->args[p->i][p->j][c] == '<')
-// 					return (1);
-// 				c++;
-// 			}
-// 			p->j++;
-// 		}
-// 		p->i++;
-// 	}
-// 	return (0);
-// }
+	counter = 0;
+	c->i = 0;
+	c->j = 0;
+	while (c->i < p->cmd_len)
+	{
+		c->j = 0;
+		while (p[c->i].cmd[c->j])
+		{
+			counter = 0;
+			while (p[c->i].cmd[c->j][counter])
+			{
+				if (p[c->i].cmd[c->j][counter] == '>'
+				|| p[c->i].cmd[c->j][counter] == '<')
+					return (1);
+				counter++;
+			}
+			c->j++;
+		}
+		c->i++;
+	}
+	return (0);
+}
 
-// void	normal_exec(t_pipe *p)
-// {
-// 	int		i;
-// 	char	*cmd;
+void	normal_exec(t_cmds *p, t_pipe *c)
+{
+	int		i;
+	char	*cmd;
 
-// 	i = 0;
-// 	cmd = check_command_existence(p->args[0][0], p->m_path);
-// 	// printf("cmd = %s", cmd);
-// 	// exit(0);
-// 	i = fork();
-// 	if (i == 0)
-// 	{
-// 		if (execve(cmd, p->args[0], p->m_env) < 0)
-// 		{
-// 			printf("command not found :%s\n", p->args[0][0]);
-// 			return ;
-// 		}
-// 	}
-// 	wait(NULL);
-// }
+	i = 0;
+	cmd = check_command_existence(p[0].cmd[0], c->m_path);
+	// printf("cmd = %s", cmd);
+	// exit(0);
+	i = fork();
+	if (i == 0)
+	{
+		if (execve(cmd, p[0].cmd, c->tmp_env) < 0)
+		{
+			printf("command not found :%s\n", p[0].cmd[0]);
+			return ;
+		}
+	}
+	waitpid(i, NULL, 0);
+}

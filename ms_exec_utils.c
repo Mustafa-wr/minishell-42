@@ -6,26 +6,29 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/02/27 14:51:31 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:32:38 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**check_env_for_path(char **env)
+char	**check_env_for_path(t_list *env)
 {
 	int		i;
 	char	*s;
+	t_list	*tmp;
 
 	i = 0;
 	s = NULL;
-	while (env[i] != NULL)
+	tmp = env;
+	while (tmp)
 	{
-		if (strncmp_orginal("PATH=", env[i], 5) == 0)
+		if (strncmp_orginal("PATH=", tmp->content, 5) == 0)
 		{
-			s = env[i] + 5;
+			s = tmp->content + 5;
 			return (ft_split(s, ':'));
 		}
+		tmp = tmp->next;
 		i++;
 	}
 	return (NULL);
@@ -64,6 +67,8 @@ char	*check_with_access(char **path, char *str)
 	char	*join;
 
 	i = 0;
+	// if (!path)
+	// 	return (str);
 	while (path[i] != NULL)
 	{
 		join = ft_strjoin(path[i], str);
@@ -98,17 +103,17 @@ void	last_sorting(t_pipe *p)
 {
 	t_list	*tmp;
 	char	*str;
-	char	*s1;
-	char	*s2;
+	// char	*s1;
+	// char	*s2;
 
 	tmp = p->m_export;
 	while (tmp)
 	{
 		if (tmp->next)
 		{
-			s1 = tmp->content;
-			s2 = tmp->next->content;
-			if (strncmp_orginal(s1, s2, 10) > 0)
+			// s1 = tmp->content;
+			// s2 = tmp->next->content;
+			if (strncmp_orginal(tmp->content, tmp->next->content, len_till_equal(tmp->content)) > 0)
 			{
 				str = tmp->content;
 				tmp->content = tmp->next->content;

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/02 19:50:18 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:18:13 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	strncmp_orginal(const char *s1, const char *s2, unsigned int n)
 	ns1 = (unsigned char *)s1;
 	ns2 = (unsigned char *)s2;
 	i = 0;
+	if (!s1 || !s2)
+		return (1);
 	while (i < n && ns1[i] != '\0' && ns2[i] != '\0')
 	{
 		if (ns1[i] != ns2[i])
@@ -71,29 +73,35 @@ int	found_first(char **m_env, int k, t_pipe *p)
 void	fill_export_list(t_pipe *p)
 {
 	int		i;
+	t_list	*tmp;
 
 	i = 0;
+	tmp = p->m_env;
 	p->m_export = NULL;
-	while (p->m_env[i])
+	while (tmp)
 	{
-		ft_lstadd_back(&p->m_export, ft_lstnew(p->m_env[i]));
+		ft_lstadd_back(&p->m_export, ft_lstnew(tmp->content));
+		tmp = tmp->next;
 		i++;
 	}
 	// ft_lstadd_back(&p->m_export, NULL);
 }
 
-void	fill_tmp_env(t_pipe *p)
+void	fill_tmp_env(t_pipe *c)
 {
 	int		i;
+	t_list	*tmp;
 
 	i = 0;
-	p->tmp_env = malloc((p->env_count + 1) * sizeof(char *));
-	while (p->m_env[i])
+	tmp = c->m_env;
+	c->tmp_env = malloc((c->env_count + 1) * sizeof(char *));
+	while (tmp)
 	{
-		p->tmp_env[i] = ft_strdup(p->m_env[i]);
+		c->tmp_env[i] = ft_strdup(tmp->content);
+		tmp = tmp->next;
 		i++;
 	}
-	p->tmp_env[i] = NULL;
+	c->tmp_env[i] = NULL;
 }
 
 int	count_cmds(char ***str)
