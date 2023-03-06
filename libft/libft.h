@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:23:13 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/05 19:45:27 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/06 19:31:19 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstadd_back(t_list **lst, t_list *new);
-char	*ft_strncpy(char *dest, char *src, unsigned int n);
+char	*ft_strcpy(char *dest, char *src);
 char	*ft_strcat(char *dest, const char *src);
 int		ft_strcmp(char *s1, char *s2);
 
