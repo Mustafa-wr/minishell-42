@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/05 19:48:55 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/06 17:18:02 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 			dollar_expansion(&cmds[var.j].cmd[var.h]);
 			clean_quotes(cmds[var.j].cmd[var.h++]);
 		}
-		// var.h = 0;
-		// while (cmds[var.j].cmd[var.h])
-		// 	puts(cmds[var.j].cmd[var.h++]);
+		var.h = 0;
+		while (cmds[var.j].cmd[var.h])
+			puts(cmds[var.j].cmd[var.h++]);
 		// h = 0;
 		// var.j++;
 	}

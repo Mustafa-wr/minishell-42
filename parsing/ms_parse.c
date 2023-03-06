@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/05 19:48:10 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/06 17:30:08 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	main(int ac, char **av, char **envp)
 		if (ms_main_helper(&pipe, cmds, read))
 			continue ;
 		files_saving(&pipe, &cmds);
-		// free_all(&pipe, cmds);
+		free_all(&pipe, cmds);
 		add_history(read);
 	}
 }

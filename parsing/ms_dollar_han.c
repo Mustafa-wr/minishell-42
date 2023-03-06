@@ -6,11 +6,31 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:11:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/05 19:47:37 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/06 18:09:15 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+// char	*replace_substr(char *str, int start, int len, const char *replace)
+// {
+// 	int		replace_len;
+// 	int		str_len;
+// 	int		new_len;
+// 	char	*new_str;
+
+// 	replace_len = ft_strlen(replace);
+// 	str_len = ft_strlen(str);
+// 	new_len = str_len - len + replace_len;
+// 	new_str = malloc(new_len + 1);
+// 	if (!new_str)
+// 		return (NULL);
+// 	ft_strncpy(new_str, str, start);
+// 	new_str[start] = '\0';
+// 	ft_strcat(new_str, replace);
+// 	ft_strcat(new_str, &str[start + len]);
+// 	return (new_str);
+// }
 
 char	*replace_substr(char *str, int start, int len, const char *replace)
 {
@@ -23,12 +43,12 @@ char	*replace_substr(char *str, int start, int len, const char *replace)
 	str_len = ft_strlen(str);
 	new_len = str_len - len + replace_len;
 	new_str = malloc(new_len + 1);
-	if (!new_str)
+	if (!new_str || !str)
 		return (NULL);
-	ft_strncpy(new_str, str, start);
-	new_str[start] = '\0';
-	ft_strcat(new_str, replace);
-	ft_strcat(new_str, &str[start + len]);
+	ft_strlcpy(new_str, str, start + 1);
+	ft_strlcat(new_str, replace, new_len + 1);
+	ft_strlcat(new_str, &str[start + len], new_len + 1);
+	free(str);
 	return (new_str);
 }
 
@@ -97,6 +117,7 @@ void	dollar_expansion(char **str)
 					var.i += ft_strlen(expanded) - len - 1;
 				}
 				free(tmp);
+				continue ;
 			}
 		}
 		var.i++;
