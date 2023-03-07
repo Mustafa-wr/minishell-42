@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:11:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/07 19:43:41 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/07 19:53:04 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,16 @@ char	*storing(char *str, int start, int len, char *replace)
 
 	if (!str || start + len > (int)ft_strlen(str))
 		return (NULL);
-	new_str = malloc(sizeof(char) * (ft_strlen(str) - len + ft_strlen(replace) + 1));
+	new_str = malloc(sizeof(char) * \
+		(ft_strlen(str) - len + ft_strlen(replace) + 1));
 	if (!new_str)
 		return (NULL);
 	i = 0;
 	j = 0;
 	while (i < start)
-	{
-		new_str[j] = str[i];
-		i++;
-		j++;
-	}
+		new_str[j++] = str[i++];
 	while (*replace)
-	{
-		new_str[j] = *replace;
-		j++;
-		replace++;
-	}
+		new_str[j++] = *replace++;
 	while (str[i + len])
 	{
 		new_str[j] = str[i + len];
