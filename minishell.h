@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/05 18:25:23 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/07 17:36:01 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <readline/history.h>
+
+int	g_exit_code;
 
 typedef struct s_env
 {
