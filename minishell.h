@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/07 17:36:01 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/07 19:15:35 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_vars
 	int	quote_char;
 	int	x;
 	int	start;
+	int	len;
 	int	xy;
 	int	in_d_quotes;
 	int	in_quotes;
