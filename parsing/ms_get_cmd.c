@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 18:39:07 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/08 19:15:46 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,7 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 		cmds[var.j].cmd = ft_split(pipe->cmds[var.j], ' ');
 		var.h = 0;
 		while (cmds[var.j].cmd[var.h])
-		{
 			clean_quotes(cmds[var.j].cmd[var.h++]);
-		}
 		var.h = 0;
 		while (cmds[var.j].cmd[var.h])
 			puts(cmds[var.j].cmd[var.h++]);
