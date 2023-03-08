@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/07 19:15:35 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/08 18:37:26 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_vars
 	int	i;
 	int	j;
 	int	h;
+	int	empty;
 	int	space_found;
 	int	quote_char;
 	int	x;
@@ -66,7 +67,7 @@ typedef struct s_cmds
 {
 	int			red_len;
 	int			cmd_len;
-	char		**cmd;
+	char		**cmd; // "ls" -la -l NULL
 	t_redirect	*outs;
 }	t_cmds;
 
