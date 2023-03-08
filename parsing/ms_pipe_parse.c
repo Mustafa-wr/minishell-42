@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 19:42:14 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/08 07:08:31 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
 		{
 			if (quotes == 0)
 				quotes = line[i];
-			else
+			else if (!quotes)
 				quotes = 0;
 			i++;
 			continue ;
@@ -128,6 +128,7 @@ int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 	{
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
 		replace_spaces_tabs(pipe->cmds[i]);
+		dollar_expansion(&pipe->cmds[i]);
 		// clean_quotes(pipe->cmds[i]);
 		// printf("%s\n", pipe->cmds[i]);
 		i++;

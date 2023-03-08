@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/07 17:34:24 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/07 20:05:23 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ int	ms_main_helper(t_pipe *pipe, t_cmds *cmds, char *read)
 	{
 		printf("Error\n");
 		add_history(read);
+		g_exit_code = 258;
 		return (1);
 	}
 	else if (!check_redirect(pipe))
 	{
 		printf("syntax error near unexpected token \n");
 		add_history(read);
+		g_exit_code = 258;
 		return (1);
 	}
 	return (0);
