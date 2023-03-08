@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 19:15:46 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/08 19:21:17 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,19 @@ void	files_fellings(t_pipe *pipe, t_cmds *cmds, t_vars *var)
 		|| pipe->cmds[var->j][var->x + 1] == '<')
 	{
 		if (pipe->cmds[var->j][var->x + 1] == '>')
-			cmds[var->j].outs[var->xy].flag = APPEND_OUT;
+			cmds[var->j].outs[var->xy].flag = APPEND;
 		else if (pipe->cmds[var->j][var->x + 1] == '<')
-			cmds[var->j].outs[var->xy].flag = APPEND_IN;
+			cmds[var->j].outs[var->xy].flag = HERE_DOC;
 		var->x = var->x + 2;
 	}
 	else if (pipe->cmds[var->j][var->x] == '>')
 	{
-		cmds[var->j].outs[var->xy].flag = IN_FILE;
+		cmds[var->j].outs[var->xy].flag = OUT_FILE;
 		var->x++;
 	}
 	else if (pipe->cmds[var->j][var->x] == '<')
 	{
-		cmds[var->j].outs[var->xy].flag = OUT_FILE;
+		cmds[var->j].outs[var->xy].flag = IN_FILE;
 		var->x++;
 	}
 }

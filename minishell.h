@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 18:37:26 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/08 19:21:35 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ enum e_types
 {
 	IN_FILE,
 	OUT_FILE,
-	APPEND_OUT,
-	APPEND_IN,
+	APPEND,
+	HERE_DOC,
 };
 
 typedef struct s_redirect
