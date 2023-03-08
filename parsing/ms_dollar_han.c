@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:11:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 18:39:53 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/08 21:40:08 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	generate_string(char **str, char *expanded, char **tmp, t_vars *var)
 		}
 		else if (!expanded)
 		{
-			*str = storing(*str, var->i - var->len - 1, var->len + 1, "\'\'");
+			*str = storing(*str, var->i - var->len - 1, var->len + 1, "\r");
 			var->i -= var->len + 1;
 		}
 		free(*tmp);
