@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/05 17:48:15 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/08 22:39:06 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ms_exec(t_cmds *p, t_pipe *c)
 	t_vars	vars;
 
 	vars.i = 0;
-	check_builtin(p, c, &vars);
+	// check_builtin(p, c, &vars);
 	// printf("v = %d", vars.i);
 	// if (vars.i == 0)
 	check_other(p, c);

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/05 16:35:51 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/07 19:26:38 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct t_pipe
 	int			num_of_pipes;
 	int			*ibq;
 	int			b;
+	int			pid;
 	t_env		*env;
 }	t_pipe;
 
