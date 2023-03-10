@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 19:21:17 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/09 22:59:22 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	store_the_file_name(char *str, char **file_name, int i, t_vars *var)
 	(*file_name) = ft_substr(str, start, i - start);
 }
 
-void	files_fellings(t_pipe *pipe, t_cmds *cmds, t_vars *var)
+void	files_fillings(t_pipe *pipe, t_cmds *cmds, t_vars *var)
 {
 	var->start = var->x - 1;
 	if (pipe->cmds[var->j][var->x + 1] == '>' \
@@ -76,7 +76,7 @@ void	utils_saving(t_pipe *pipe, t_cmds *cmds, t_vars *v)
 		if ((pipe->cmds[v->j][v->x] == '>' || \
 			pipe->cmds[v->j][v->x] == '<') && !v->quote_char)
 		{
-			files_fellings(pipe, cmds, v);
+			files_fillings(pipe, cmds, v);
 			store_the_file_name(pipe->cmds[v->j], \
 				&cmds[v->j].outs[v->xy].file_name, v->x + 1, v);
 			clean_quotes(cmds[v->j].outs[v->xy].file_name);
@@ -102,7 +102,7 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 	var.x = 0;
 	*tmp = malloc(sizeof(t_cmds) * pipe->cmd_len);
 	cmds = *tmp;
-	cmds->red_len = 0;
+	cmds->red_len = 0; //     echo hi > 'file1   khk' < file2 | cat -e | ls -la
 	while (++var.j < pipe->cmd_len)
 	{
 		cmds[var.j].red_len = num_of_redirects(pipe->cmds[var.j]);

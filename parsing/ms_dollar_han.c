@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:11:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 21:40:08 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/10 18:06:11 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,33 @@ int	expand(char **str, char *expanded, t_vars *var)
 
 int	generate_string(char **str, char *expanded, char **tmp, t_vars *var)
 {
+	char	*joined;
+	char	*joined2;
+
 	expanded = NULL;
 	if (*tmp)
 	{
 		expanded = getenv(*tmp);
 		if (expanded)
 		{
-			*str = storing(*str, var->i - var->len - 1, var->len + 1, expanded);
-			var->i += ft_strlen(expanded) - var->len - 1;
+			if (!var->in_d_quotes)
+			{
+				joined = ft_strjoin(expanded, "\"");
+				joined2 = ft_strjoin("\"", joined);
+				*str = storing(*str, var->i - var->len - 1, var->len + 1, joined2);
+				var->i += ft_strlen(expanded) - var->len - 1;
+				free(joined2);
+				free(joined);
+			}
+			else
+			{
+				*str = storing(*str, var->i - var->len - 1, var->len + 1, expanded);
+				var->i += ft_strlen(expanded) - var->len - 1;
+			}
 		}
 		else if (!expanded)
 		{
-			*str = storing(*str, var->i - var->len - 1, var->len + 1, "\r");
+			*str = storing(*str, var->i - var->len - 1, var->len + 1, "");
 			var->i -= var->len + 1;
 		}
 		free(*tmp);

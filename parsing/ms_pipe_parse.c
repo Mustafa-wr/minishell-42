@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 21:33:20 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/09 19:58:36 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ static int	check_string_helper(char *str, int in_quote, int in_d_quote, int i)
 				in_d_quote = 0;
 			else if (!in_quote)
 				in_d_quote = 1;
-		}
-		else if (str[i] == '\\')
-		{
-			i++;
-			while (str[i] == ' ')
-				i++;
-			if (!str[i])
-				return (0);
 		}
 		i++;
 	}

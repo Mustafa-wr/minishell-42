@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/08 19:21:35 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/09 19:59:19 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_redirect
 }	t_redirect;
 
 //< pwd ls < lsss < out > outfile -la | pwd cat | grep -n hello | cat -e
-
+//< ls pwd
 typedef struct s_cmds
 {
 	int			red_len;
@@ -90,7 +90,7 @@ int		check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
 void	dollar_expansion(char **str);
 
 /***************    redirection_parse     ****************/
-int		check_redirect(t_pipe *cmd);
+int		check_redirect(char *str);
 int		num_of_redirects(char *str);
 void	remove_substr(char *s, unsigned int start, size_t len);
 
