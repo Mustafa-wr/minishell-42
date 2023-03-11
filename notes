@@ -8,14 +8,3 @@ void handle_sigint(int sig)
         rl_redisplay();
     }
 }
-
-typedef struct t_pipe
-{
-	int		cmd_len;
-	char	**cmds;
-	char	**env;
-	int		env_count;
-	int		i;
-}	t_pipe;
-
-i store the environment in this struct in char **env, i want to create function that exactly like getenv(), but by using this struct
