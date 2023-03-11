@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/11 20:14:47 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/11 23:55:59 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@
 // 	return (1);
 // }
 
-
 static int	is_redirect(char **str, t_vars *v)
 {
 	if ((*str)[v->i] == '>' || (*str)[v->i] == '<')
@@ -107,7 +106,7 @@ static int	is_redirect(char **str, t_vars *v)
 			return (0);
 		while ((*str)[v->i] == ' ')
 			v->i++;
-		if ((*str)[v->i] == '\0' || (*str)[v->i] == '|')
+		if ((*str)[v->i] == '\0' || ((*str)[v->i] == '|' && !v->in_quotes))
 			return (0);
 	}
 	else
@@ -161,7 +160,7 @@ int	check_redirect(char *str)
 	// while (str[vars.j])
 	// {
 		if (!redirect_helper(&str, &vars))
-			return (/*free_strings(str), */0);
+			return (/*free_strings(str), */printf("from here") ,0);
 		// vars.j++;
 	// }
 	return (1);
