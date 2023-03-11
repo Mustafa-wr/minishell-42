@@ -6,7 +6,7 @@
 #    By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/22 18:04:04 by mradwan           #+#    #+#              #
-#    Updated: 2022/08/10 01:42:17 by mradwan          ###   ########.fr        #
+#    Updated: 2023/03/12 00:16:17 by mradwan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,8 @@ SRCSB = ft_lstnew.c			\
 		ft_lstadd_front.c	\
 		ft_lstsize.c		\
 		ft_lstlast.c		\
-		ft_lstadd_back.c
+		ft_lstadd_back.c	\
+		ft_lstdelone.c
 
 OBJS = $(SRCS:.c=.o)
 

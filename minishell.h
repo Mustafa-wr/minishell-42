@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/11 20:01:23 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/12 00:12:43 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ typedef struct t_pipe
 {
 	int		cmd_len;
 	char	**cmds;
-	char	**env;
+	t_list	*m_env;
 	int		env_count;
 	int		i;
 }	t_pipe;
 
-void	enviro(t_pipe *s, char **envp);
-char *my_getenv(const char *name, t_pipe *pipe);
+void	get_env(t_pipe *p, char **envp);
+char 	*my_getenv(const char *name, t_pipe *pipe);
 
 /***************      parse_tool          ****************/
 int		is_space(char *str);

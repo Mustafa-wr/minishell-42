@@ -6,9 +6,9 @@ SRCS =	parsing/ms_parse.c				\
 		parsing/ms_parse_utils.c		\
 		parsing/ms_add_spaces.c			\
 		parsing/ms_get_cmd.c			\
-		ms_free_functions.c				\
 		parsing/ms_dollar_han.c			\
-		parsing/get_nv.c
+		parsing/get_nv.c				\
+		ms_free_functions.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -19,7 +19,7 @@ CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include #-fs
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	make -C ./libft
+	make -C ./libft && make bonus -C ./libft
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L ./libft -lft -lreadline -L /usr/local/Cellar/readline/8.1/lib/
 
 clean:
