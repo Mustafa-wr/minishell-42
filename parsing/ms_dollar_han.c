@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:11:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/10 18:06:11 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/11 20:06:12 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,31 +82,54 @@ int	expand(char **str, char *expanded, t_vars *var)
 	return (0);
 }
 
-int	generate_string(char **str, char *expanded, char **tmp, t_vars *var)
+void	generate_strings_helper(char **str, char *expanded, t_vars *var)
 {
 	char	*joined;
 	char	*joined2;
 
+	if (!var->in_d_quotes)
+	{
+		joined = ft_strjoin(expanded, "\"");
+		joined2 = ft_strjoin("\"", joined);
+		*str = storing(*str, var->i - var->len - 1, var->len + 1, joined2);
+		var->i += ft_strlen(expanded) - var->len - 1;
+		free(joined2);
+		free(joined);
+	}
+	else
+	{
+		*str = storing(*str, var->i - var->len - 1, var->len + 1, expanded);
+		var->i += ft_strlen(expanded) - var->len - 1;
+	}
+}
+
+int	generate_string(char **str, char **tmp, t_vars *var, t_pipe *pipe)
+{
+	// char	*joined;
+	// char	*joined2;
+	char	*expanded;
+
 	expanded = NULL;
 	if (*tmp)
 	{
-		expanded = getenv(*tmp);
+		expanded = my_getenv(*tmp, pipe);
 		if (expanded)
 		{
-			if (!var->in_d_quotes)
-			{
-				joined = ft_strjoin(expanded, "\"");
-				joined2 = ft_strjoin("\"", joined);
-				*str = storing(*str, var->i - var->len - 1, var->len + 1, joined2);
-				var->i += ft_strlen(expanded) - var->len - 1;
-				free(joined2);
-				free(joined);
-			}
-			else
-			{
-				*str = storing(*str, var->i - var->len - 1, var->len + 1, expanded);
-				var->i += ft_strlen(expanded) - var->len - 1;
-			}
+			generate_strings_helper(str, expanded, var);
+			// if (!var->in_d_quotes)
+			// {
+			// 	joined = ft_strjoin(expanded, "\"");
+			// 	joined2 = ft_strjoin("\"", joined);
+			// 	*str = storing(*str, var->i - var->len - 1, var->len + 1, joined2);
+			// 	var->i += ft_strlen(expanded) - var->len - 1;
+			// 	free(joined2);
+			// 	free(joined);
+			// }
+			// else
+			// {
+			// 	*str = storing(*str, var->i - var->len - 1, var->len + 1, expanded);
+			// 	var->i += ft_strlen(expanded) - var->len - 1;
+			// }
 		}
 		else if (!expanded)
 		{
@@ -119,7 +142,7 @@ int	generate_string(char **str, char *expanded, char **tmp, t_vars *var)
 	return (0);
 }
 
-void	dollar_expansion(char **str)
+void	dollar_expansion(char **str, t_pipe *pipe)
 {
 	t_vars	var;
 	char	*tmp;
@@ -138,7 +161,7 @@ void	dollar_expansion(char **str)
 			if (expand(str, expanded, &var))
 				continue ;
 			tmp = ft_substr(*str, var.i - var.len, var.len);
-			if (generate_string(str, expanded, &tmp, &var))
+			if (generate_string(str, &tmp, &var, pipe))
 				continue ;
 		}
 		var.i++;

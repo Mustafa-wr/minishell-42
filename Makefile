@@ -7,7 +7,8 @@ SRCS =	parsing/ms_parse.c				\
 		parsing/ms_add_spaces.c			\
 		parsing/ms_get_cmd.c			\
 		ms_free_functions.c				\
-		parsing/ms_dollar_han.c
+		parsing/ms_dollar_han.c			\
+		parsing/get_nv.c
 
 OBJS = $(SRCS:.c=.o)
 

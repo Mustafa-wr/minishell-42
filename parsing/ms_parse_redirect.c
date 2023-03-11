@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/09 19:59:35 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/11 20:14:47 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 // 	if (cmd->cmds[v->j][cmd->i] == '>' || cmd->cmds[v->j][cmd->i] == '<')
 // 	{
 // 		cmd->i++;
-// 		if ((cmd->cmds[v->j][cmd->i] == '<' && \
-// 			cmd->cmds[v->j][cmd->i - 1] == '<') \
-// 			|| (cmd->cmds[v->j][cmd->i] == '>' && \
+// 		if ((cmd->cmds[v->j][cmd->i] == '<' && 
+// 			cmd->cmds[v->j][cmd->i - 1] == '<') 
+// 			|| (cmd->cmds[v->j][cmd->i] == '>' && 
 // 				cmd->cmds[v->j][cmd->i - 1] == '>'))
 // 			cmd->i++;
 // 		while (cmd->cmds[v->j][cmd->i] == ' ')
 // 			cmd->i++;
-// 		if ((cmd->cmds[v->j][cmd->i] == '>' || cmd->cmds[v->j][cmd->i] == '<') \
+// 		if ((cmd->cmds[v->j][cmd->i] == '>' || cmd->cmds[v->j][cmd->i] == '<') 
 // 			&& (!v->in_quotes))
 // 			return (0);
 // 		while (cmd->cmds[v->j][cmd->i] == ' ')
@@ -58,7 +58,7 @@
 // 	cmd->i = 0;
 // 	while (cmd->cmds[vars->j][cmd->i])
 // 	{
-// 		if (cmd->cmds[vars->j][cmd->i] == '\'' || \
+// 		if (cmd->cmds[vars->j][cmd->i] == '\'' || 
 // 			cmd->cmds[vars->j][cmd->i] == '\"')
 // 		{
 // 			if (!vars->in_quotes)

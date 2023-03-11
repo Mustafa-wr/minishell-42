@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/09 19:58:36 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/11 19:58:25 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 	i = 0;
 	while (pipe->cmds[i])
 	{
-		dollar_expansion(&pipe->cmds[i]);
+		dollar_expansion(&pipe->cmds[i], pipe);
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
 		replace_spaces_tabs(pipe->cmds[i]);
 		// clean_quotes(pipe->cmds[i]);
