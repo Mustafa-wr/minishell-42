@@ -1,41 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ms_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 21:44:23 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 14:04:51 by abdamoha         ###   ########.fr       */
+/*   Created: 2023/03/04 18:03:59 by abdamoha          #+#    #+#             */
+/*   Updated: 2023/03/12 21:32:24 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strdup(const char *s1)
+void	free_list(t_list **lst)
 {
-	char	*s2;
+	t_list	*tmp;
 
-	if (!s1)
-		return (NULL);
-	s2 = (char *)malloc(ft_strlen(s1) + 1);
-	if (!s2)
-		return (0);
-	ft_memcpy(s2, s1, ft_strlen(s1) + 1);
-	return (s2);
+	while ((*lst)->next)
+	{
+		tmp = *lst;
+		(*lst) = (*lst)->next;
+		// if (tmp->content)
+		free(tmp->content);
+		free(tmp);
+	}
+	free((*lst)->content);
+	free(*lst);
 }
 
-/*
-int	main(void)
+void	free_and_exit(t_pipe *c, t_cmds *p)
 {
-	char	*s;
-	char	*t;
-
-    s = "My name ";
- 
-    t = ft_strdup(s);
- 
-    printf("%s\n", t);
-    return (0);
+	(void)p;
+	free_list(&c->m_env);
+	free_list(&c->m_export);
+	free_strings(c->tmp_env);
+	free_all(c, p);
+	exit(0);
 }
-*/

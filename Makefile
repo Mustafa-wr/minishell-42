@@ -1,20 +1,30 @@
 NAME = minishell
 
-SRCS =	parsing/ms_parse.c				\
-		parsing/ms_parse_redirect.c		\
-		parsing/ms_pipe_parse.c			\
-		parsing/ms_parse_utils.c		\
-		parsing/ms_add_spaces.c			\
-		parsing/ms_get_cmd.c			\
-		parsing/ms_dollar_han.c			\
-		parsing/get_nv.c				\
-		ms_free_functions.c
+SRCS =	parsing/ms_parse.c					\
+		parsing/ms_parse_redirect.c			\
+		parsing/ms_pipe_parse.c				\
+		parsing/ms_parse_utils.c			\
+		parsing/ms_add_spaces.c				\
+		parsing/ms_get_cmd.c				\
+		parsing/ms_dollar_han.c				\
+		parsing/get_nv.c					\
+		ms_free_functions.c					\
+		exec/ms_exec.c          			\
+		exec/ms_builtins.c      			\
+		exec/ms_utils2.c        			\
+		exec/ms_extra_utils.c   			\
+		exec/ms_utils3.c        			\
+		exec/ms_export.c        			\
+		exec/ms_exec_utils.c    			\
+		exec/ms_exit.c          			\
+		exec/ms_multiple_pipe.c 			\
+		exec/ms_multiple_pipes_utils.c     
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include #-fsanitize=address
+CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -fsanitize=address
 
 all : $(NAME)
 

@@ -6,25 +6,25 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 20:35:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 17:02:25 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/12 22:08:53 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	get_env(t_pipe *p, char **envp)
-{
-	int		i;
+// void	get_env(t_pipe *p, char **envp)
+// {
+// 	int		i;
 
-	i = 0;
-	p->m_env = NULL;
-	while (envp[i])
-	{
-		ft_lstadd_back(&p->m_env, ft_lstnew(envp[i]));
-		i++;
-	}
-	p->env_count = i;
-}
+// 	i = 0;
+// 	p->m_env = NULL;
+// 	while (envp[i])
+// 	{
+// 		ft_lstadd_back(&p->m_env, ft_lstnew(envp[i]));
+// 		i++;
+// 	}
+// 	p->env_count = i;
+// }
 
 // char	*my_getenv(const char *name, t_pipe *pipe)
 // {
