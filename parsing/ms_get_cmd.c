@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/09 22:59:22 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/12 16:52:32 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 	var.x = 0;
 	*tmp = malloc(sizeof(t_cmds) * pipe->cmd_len);
 	cmds = *tmp;
-	cmds->red_len = 0; //     echo hi > 'file1   khk' < file2 | cat -e | ls -la
+	cmds->red_len = 0;
 	while (++var.j < pipe->cmd_len)
 	{
 		cmds[var.j].red_len = num_of_redirects(pipe->cmds[var.j]);

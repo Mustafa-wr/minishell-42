@@ -6,13 +6,26 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 00:12:03 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/12 17:03:15 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 int	g_exit_code = 0;
+
+void	free_list(t_list *lst)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
+}
 
 void	clean_quotes(char *str)
 {
@@ -80,7 +93,6 @@ int	main(int ac, char **av, char **envp)
 	char	*read;
 
 	(void)av;
-	(void)envp;
 	if (ac != 1)
 		return (0);
 	get_env(&pipe, envp);
@@ -90,7 +102,7 @@ int	main(int ac, char **av, char **envp)
 		signal(SIGQUIT, SIG_IGN);
 		read = readline("minishell$ ");
 		if (!read)
-			return (printf("exit\n"), 0);
+			return (printf("exit\n"), free_list(pipe.m_env), 0);
 		if (ms_main_helper(&pipe, cmds, read))
 			continue ;
 		files_saving(&pipe, &cmds);

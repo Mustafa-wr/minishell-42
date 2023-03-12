@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 20:35:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 00:11:23 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/12 17:02:25 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	get_env(t_pipe *p, char **envp)
 		ft_lstadd_back(&p->m_env, ft_lstnew(envp[i]));
 		i++;
 	}
-	// p->m_env[i] = NULL;
 	p->env_count = i;
 }
 

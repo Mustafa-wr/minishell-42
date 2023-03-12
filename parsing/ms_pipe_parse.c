@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/11 23:51:01 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/12 16:04:29 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
 		{
 			if (quotes == 0)
 				quotes = line[i];
-			else if (!quotes)
+			else if (quotes == line[i])
 				quotes = 0;
 			i++;
 			continue ;
