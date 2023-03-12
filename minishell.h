@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/07 19:26:38 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 00:07:06 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <unistd.h>
+#include <fcntl.h>
 # include <stdlib.h>
 # include "libft/libft.h"
 # include <stdio.h>
@@ -79,13 +80,13 @@ typedef struct t_pipe
 	char		**tmp_env;
 	t_list		*m_export;
 	char		**tmp;
-	char		***args; // {CMD1={CMD=ls, ARGS:ls, -l},CMD2={echo, h} }
 	int			i;
 	int			j;
 	int			num_of_pipes;
 	int			*ibq;
 	int			b;
 	int			pid;
+	int		fd[2][2];
 	t_env		*env;
 }	t_pipe;
 
@@ -153,4 +154,5 @@ void	free_list(t_list **lst);
 void	free_and_exit(t_pipe *c, t_cmds *p);
 void	unset_cmp(t_cmds *p, t_list *lst, int i, int j);
 void	multiple_pipes(t_cmds *p, t_pipe *c);
+void	closing_fds(t_pipe *c);
 #endif

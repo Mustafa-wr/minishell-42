@@ -51,7 +51,8 @@ SRCS =	libft/ft_memset.c				\
 		ms_export.c                     \
 		ms_exec_utils.c                 \
 		ms_exit.c                       \
-		ms_multiple_pipe.c
+		ms_multiple_pipe.c              \
+		ms_multiple_pipes_utils.c       
 
 OBJS = $(SRCS:.c=.o)
 

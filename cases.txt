@@ -1,0 +1,26 @@
+
+/***************** echo ********************/
+
+ECHO   "gfeyjgf"
+Echo   "gfeyjgf"
+ECho   "gfeyjgf"
+ECHo   "gfeyjgf"
+
+
+
+/******************   export          ****************/
+
+export t = hjhdjhdg
+/will add the string after the = sign but it will print a error/
+
+
+
+/******************   unset          ****************/
+
+from both env and export
+
+
+/******************   debug tools         ****************/
+
+1-set -x 
+2-strace
