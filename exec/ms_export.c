@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/04 20:23:04 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:32:28 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_for_equal(t_cmds *p, int i, int j)
 {

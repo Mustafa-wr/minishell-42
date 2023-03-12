@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/12 21:30:45 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:32:38 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	multiple_pipes(t_cmds *p, t_pipe *c)
 {

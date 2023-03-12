@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/04 20:51:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:32:12 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 {

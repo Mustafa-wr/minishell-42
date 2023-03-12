@@ -42,17 +42,17 @@ SRCS =	libft/ft_memset.c				\
 		parsing/ms_parse_utils.c		\
 		parsing/ms_add_spaces.c			\
 		parsing/ms_get_cmd.c			\
-		ms_free_functions.c             \
-		ms_exec.c                       \
-		ms_builtins.c                   \
-		ms_utils2.c                     \
-		ms_extra_utils.c                \
-		ms_utils3.c                     \
-		ms_export.c                     \
-		ms_exec_utils.c                 \
-		ms_exit.c                       \
-		ms_multiple_pipe.c              \
-		ms_multiple_pipes_utils.c       
+		exec/ms_free_functions.c             \
+		exec/ms_exec.c                       \
+		exec/ms_builtins.c                   \
+		exec/ms_utils2.c                     \
+		exec/ms_extra_utils.c                \
+		exec/ms_utils3.c                     \
+		exec/ms_export.c                     \
+		exec/ms_exec_utils.c                 \
+		exec/ms_exit.c                       \
+		exec/ms_multiple_pipe.c              \
+		exec/ms_multiple_pipes_utils.c       
 
 OBJS = $(SRCS:.c=.o)
 

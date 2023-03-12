@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/05 17:32:38 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:32:16 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	**check_env_for_path(t_list *env)
 {

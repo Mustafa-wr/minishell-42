@@ -6,39 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 18:26:13 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:52:11 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	enviroments(char **envp, t_env *d_env)
-{
-	int i = 0;
-	char *string;
-
-	while (ft_strncmp(envp[i], "PATH=", 5) != 0 && envp[i])
-		i++;
-	string = ft_strchr(envp[i], '/');
-	d_env->path = ft_split(string, ':');
-	i = 0;
-	// while (envp[i][0] != 'U')
-	// 	i++;
-	// string = ft_strchr(envp[i], '=');
-	// string++;
-	// d_env->user = string;
-	// i = 0;
-	// while (envp[i][0] != 'H')
-	// 	i++;
-	// string = ft_strchr(envp[i], '/');
-	// d_env->home = string;
-	// i = 0;
-	// while (d_path->path[i])
-	// {
-	// 	printf("%s\n", d_path->path[i]);
-	// 	i++;
-	// }
-}
 
 void	clean_quotes(char *str)
 {

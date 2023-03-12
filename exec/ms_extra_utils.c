@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/04 19:18:13 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:32:31 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	strncmp_orginal(const char *s1, const char *s2, unsigned int n)
 {

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 00:07:06 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:53:32 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@
 # include <signal.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-
-typedef struct s_env
-{
-	char	**path;
-	char	*user;
-	char	*home;
-}	t_env;
 
 typedef struct s_vars
 {
@@ -82,12 +75,9 @@ typedef struct t_pipe
 	char		**tmp;
 	int			i;
 	int			j;
-	int			num_of_pipes;
-	int			*ibq;
 	int			b;
 	int			pid;
-	int		fd[2][2];
-	t_env		*env;
+	int			fd[2][2];
 }	t_pipe;
 
 /***************      parse_tool          ****************/

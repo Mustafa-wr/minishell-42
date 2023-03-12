@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/05 15:57:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:32:49 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 {

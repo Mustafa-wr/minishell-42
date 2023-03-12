@@ -6,11 +6,11 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 18:17:12 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:32:01 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_strings(char **av)
 {
