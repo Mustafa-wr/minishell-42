@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 20:38:56 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/13 16:54:22 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	free_strings(char **av)
 		free(av[i]);
 		i++;
 	}
-	free(av);
+	if (av)
+		free(av);
 }
 
 void	free_all(t_pipe *pipe, t_cmds *cmd)

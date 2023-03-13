@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:11:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/11 20:06:12 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/13 16:19:01 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	expand(char **str, char *expanded, t_vars *var)
 {
 	expanded = NULL;
 	var->i++;
-	if ((*str)[var->i] == '?' && var->i == 1 && (*str)[var->i - 1] == '$')
+	if ((*str)[var->i] == '?' && (*str)[var->i - 1] == '$')
 	{
 		expanded = ft_itoa(g_exit_code);
 		*str = storing(*str, var->i - 1, 2, expanded);
