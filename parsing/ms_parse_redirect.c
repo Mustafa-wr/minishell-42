@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 18:07:04 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:55:53 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	check_redirect(t_pipe *cmd)
 	i = 0;
 	while (cmd->cmds[i])
 		i++;
-	cmd->num_of_pipes = i;
+	// cmd->num_of_pipes = i;
 	vars.j = 0;
 	return (1);
 }
