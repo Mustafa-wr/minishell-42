@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:03:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/13 16:16:00 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/14 01:56:05 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	free_list(t_list **lst)
 		tmp = *lst;
 		(*lst) = (*lst)->next;
 		// if (tmp->content)
-		// free(tmp->content);
+		free(tmp->content);
 		free(tmp);
 	}
-	// free((*lst)->content);
+	free((*lst)->content);
 	free(*lst);
 }
 
@@ -34,6 +34,7 @@ void	free_and_exit(t_pipe *c, t_cmds *p)
 	free_list(&c->m_env);
 	free_list(&c->m_export);
 	free_strings(c->tmp_env);
+	free_strings(c->m_path);
 	free_all(c, p);
 	exit(0);
 }

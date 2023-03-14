@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/12 22:28:57 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/14 08:29:24 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,39 @@ void	ms_exec(t_cmds *p, t_pipe *c)
 	t_vars	vars;
 
 	vars.i = 0;
-	// check_builtin(p, c, &vars);
-	// printf("v = %d", vars.i);
-	// if (vars.i == 0)
-	check_other(p, c);
+	if (check_builtin(p, c, &vars) == 1 && check_executable(c, p) == 0)
+		check_other(p, c);
+	// else if (check_executable(c, p) == 1)
+	// {
+		
+	// }
 }
 
-void	check_builtin(t_cmds *p, t_pipe *c, t_vars *vars)
+int	check_builtin(t_cmds *p, t_pipe *c, t_vars *vars)
 {
 	int		x;
 
 	x = 0;
 	(void)vars;
 	if (ft_strncmp(p[x].cmd[0], "exit", 4) == 0)
-		free_and_exit(c, p);
+		return (free_and_exit(c, p), 0);
 	else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
-		ft_cd(p, x, 0, c);
+		return (ft_cd(p, x, 0, c), 0);
 	else if (ft_strncmp(p[x].cmd[0], "export", 6) == 0)
-		ft_export(c, p, x, 0);
+		return (ft_export(c, p, x, 0), 0);
 	else if (ft_strncmp(p[x].cmd[0], "unset", 5) == 0)
-		ft_unset(p, x, 0, c);
+		return (ft_unset(p, x, 0, c), 0);
 	else
 	{
 		ft_tolower(p[x].cmd[0]);
 		if (ft_strncmp(p[x].cmd[0], "echo", 4) == 0)
-			ft_echo(p, x, 0, c);
+			return (ft_echo(p, x, 0, c), 0);
 		else if (ft_strncmp(p[x].cmd[0], "pwd", 3) == 0)
-			ft_pwd(p, c);
+			return (ft_pwd(p, c), 0);
 		else if (ft_strncmp(p[x].cmd[0], "env", 3) == 0)
-			ft_env(p, c);
+			return (ft_env(p, c), 0);
 	}
+	return (1);
 }
 
 void	check_other(t_cmds *p, t_pipe *c)
@@ -96,17 +99,21 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 	char	*cmd;
 
 	i = 0;
+	update_env(c);
+	c->m_path = get_path(c->tmp_env);
 	cmd = check_command_existence(p[0].cmd[0], c->m_path);
-	// printf("cmd = %s", cmd);
-	// exit(0);
 	i = fork();
 	if (i == 0)
 	{
 		if (execve(cmd, p[0].cmd, c->tmp_env) < 0)
 		{
 			printf("command not found :%s\n", p[0].cmd[0]);
+			free_all(c, p);
+			free(cmd);
 			return ;
 		}
 	}
 	waitpid(i, NULL, 0);
+	free(cmd);
+	free_all(c, p);
 }

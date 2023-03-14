@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/12 21:32:49 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 00:39:16 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 		return ;
 	else if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 1)
 	{
+		// printf("change the value\n");
 		changing_the_value(p, i, j, c);
 		changing_the_env_v(p, i, j, c);
 		return ;
@@ -41,6 +42,7 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 				tmp2->next = tmp;
 				tmp3->next = tmp2;
 				c->env_count += 1;
+				ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[k].cmd[j])));
 				break ;
 			}
 			tmp3 = tmp;
@@ -66,17 +68,14 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 
 void	insert_the_node(t_cmds *p, t_pipe *c)
 {
-	// t_list	*tmp3;
 	int		i;
 	int		j;
 
-	// printf("entered");
 	i = 0;
 	j = 1;
-	// tmp3 = c->m_export;
 	while (p[i].cmd[j])
 	{
-		printf("p = %s\n", p[i].cmd[j]);
+		// printf("p = %s\n", p[i].cmd[j]);
 		if (ft_strncmp(p[i].cmd[j], "=", 1) != 0)
 			add_to_export(p, c, i, j);
 		j++;

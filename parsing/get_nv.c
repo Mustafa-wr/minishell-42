@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 20:35:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 22:08:53 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/13 19:23:32 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,3 @@ char	*my_getenv(const char *name, t_pipe *pipe)
 	}
 	return (value);
 }
-

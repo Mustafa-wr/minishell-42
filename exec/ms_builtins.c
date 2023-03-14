@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/12 21:32:12 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 00:54:19 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,22 @@ void	ft_pwd(t_cmds *p, t_pipe *c)
 
 void	ft_env(t_cmds *p, t_pipe *c)
 {
-	int		i;
+	// int		i;
 	t_list	*tmp;
 
-	i = 0;
+	// i = 0;
 	(void)p;
 	(void)c;
 	tmp = c->m_env;
 	// printf("c = %d\n", c->env_count);
 	// exit(0);
-	while (i < c->env_count)
+	while (tmp)
 	{
-		if (!tmp->content)
-			i++;
+		// if (!tmp->content)
+		// 	i++;
 		printf("%s\n", (char *)tmp->content);
 		tmp = tmp->next;
-		i++;
+		// i++;
 	}
 	free_all(c, p);
 }
@@ -97,6 +97,7 @@ void	ft_cd(t_cmds *p, int x, int y, t_pipe *c)
 
 void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 {
+	int	k = 0;
 	t_list	*tmp;
 
 	tmp = c->m_export;
@@ -112,7 +113,9 @@ void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 			if (tmp->content != NULL)
 				printf("declare -x %s\n", (char *)tmp->content);
 			tmp = tmp->next;
+			k++;
 		}
+		printf("i = %d\n", k);
 	}
 	free_all(c, p);
 }

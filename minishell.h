@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 22:03:15 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/14 17:40:19 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct t_pipe
 }	t_pipe;
 
 /***************      parse_tool          ****************/
-char 	*my_getenv(const char *name, t_pipe *pipe);
+char	*my_getenv(const char *name, t_pipe *pipe);
 int		is_space(char *str);
 char	*ft_add_spaces(char *str);
 void	replace_spaces_tabs(char *str);
@@ -125,7 +125,7 @@ int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
 int		found_first(char **m_env, int k, t_pipe *p);
 void	fill_export_list(t_pipe *p);
 void	fill_tmp_env(t_pipe *c);
-void	check_builtin(t_cmds *p, t_pipe *c, t_vars *vars);
+int		check_builtin(t_cmds *p, t_pipe *c, t_vars *vars);
 int		check_for_redirction(t_cmds *p, t_pipe *c);
 int		count_cmds(char ***str);
 void	check_other(t_cmds *p, t_pipe *c);
@@ -154,5 +154,10 @@ void	free_and_exit(t_pipe *c, t_cmds *p);
 void	unset_cmp(t_cmds *p, t_list *lst, int i, int j);
 void	multiple_pipes(t_cmds *p, t_pipe *c);
 void	closing_fds(t_pipe *c);
+void	update_env(t_pipe *c);
+int		check_executable(t_pipe *c, t_cmds *p);
+int		increase_shlvl_value(char *str);
+void	change_shlv(t_cmds *p, t_pipe *c, t_list *lst);
+char	**get_path(char **str);
 
 #endif

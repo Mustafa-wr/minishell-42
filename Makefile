@@ -9,16 +9,17 @@ SRCS =	parsing/ms_parse.c					\
 		parsing/ms_dollar_han.c				\
 		parsing/get_nv.c					\
 		ms_free_functions.c					\
-		exec/ms_exec.c          			\
-		exec/ms_builtins.c      			\
-		exec/ms_utils2.c        			\
-		exec/ms_extra_utils.c   			\
-		exec/ms_utils3.c        			\
-		exec/ms_export.c        			\
-		exec/ms_exec_utils.c    			\
-		exec/ms_exit.c          			\
-		exec/ms_multiple_pipe.c 			\
-		exec/ms_multiple_pipes_utils.c     
+		exec/ms_exec.c                      \
+		exec/ms_builtins.c                  \
+		exec/ms_utils2.c                    \
+		exec/ms_extra_utils.c               \
+		exec/ms_utils3.c                    \
+		exec/ms_export.c                    \
+		exec/ms_exec_utils.c                \
+		exec/ms_exit.c                      \
+		exec/ms_multiple_pipe.c             \
+		exec/ms_multiple_pipes_utils.c      \
+		exec/ms_builtins_utils.c   
 
 OBJS = $(SRCS:.c=.o)
 
