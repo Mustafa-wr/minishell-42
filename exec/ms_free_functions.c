@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 21:32:01 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 08:12:18 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	free_strings(char **av)
 		free(av[i]);
 		i++;
 	}
-	free(av);
+	if (av)
+		free(av);
 }
 
 void	free_all(t_pipe *pipe, t_cmds *cmd)

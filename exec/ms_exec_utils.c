@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/12 21:32:16 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 08:25:04 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*check_command_existence(char *av, char **path)
 
 	j = 0;
 	i = ft_strlen(av);
-	if (ft_strchr(av, '/') != NULL)
+	if (ft_strchr(av, '/') != NULL || !path)
 	{
 		return (backslash_case(av, i));
 	}

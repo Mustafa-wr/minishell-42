@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 07:28:33 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 08:29:24 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 
 	i = 0;
 	update_env(c);
+	c->m_path = get_path(c->tmp_env);
 	cmd = check_command_existence(p[0].cmd[0], c->m_path);
-	// printf("cmd = %s\n", *c->tmp_env);
-	// exit(0);
 	i = fork();
 	if (i == 0)
 	{

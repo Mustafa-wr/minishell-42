@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 07:20:21 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 08:02:11 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 08:29:08 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	check_executable(t_pipe *c, t_cmds *p)
 		{
 			change_shlv(p, c, c->m_env);
 			change_shlv(p, c, c->m_export);
+			free_all(c, p);
 			return (1);
 		}
 	}
@@ -71,4 +72,20 @@ int	increase_shlvl_value(char *str)
 
 	i = len_till_equal(str) + 1;
 	return (ft_atoi(str + i) + 1);
+}
+
+char	**get_path(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (strncmp_orginal("PATH=", str[i], 5) == 0)
+		{
+			return (ft_split(str[i], ':'));
+		}
+		i++;
+	}
+	return (NULL);
 }
