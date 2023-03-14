@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 21:52:11 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 07:17:10 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,19 @@ int main(int ac, char **av, char **envp)
 	char	*read;
 
 	(void)av;
-	(void)envp;
+	// (void)envp;
 	if (ac != 1)
 		return (0);
 	// printf("env[0] = %s\n", envp[2]);
 	get_env(&pipe, envp);
+	// t_list *tmp = pipe.m_env;
+	// int  i = 0;
+	// while (envp[i])
+	// {
+	// 	printf("env = %s\n", tmp->content);
+	// 	// tmp = tmp->next;
+	// }
+	// exit(0);
 	fill_export(&pipe);
 	while (1)
 	{

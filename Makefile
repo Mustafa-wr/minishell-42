@@ -52,13 +52,14 @@ SRCS =	libft/ft_memset.c				\
 		exec/ms_exec_utils.c                 \
 		exec/ms_exit.c                       \
 		exec/ms_multiple_pipe.c              \
-		exec/ms_multiple_pipes_utils.c       
+		exec/ms_multiple_pipes_utils.c       \
+		exec/ms_builtins_utils.c 
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -g3 -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -g3 -Wall -Wextra -Werror -fsanitize=address
 
 all : $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/14 02:11:14 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 07:46:51 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,4 +146,7 @@ void	unset_cmp(t_cmds *p, t_list *lst, int i, int j);
 void	multiple_pipes(t_cmds *p, t_pipe *c);
 void	closing_fds(t_pipe *c);
 void	update_env(t_pipe *c);
+int		check_executable(t_pipe *c, t_cmds *p);
+int		increase_shlvl_value(char *str);
+void	change_shlv(t_cmds *p, t_pipe *c, t_list *lst);
 #endif
