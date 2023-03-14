@@ -24,3 +24,8 @@ from both env and export
 
 1-set -x 
 2-strace
+
+/******************   env        ****************/
+(optional)
+1-SHLVL
+2-PWD

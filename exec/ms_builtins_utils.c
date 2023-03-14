@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 07:20:21 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 08:29:08 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/14 08:45:41 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**get_path(char **str)
 	{
 		if (strncmp_orginal("PATH=", str[i], 5) == 0)
 		{
-			return (ft_split(str[i], ':'));
+			return (ft_split(str[i] + 5, ':'));
 		}
 		i++;
 	}
