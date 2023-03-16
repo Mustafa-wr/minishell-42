@@ -6,18 +6,18 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/14 08:12:18 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:00:02 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	free_strings(char **av)
 {
 	int	i;
 
 	i = 0;
-	while (av[i])
+	while (av && av[i])
 	{
 		free(av[i]);
 		i++;
@@ -28,26 +28,25 @@ void	free_strings(char **av)
 
 void	free_all(t_pipe *pipe, t_cmds *cmd)
 {
-	int i = 0;
-	int j = 0;
-	while (i < pipe->cmd_len)
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (++i < pipe->cmd_len)
 	{
-		j = 0;
-		if(cmd[i].red_len > 0)
+		j = -1;
+		if (cmd[i].red_len > 0)
 		{
-			while (j < cmd[i].red_len)
+			while (++j < cmd[i].red_len)
 			{
 				if (cmd[i].outs[j].file_name)
-				{
 					free(cmd[i].outs[j].file_name);
-				}
-				j++;
 			}
-			if(cmd[i].outs)
+			if (cmd[i].outs)
 				free(cmd[i].outs);
 		}
 		free_strings(cmd[i].cmd);
-		i++;
 	}
 	free_strings(pipe->cmds);
 	free(cmd);

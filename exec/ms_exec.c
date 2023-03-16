@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 08:29:24 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/16 04:04:12 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ void	check_other(t_cmds *p, t_pipe *c)
 
 	c->i = 0;
 	c->j = 0;
-	// printf("cmd_len = %d\n", p->cmd_len);
-	c->m_path = check_env_for_path(c->m_env);
+	update_env(c);
+	get_path(c->tmp_env, c);
 	if (p->cmd_len == 1)
 		normal_exec(p, c);
 	else if (p->cmd_len > 1)
+	{
+		printf("cmd_len = %d\n", p->cmd_len);
 		multiple_pipes(p, c);
+	}
 }
 
 int	check_for_redirction(t_cmds *p, t_pipe *c)
@@ -99,19 +102,25 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 	char	*cmd;
 
 	i = 0;
-	update_env(c);
-	c->m_path = get_path(c->tmp_env);
 	cmd = check_command_existence(p[0].cmd[0], c->m_path);
 	i = fork();
 	if (i == 0)
 	{
-		if (execve(cmd, p[0].cmd, c->tmp_env) < 0)
-		{
-			printf("command not found :%s\n", p[0].cmd[0]);
-			free_all(c, p);
-			free(cmd);
-			return ;
-		}
+		// if (cmd == NULL)
+		// {
+		// 	printf("command not found :%s\n", p[0].cmd[0]);
+		// 	free_and_exit(c, p);
+		// }
+			if (execve(cmd, p[0].cmd, c->tmp_env) < 0)
+			{
+				printf("command not found :%s\n", p[0].cmd[0]);
+				free_and_exit(c, p);
+			}
+		// else
+		// {
+		// 	printf("command not found :%s\n", p[0].cmd[0]);
+		// 	free_and_exit(c, p);
+		// }
 	}
 	waitpid(i, NULL, 0);
 	free(cmd);

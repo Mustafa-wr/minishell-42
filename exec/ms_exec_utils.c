@@ -6,33 +6,33 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 08:46:28 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/15 18:25:15 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**check_env_for_path(t_list *env)
-{
-	int		i;
-	char	*s;
-	t_list	*tmp;
+// char	**check_env_for_path(t_list *env)
+// {
+// 	int		i;
+// 	char	*s;
+// 	t_list	*tmp;
 
-	i = 0;
-	s = NULL;
-	tmp = env;
-	while (tmp)
-	{
-		if (strncmp_orginal("PATH=", tmp->content, 5) == 0)
-		{
-			s = tmp->content + 5;
-			return (ft_split(s, ':'));
-		}
-		tmp = tmp->next;
-		i++;
-	}
-	return (NULL);
-}
+// 	i = 0;
+// 	s = NULL;
+// 	tmp = env;
+// 	while (tmp)
+// 	{
+// 		if (strncmp_orginal("PATH=", tmp->content, 5) == 0)
+// 		{
+// 			s = tmp->content + 5;
+// 			return (ft_split(s, ':'));
+// 		}
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
 char	*check_command_existence(char *av, char **path)
 {

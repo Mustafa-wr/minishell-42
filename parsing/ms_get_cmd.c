@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 16:59:01 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/13 21:31:25 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	store_the_file_name(char *str, char **file_name, int i, t_vars *var)
 {
-	int start;
+	int	start;
 	int	in_quote;
 
 	start = i;
@@ -29,137 +29,95 @@ void	store_the_file_name(char *str, char **file_name, int i, t_vars *var)
 				in_quote = 0;
 		}
 		if ((str[i] == ' ' || str[i] == '\t') && !in_quote)
-			break;
+			break ;
 		i++;
 	}
 	var->i = i;
 	(*file_name) = ft_substr(str, start, i - start);
 }
 
-int	is_between_quotes(char *str, int x)
-{
-	while (str[x] && (str[x] == ' ' || str[x] == '\t'))
-		x--;
-	if(str[x == '\'' || str[x] == '"'])
-		return (1);
-	return (0);
-}
-
-void	files_fellings(t_pipe *pipe, t_cmds *cmds, t_vars *var)
+void	files_fillings(t_pipe *pipe, t_cmds *cmds, t_vars *var)
 {
 	var->start = var->x - 1;
-	if (pipe->cmds[var->j][var->x + 1] == '>' || pipe->cmds[var->j][var->x + 1] == '<')
+	if (pipe->cmds[var->j][var->x + 1] == '>' \
+		|| pipe->cmds[var->j][var->x + 1] == '<')
 	{
-		if(pipe->cmds[var->j][var->x + 1] == '>')
-			cmds[var->j].outs[var->xy].flag = APPEND_OUT;
+		if (pipe->cmds[var->j][var->x + 1] == '>')
+			cmds[var->j].outs[var->xy].flag = APPEND;
 		else if (pipe->cmds[var->j][var->x + 1] == '<')
-			cmds[var->j].outs[var->xy].flag = APPEND_IN;
+			cmds[var->j].outs[var->xy].flag = HERE_DOC;
 		var->x = var->x + 2;
 	}
 	else if (pipe->cmds[var->j][var->x] == '>')
 	{
-		cmds[var->j].outs[var->xy].flag = IN_FILE;
+		cmds[var->j].outs[var->xy].flag = OUT_FILE;
 		var->x++;
 	}
 	else if (pipe->cmds[var->j][var->x] == '<')
 	{
-		cmds[var->j].outs[var->xy].flag = OUT_FILE;
+		cmds[var->j].outs[var->xy].flag = IN_FILE;
 		var->x++;
 	}
 }
 
-void	utils_saving(t_pipe *pipe, t_cmds *cmds, t_vars *var)
+void	utils_saving(t_pipe *pipe, t_cmds *cmds, t_vars *v)
 {
-	var->xy = 0;
-	var->x = 0;
-	while (pipe->cmds[var->j][var->x])
+	v->xy = 0;
+	v->x = -1;
+	while (pipe->cmds[v->j][++v->x])
 	{
-		if (pipe->cmds[var->j][var->x] == '"' || pipe->cmds[var->j][var->x] == '\'')
+		if (pipe->cmds[v->j][v->x] == '"' || pipe->cmds[v->j][v->x] == '\'')
 		{
-			if (var->quote_char == 0)
-				var->quote_char = pipe->cmds[var->j][var->x];
-			else if (var->quote_char == pipe->cmds[var->j][var->x])
-				var->quote_char = 0;
+			if (v->quote_char == 0)
+				v->quote_char = pipe->cmds[v->j][v->x];
+			else if (v->quote_char == pipe->cmds[v->j][v->x])
+				v->quote_char = 0;
 		}
-		if ((pipe->cmds[var->j][var->x] == '>' || pipe->cmds[var->j][var->x] == '<') \
-			&& is_between_quotes(pipe->cmds[var->j], var->x) && !var->quote_char)
+		if ((pipe->cmds[v->j][v->x] == '>' || \
+			pipe->cmds[v->j][v->x] == '<') && !v->quote_char)
 		{
-			files_fellings(pipe, cmds, var);
-			store_the_file_name(pipe->cmds[var->j], &cmds[var->j].outs[var->xy].file_name, var->x + 1, var);
-			clean_quotes(cmds[var->j].outs[var->xy].file_name);
-			// printf("flag	  : %d\n", var->i);
-			// pipe->cmds[var->j] = remove_substr(pipe->cmds[var->j], var->start, var->i);
-			/*pipe->cmds[var->j] = */remove_substr(pipe->cmds[var->j], var->start, var->i);
-			var->x = var->start - 1;
-			// printf("file name : %s\n", pipe->cmds[var->j]);
-			// printf("file name : %s\n", cmds[var->j].outs[var->xy].file_name);
-			// printf("flag	  : %d\n", cmds[var->j].outs[var->xy].flag);
-			var->xy++;
+			files_fillings(pipe, cmds, v);
+			store_the_file_name(pipe->cmds[v->j], \
+				&cmds[v->j].outs[v->xy].file_name, v->x + 1, v);
+			clean_quotes(cmds[v->j].outs[v->xy].file_name);
+			remove_substr(pipe->cmds[v->j], v->start, v->i);
+			v->x = v->start - 1;
+			// printf("file name : %s\n", pipe->cmds[v->j]);
+			// printf("file name : %s\n", cmds[v->j].outs[v->xy].file_name);
+			// printf("flag	  : %d\n", cmds[v->j].outs[v->xy].flag);
+			v->xy++;
 		}
-		var->x++;
 	}
 }
 
 void	files_saving(t_pipe *pipe, t_cmds **tmp)
 {
-	int		i;
-	int		h;
-	t_cmds *cmds;
+	t_cmds	*cmds;
 	t_vars	var;
 
 	var.start = 0;
 	var.quote_char = 0;
-	h = 0;
-	i = 0;
-	var.j = 0;
+	var.h = 0;
+	var.j = -1;
 	var.x = 0;
-	while (pipe->cmds[i])
-		i++;
-	*tmp = malloc(sizeof(t_cmds) * i);
+	*tmp = malloc(sizeof(t_cmds) * pipe->cmd_len);
 	cmds = *tmp;
-	cmds->cmd_len = i;
+	cmds->cmd_len = pipe->cmd_len;
 	cmds->red_len = 0;
-	while (var.j < i)
+	while (++var.j < pipe->cmd_len)
 	{
 		cmds[var.j].red_len = num_of_redirects(pipe->cmds[var.j]);
-		if(cmds[var.j].red_len)
+		if (cmds[var.j].red_len)
 			cmds[var.j].outs = malloc(sizeof(t_redirect) * cmds[var.j].red_len);
 		utils_saving(pipe, cmds, &var);
-		// var.xy = 0;
-		// var.x = 0;
-		// while (pipe->cmds[var.j][var.x])
-		// {
-		// 	if (pipe->cmds[var.j][var.x] == '"' || pipe->cmds[var.j][var.x] == '\'')
-		// 	{
-		// 		if (var.quote_char == 0)
-		// 			var.quote_char = pipe->cmds[var.j][var.x];
-		// 		else if (var.quote_char == pipe->cmds[var.j][var.x])
-		// 			var.quote_char = 0;
-		// 	}
-			// if ((pipe->cmds[var.j][var.x] == '>' || pipe->cmds[var.j][var.x] == '<') 
-		// 		&& is_between_quotes(pipe->cmds[var.j], var.x) && !var.quote_char)
-		// 	{
-		// 		files_fellings(pipe, cmds, &var);
-		// 		store_the_file_name(pipe->cmds[var.j], &cmds[var.j].outs[var.xy].file_name, var.x + 1, &var);
-		// 		clean_quotes(cmds[var.j].outs[var.xy].file_name);
-		// 		// printf("flag	  : %d\n", var.i);
-		// 		// pipe->cmds[var.j] = remove_substr(pipe->cmds[var.j], var.start, var.i);
-		// 		/*pipe->cmds[var.j] = */remove_substr(pipe->cmds[var.j], var.start, var.i);
-		// 		var.x = var.start - 1;
-		// 		// printf("file name : %s\n", pipe->cmds[var.j]);
-		// 		printf("file name : %s\n", cmds[var.j].outs[var.xy].file_name);
-		// 		printf("flag	  : %d\n", cmds[var.j].outs[var.xy].flag);
-		// 		var.xy++;
-		// 	}
-		// 	var.x++;
-		// }
 		cmds[var.j].cmd = ft_split(pipe->cmds[var.j], ' ');
-		h = 0;
-		while (cmds[var.j].cmd[h])
-			clean_quotes(cmds[var.j].cmd[h++]);
-		h = 0;
-		// while (cmds[var.j].cmd[h])
-		// 	puts(cmds[var.j].cmd[h++]);
-		var.j++;
+		var.h = 0;
+		while (cmds[var.j].cmd[var.h])
+			clean_quotes(cmds[var.j].cmd[var.h++]);
+		var.h = 0;
+		// while (cmds[var.j].cmd[var.h])
+		// 	puts(cmds[var.j].cmd[var.h++]);
+		// h = 0;
+		// var.j++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/14 08:27:21 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/15 23:51:48 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include <unistd.h>
-#include <fcntl.h>
 # include <stdlib.h>
 # include "libft/libft.h"
 # include <stdio.h>
@@ -24,27 +23,39 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 
+extern int	g_exit_code;
+
+typedef struct s_env
+{
+	char	**path;
+	char	*user;
+	char	*home;
+}	t_env;
+
 typedef struct s_vars
 {
 	int		i;
-    int		j;
-    int		space_found;
-    int		quote_char;
+	int		j;
+	int		h;
+	int		empty;
+	int		space_found;
+	int		quote_char;
 	int		x;
 	int		start;
+	int		len;
 	int		xy;
 	int		in_d_quotes;
 	int		in_quotes;
 	int		pid;
-	char	*cmd_exec;	
+	char	*cmd_exec;
 }	t_vars;
 
 enum e_types
 {
 	IN_FILE,
 	OUT_FILE,
-	APPEND_OUT,
-	APPEND_IN,
+	APPEND,
+	HERE_DOC,
 };
 
 typedef struct s_redirect
@@ -53,14 +64,12 @@ typedef struct s_redirect
 	char	*file_name;
 }	t_redirect;
 
-//< pwd ls < lsss < out > outfile -la | pwd cat | grep -n hello | cat -e
-
 typedef struct s_cmds
 {
-	int			red_len;// = 4
+	int			red_len;
 	int			cmd_len;
-	char		**cmd;// [0]-ls.. [1] -la
-	t_redirect  *outs;
+	char		**cmd;
+	t_redirect	*outs;
 }	t_cmds;
 
 typedef struct t_pipe
@@ -81,21 +90,22 @@ typedef struct t_pipe
 }	t_pipe;
 
 /***************      parse_tool          ****************/
+char	*my_getenv(const char *name, t_pipe *pipe);
 int		is_space(char *str);
 char	*ft_add_spaces(char *str);
-void 	replace_spaces_tabs(char *str);
+void	replace_spaces_tabs(char *str);
 
 /***************      pipes_parse         ****************/
-int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
+int		check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
+void	dollar_expansion(char **str, t_pipe *pipe);
 
 /***************    redirection_parse     ****************/
-int		check_redirect(t_pipe *cmd);
+int		check_redirect(char *str);
 int		num_of_redirects(char *str);
 void	remove_substr(char *s, unsigned int start, size_t len);
 
 /***************      free_functions      ****************/
 void	free_strings(char **av);
-void	free_3d(char ***av);
 void	free_all(t_pipe *pipe, t_cmds *cmd);
 
 /***************      quotes_parse        ****************/
@@ -149,5 +159,6 @@ void	update_env(t_pipe *c);
 int		check_executable(t_pipe *c, t_cmds *p);
 int		increase_shlvl_value(char *str);
 void	change_shlv(t_cmds *p, t_pipe *c, t_list *lst);
-char	**get_path(char **str);
+void	get_path(char **str, t_pipe *c);
+
 #endif

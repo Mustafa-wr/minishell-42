@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 14:58:26 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:51:43 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ static int	check_string_helper(char *str, int in_quote, int in_d_quote, int i)
 				in_d_quote = 0;
 			else if (!in_quote)
 				in_d_quote = 1;
-		}
-		else if (str[i] == '\\')
-		{
-			i++;
-			while (str[i] == ' ')
-				i++;
-			if (!str[i])
-				return (0);
 		}
 		i++;
 	}
@@ -73,7 +65,7 @@ static int	pipe_from_back(char *line)
 	if (line[len] == '|')
 		return (0);
 	i = 0;
-	while (line[i] == ' ' || line[i] =='\t')
+	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '|')
 		return (0);
@@ -88,7 +80,7 @@ static int	check_pipe_in_quotes(char *line, int i, int quotes, int j)
 		{
 			if (quotes == 0)
 				quotes = line[i];
-			else
+			else if (quotes == line[i])
 				quotes = 0;
 			i++;
 			continue ;
@@ -112,8 +104,8 @@ int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 	int	j;
 	int	quotes;
 
-	quotes = 0;
 	(void)cmds;
+	quotes = 0;
 	i = 0;
 	j = 0;
 	if (!pipe_from_back(line))
@@ -126,6 +118,7 @@ int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 	i = 0;
 	while (pipe->cmds[i])
 	{
+		dollar_expansion(&pipe->cmds[i], pipe);
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
 		replace_spaces_tabs(pipe->cmds[i]);
 		// clean_quotes(pipe->cmds[i]);

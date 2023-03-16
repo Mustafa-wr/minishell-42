@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/12 21:32:31 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/15 21:09:57 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ int	found_first(char **m_env, int k, t_pipe *p)
 					break ;
 				k--;
 			}
-			if (!m_env[f + 1])
-				return (i);
+			if (m_env[f] != NULL)
+				if (!m_env[f + 1])
+					return (i);
 		}
 		i++;
 	}

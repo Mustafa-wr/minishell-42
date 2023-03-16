@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 07:20:21 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 08:45:41 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/15 18:23:21 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,22 @@ int	increase_shlvl_value(char *str)
 	return (ft_atoi(str + i) + 1);
 }
 
-char	**get_path(char **str)
+void	get_path(char **str, t_pipe *c)
 {
-	int	i;
+	char	*s;
+	int		i;
 
 	i = 0;
+	s = NULL;
 	while (str[i])
 	{
 		if (strncmp_orginal("PATH=", str[i], 5) == 0)
 		{
-			return (ft_split(str[i] + 5, ':'));
+			s = str[i] + 5;
+			c->m_path = ft_split(s, ':');
+			return ;
 		}
 		i++;
 	}
-	return (NULL);
+	return ;
 }
