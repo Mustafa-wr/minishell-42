@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 00:54:19 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/19 00:24:28 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,45 @@
 void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 {
 	y += 1;
-	(void)c;
+	// (void)c;
+	// printf("e = %s\n", p[x].outs[1].file_name);
+	// exit(0);
+	// c->fd1 = 0;
+	// printf("c-> = %d", c->fd1);
+	// exit(0);
+	// printf("fd1 = %d\n", c->fd1);
 	if (!p[x].cmd[y] || !p[x].cmd[y][0])
-		printf("\n");
-	else if (check_for_flag(p[x].cmd[y])&& !p[x].cmd[y - 1][4])
 	{
+		printf("heeeereeeeeee1\n");
+		printf("\n");
+	}
+	else if (check_for_flag(p[x].cmd[y]) && !p[x].cmd[y - 1][4])
+	{
+		// printf("heeeereeeeeee2\n");
 		while (p[x].cmd[y])
 		{
-			printf("%s ", p[x].cmd[y]);
+			if (p[x].red_len == 0)
+				printf("%s ", p[x].cmd[y]);
+			else
+			{
+				c->fd1 = check_exec_rederict(p, c);
+				// printf("c = %d", c->fd1);
+				write_in_fd(p, x, y, c);
+				write(c->fd1, "\n", 1);
+				close(c->fd1);
+				return ;
+				// printf("kll");
+				// exit(0);
+			}
 			y++;
 		}
-		printf("\n");
+		// close(c->fd1);
+		// printf("\n");
+		return ;
 	}
 	else if (check_for_flag(p[x].cmd[y]) == 0)
 	{
+		printf("heeeereeeeeee");
 		y += 1;
 		if (!p[x].cmd[y])
 			return ;
@@ -41,6 +66,7 @@ void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 	}
 	else
 		printf("%s: command not found\n", p[x].cmd[y - 1]);
+	close(c->fd1);
 	free_all(c, p);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/16 04:04:12 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/18 23:13:27 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	check_other(t_cmds *p, t_pipe *c)
 		printf("cmd_len = %d\n", p->cmd_len);
 		multiple_pipes(p, c);
 	}
+	// if (c->m_path)
+	// 	free_strings(c->m_path);
 }
 
 int	check_for_redirction(t_cmds *p, t_pipe *c)
