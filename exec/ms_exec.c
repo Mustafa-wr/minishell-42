@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/18 23:13:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/19 20:28:52 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ms_exec(t_cmds *p, t_pipe *c)
 	t_vars	vars;
 
 	vars.i = 0;
-	if (check_builtin(p, c, &vars) == 1 && check_executable(c, p) == 0)
+	if (check_builtin(p, c, &vars) == 1)
 		check_other(p, c);
 	// else if (check_executable(c, p) == 1)
 	// {
@@ -41,6 +41,7 @@ int	check_builtin(t_cmds *p, t_pipe *c, t_vars *vars)
 		return (ft_unset(p, x, 0, c), 0);
 	else
 	{
+		// printf("")
 		ft_tolower(p[x].cmd[0]);
 		if (ft_strncmp(p[x].cmd[0], "echo", 4) == 0)
 			return (ft_echo(p, x, 0, c), 0);
@@ -113,11 +114,18 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 		// 	printf("command not found :%s\n", p[0].cmd[0]);
 		// 	free_and_exit(c, p);
 		// }
-			if (execve(cmd, p[0].cmd, c->tmp_env) < 0)
-			{
-				printf("command not found :%s\n", p[0].cmd[0]);
-				free_and_exit(c, p);
-			}
+		if (p[0].red_len > 0)
+		{
+			c->fd1 = check_exec_rederict(p, c);
+			dup2(c->fd1, STDOUT_FILENO);
+			if (c->fd1 > 2)
+				close(c->fd1);
+		}
+		if (execve(cmd, p[0].cmd, c->tmp_env) < 0)
+		{
+			printf("command not found :%s\n", p[0].cmd[0]);
+			free_and_exit(c, p);
+		}
 		// else
 		// {
 		// 	printf("command not found :%s\n", p[0].cmd[0]);

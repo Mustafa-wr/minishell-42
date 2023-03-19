@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/16 07:03:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:05:38 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 		{
 			if (j == 0)
 			{
+				c->fd2 = check_input_redirect(p, c);
+				if (c->fd2 > 2)
+				{
+					dup2(c->fd2, STDIN_FILENO);
+					close(c->fd2);
+				}
 				dup2(c->fd[0][1], STDOUT_FILENO);
 				close(c->fd[0][1]);
 				close(c->fd[0][0]);
@@ -65,6 +71,12 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 					dup2(c->fd[1][0], STDIN_FILENO);
 					close(c->fd[1][1]);
 					close(c->fd[1][0]);
+				}
+				c->fd1 = check_exec_rederict(p, c);
+				if (c->fd1 > 2)
+				{
+					dup2(c->fd1, STDOUT_FILENO);
+					close(c->fd1);
 				}
 				cmd_exec = check_command_existence(p[j].cmd[0], c->m_path);
 				if (execve(cmd_exec, p[j].cmd, NULL) < 0)

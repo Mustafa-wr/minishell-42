@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 00:39:16 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/19 20:42:44 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	insert_the_node(t_cmds *p, t_pipe *c)
 	while (p[i].cmd[j])
 	{
 		// printf("p = %s\n", p[i].cmd[j]);
-		if (ft_strncmp(p[i].cmd[j], "=", 1) != 0)
+		if (ft_strncmp(p[i].cmd[j], "=", 1) != 0 && ft_isdigit(p[i].cmd[j][0]) == 0)
 			add_to_export(p, c, i, j);
 		j++;
 	}

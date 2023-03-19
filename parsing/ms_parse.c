@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/14 17:43:47 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/03/19 20:28:11 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	get_env(&pipe, envp);
 	fill_export(&pipe);
+	pipe.m_path = NULL;
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 00:27:51 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/19 20:38:14 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 			tmp3->next = tmp->next;
 			tmp2->next = tmp3;
 			free(tmp->content);
-			free(tmp);
+			// free(tmp);
 			break ;
 		}
 		tmp2 = tmp;
@@ -94,7 +94,6 @@ void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
 			tmp3->next = tmp->next;
 			tmp2->next = tmp3;
 			free(tmp->content);
-			free(tmp);
 			break ;
 		}
 		tmp2 = tmp;
