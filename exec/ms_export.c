@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/19 20:38:14 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/25 03:26:25 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,22 @@ void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 		{
 			tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
 			tmp3->next = tmp->next;
-			tmp2->next = tmp3;
-			free(tmp->content);
-			// free(tmp);
+			if (tmp2->content != tmp->content)
+				tmp2->next = tmp3;
 			break ;
 		}
 		tmp2 = tmp;
 		tmp = tmp->next;
 		k++;
 	}
-	tmp2->next = tmp3;
+	if (tmp2->content != tmp->content)
+		tmp2->next = tmp3;
+	if (k == 0)
+	{
+		c->m_export = tmp3;
+		free(tmp->content);
+		free(tmp);
+	}
 }
 
 char	*env_index(int index, t_list *env)
@@ -92,13 +98,21 @@ void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
 		{
 			tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
 			tmp3->next = tmp->next;
-			tmp2->next = tmp3;
-			free(tmp->content);
+			if (tmp2->content != tmp->content)
+				tmp2->next = tmp3;
 			break ;
 		}
 		tmp2 = tmp;
 		tmp = tmp->next;
 		k++;
+	}
+	if (tmp2->content != tmp->content)
+		tmp2->next = tmp3;
+	if (k == 0)
+	{
+		c->m_export = tmp3;
+		free(tmp->content);
+		free(tmp);
 	}
 }
 

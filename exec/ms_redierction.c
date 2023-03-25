@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/19 18:03:10 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/25 23:15:47 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,26 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 		i = 0;
 		while (i < p[j].red_len)
 		{
-			if (p[j].outs[i].flag == 0)
-			{
-				// printf("jhjhhjh");
-				fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);
-				if (fd < 0)
-				{
-					perror("no such file or dir\n");
-					free_and_exit(c, p);
-				}
-			}
-			else
-			{
-				fd = open(p[j].outs[i].file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			}
+			// if (p[j].outs[i].flag == 0)
+			// {
+			// 	// printf("jhjhhjh");
+			// 	fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);
+			// 	if (fd < 0)
+			// 	{
+			// 		perror("no such file or dir\n");
+			// 		free_and_exit(c, p);
+			// 	}
+			// }
+			// else
+			// {
+			fd = open(p[j].outs[i].file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			// }
 			if (p[j].outs[i].flag == 1)
 			{
 				if (i == p[j].red_len - 1)
 				{
 					printf("p in = %s\n", p[j].outs[i].file_name);
+					printf("fd in = %d\n", fd);
 					if (fd == 0)
 					{
 						close(fd);
@@ -96,12 +97,13 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 	i = 0;
 	int j = 0;
 	c->fd1 = 0;
-	printf("len_red = %d\n", p->red_len);
+	// printf("cmd_red = %d\n", p->cmd_len);
 	while (j < p->cmd_len)
 	{
 		i = 0;
 		while (i < p[j].red_len)
 		{
+			// printf("red in = %d\n", p[j].red_len);
 			if (p[j].outs[i].flag == 0)
 			{
 				fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);

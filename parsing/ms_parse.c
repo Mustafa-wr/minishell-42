@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/19 20:28:11 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/25 18:23:42 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	handle_sigint(int sig)
 int	main(int ac, char **av, char **envp)
 {
 	t_pipe	pipe;
-	t_cmds	*cmds;
+	t_cmds	*cmds = NULL;
 	char	*read;
 
 	(void)av;
@@ -91,7 +91,7 @@ int	main(int ac, char **av, char **envp)
 		signal(SIGQUIT, SIG_IGN);
 		read = readline("minishell$ ");
 		if (!read)
-			return (free_list(&pipe.m_env), printf("exit\n"), 0);
+			return (free_and_exit_2(&pipe, cmds), printf("exit\n"), 0);
 		if (ms_main_helper(&pipe, cmds, read))
 			continue ;
 		files_saving(&pipe, &cmds);

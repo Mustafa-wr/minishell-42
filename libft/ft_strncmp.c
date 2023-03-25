@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:44:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/02 21:33:29 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/25 17:55:05 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned char	*ns2;
 
 	if (!s1 || !s2)
-		return (1);
+	{
+		// printf("out\n");
+		return (-1);
+	}
 	ns1 = (unsigned char *)s1;
 	ns2 = (unsigned char *)s2;
 	i = 0;

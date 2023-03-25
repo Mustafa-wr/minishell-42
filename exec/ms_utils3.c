@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/19 20:42:44 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/25 03:21:20 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 	tmp2 = NULL;
 	tmp = c->m_export;
 	tmp3 = tmp;
+	printf("here to add\n");
 	if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 0)
 		return ;
 	else if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 1)
 	{
-		// printf("change the value\n");
+		printf("change the value\n");
+		// exit(0);
 		changing_the_value(p, i, j, c);
 		changing_the_env_v(p, i, j, c);
 		return ;
@@ -38,11 +40,16 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 			if (strncmp_orginal(tmp->content, p[k].cmd[j],
 					ft_strlen(tmp->content)) > 0)
 			{
+				printf("front\n");
 				tmp2 = ft_lstnew(ft_strdup(p[k].cmd[j]));
+				printf("tmp2 = %s\n", (char *)tmp2->content);
 				tmp2->next = tmp;
-				tmp3->next = tmp2;
+				if (i != 0)
+					tmp3->next = tmp2;
 				c->env_count += 1;
 				ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[k].cmd[j])));
+				if (i == 0)
+					c->m_export = tmp2;
 				break ;
 			}
 			tmp3 = tmp;
@@ -56,13 +63,13 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 			c->env_count += 1;
 			return ;
 		}
-		else if (tmp && i == 0)
-		{
-			ft_lstadd_front(&c->m_export, tmp2);
-			ft_lstadd_back(&c->m_env, tmp2);
-			c->env_count += 1;
-			return ;
-		}
+		// else if (tmp && i == 0)
+		// {
+		// 	ft_lstadd_front(&c->m_export, tmp2);
+		// 	ft_lstadd_back(&c->m_env, tmp2);
+		// 	c->env_count += 1;
+		// 	return ;
+		// }
 	}
 }
 

@@ -29,3 +29,11 @@ from both env and export
 (optional)
 1-SHLVL
 2-PWD
+
+/***************** pipes && redierction **************/
+
+ls | <i wc > f | cat > g
+ls | <i wc | cat > f
+> ""
+<"">""
+<''>''
