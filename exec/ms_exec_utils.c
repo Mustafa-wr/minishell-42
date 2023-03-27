@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/19 20:23:28 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/27 04:30:56 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*check_command_existence(char *av, char **path)
 	str = malloc(i + 2);
 	str[0] = '/';
 	i = 1;
-	// printf("av = %s\n", av);
 	while (av[j] != '\0' && av[i - 1] != ' ')
 	{
 		str[i] = av[j];

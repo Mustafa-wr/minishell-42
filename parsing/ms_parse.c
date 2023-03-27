@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/25 18:23:42 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/26 02:50:21 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		files_saving(&pipe, &cmds);
 		ms_exec(cmds, &pipe);
-		// free_all(&pipe, cmds);
 		add_history(read);
 	}
 }

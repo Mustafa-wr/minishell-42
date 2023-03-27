@@ -37,3 +37,8 @@ ls | <i wc | cat > f
 > ""
 <"">""
 <''>''
+<f <g <i cat
+<f <g <i cat >1 >2 >3 >4
+<i <f <g cat >s
+<i <f <g cat >s
+kllkl>lkjlkj

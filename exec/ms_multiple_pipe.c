@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/25 21:47:04 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/26 22:27:28 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,6 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 		wait(NULL);
 		k++;
 	}
-	free_all(c, p);
+	// free_all(c, p);
 	// free_strings(c->m_path);
 }

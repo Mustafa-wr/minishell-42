@@ -1,0 +1,36 @@
+total 328
+drwxrwxr-x@ 34 abdamoha  2022_abu-dhabi   1156 Mar 27 03:38 .
+drwxr-xr-x  22 abdamoha  2022_abu-dhabi    748 Mar 26 19:37 ..
+drwxr-xr-x  14 abdamoha  2022_abu-dhabi    476 Mar 25 23:20 .git
+drwxrwxr-x@  5 abdamoha  2022_abu-dhabi    170 Mar  9 20:20 .vscode
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      7 Mar 26 02:49 2
+-rw-r--r--   1 abdamoha  2022_abu-dhabi   1357 Mar 26 22:51 Makefile
+-rw-r--r--   1 abdamoha  2022_abu-dhabi     10 Mar 26 18:13 a
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      4 Mar 26 17:50 c
+-rwxr-xr-x   1 abdamoha  2022_abu-dhabi    146 Mar 15 16:48 check_leaks.sh
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      6 Mar 26 17:50 d
+-rw-r--r--   1 abdamoha  2022_abu-dhabi     22 Mar 25 18:09 env;
+-rw-r--r--   1 abdamoha  2022_abu-dhabi     22 Mar 25 18:09 env_count
+drwxr-xr-x  29 abdamoha  2022_abu-dhabi    986 Mar 27 03:35 exec
+-rw-r--r--   1 abdamoha  2022_abu-dhabi     12 Mar 26 18:08 f
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      0 Mar 27 03:40 f1
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      0 Mar 27 03:40 f2
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      0 Mar 26 02:48 fd1);
+
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      0 Mar 26 02:48 fd1,
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      8 Mar 26 19:53 g
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      8 Mar 26 22:42 h
+-rw-r--r--   1 abdamoha  2022_abu-dhabi     11 Mar 26 18:08 i
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      6 Mar 26 22:42 j
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      0 Mar 27 03:39 l
+drwxr-xr-x  85 abdamoha  2022_abu-dhabi   2890 Mar 27 03:35 libft
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      0 Mar 26 22:48 ll
+-rwxr-xr-x   1 abdamoha  2022_abu-dhabi  81616 Mar 27 03:35 minishell
+-rw-r--r--   1 abdamoha  2022_abu-dhabi   5089 Mar 26 21:48 minishell.h
+-rw-r--r--   1 abdamoha  2022_abu-dhabi   1571 Mar 26 02:36 ms_free_functions.c
+-rw-r--r--   1 abdamoha  2022_abu-dhabi   4140 Mar 27 03:35 ms_free_functions.o
+drwxr-xr-x  18 abdamoha  2022_abu-dhabi    612 Mar 27 03:35 parsing
+-rw-r--r--   1 abdamoha  2022_abu-dhabi    190 Mar 26 22:37 r
+-rw-r--r--   1 abdamoha  2022_abu-dhabi      0 Mar 26 18:13 s
+-rw-r--r--   1 abdamoha  2022_abu-dhabi   1611 Mar 17 19:12 tt.c
+-rw-r--r--   1 abdamoha  2022_abu-dhabi    112 Mar 15 16:48 valgrind_readline_leaks_ignore.txt

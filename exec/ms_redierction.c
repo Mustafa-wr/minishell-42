@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/25 23:15:47 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/27 04:00:58 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 	// 	return (0);
 	// else
 	// 	return (1);
-	printf("len_red = %d\n", p->red_len);
+	// printf("len_red = %d\n", p->red_len);
 	while (j < p->cmd_len)
 	{
 		i = 0;
@@ -43,24 +43,26 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 			// }
 			// else
 			// {
-			fd = open(p[j].outs[i].file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			if (p[j].outs[i].flag == 1)
+				fd = open(p[j].outs[i].file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 			// }
 			if (p[j].outs[i].flag == 1)
 			{
 				if (i == p[j].red_len - 1)
 				{
-					printf("p in = %s\n", p[j].outs[i].file_name);
-					printf("fd in = %d\n", fd);
+					// printf("p in = %s\n", p[j].outs[i].file_name);
+					// printf("fd in = %d\n", fd);
 					if (fd == 0)
 					{
-						close(fd);
+						// close(fd);
 						return (0);
 					}
 					return (fd);
 				}
 			}
 			i++;
-			close(fd);
+			if (fd != 0)
+				close(fd);
 		}
 		j++;
 	}
@@ -106,6 +108,7 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 			// printf("red in = %d\n", p[j].red_len);
 			if (p[j].outs[i].flag == 0)
 			{
+				printf("name %s\n", p[j].outs[i].file_name);
 				fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);
 				if (fd < 0)
 				{
@@ -113,9 +116,9 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 					free_and_exit(c, p);
 				}
 			}
-			if (i == p[j].red_len - 1)
+			if (p[j].outs[i + 1].flag != 0)
 			{
-				printf("p in = %s\n", p[j].outs[i].file_name);
+				printf("p stdin = %s\n", p[j].outs[i].file_name);
 				if (fd == 0)
 				{
 					close(fd);

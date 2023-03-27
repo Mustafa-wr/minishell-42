@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/25 18:07:05 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/26 22:26:54 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 {
 	y += 1;
-	// (void)c;
-	// printf("e = %s\n", p[x].outs[1].file_name);
-	// exit(0);
-	// c->fd1 = 0;
-	// printf("c-> = %d", c->fd1);
-	// exit(0);
-	// printf("fd1 = %d\n", c->fd1);
+	c->fd1 = check_exec_rederict(p, c);
 	if (!p[x].cmd[y] || !p[x].cmd[y][0])
 	{
 		// printf("heeeereeeeeee1\n");
-		printf("\n");
+		if (c->fd1 > 2)
+		{
+			write(c->fd1, "\n", 1);
+			close(c->fd1);
+		}
+		else
+			printf("\n");
 	}
 	else if (check_for_flag(p[x].cmd[y]) && !p[x].cmd[y - 1][4])
 	{
@@ -36,7 +36,6 @@ void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 				printf("%s ", p[x].cmd[y]);
 			else
 			{
-				c->fd1 = check_exec_rederict(p, c);
 				// printf("c = %d", c->fd1);
 				write_in_fd(p, x, y, c);
 				write(c->fd1, "\n", 1);
@@ -59,15 +58,29 @@ void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 			return ;
 		while (p[x].cmd[y + 1])
 		{
-			printf("%s ", p[x].cmd[y]);
+			if (c->fd1 > 2)
+			{
+				write_in_fd(p, x, y, c);
+				close(c->fd1);
+				return ;
+			}
+			else
+				printf("%s ", p[x].cmd[y]);
 			y++;
 		}
-		printf("%s", p[x].cmd[y]);
+		if (c->fd1 > 2)
+		{
+			write_in_fd(p, x, y, c);
+			close(c->fd1);
+			return ;
+		}
+		else
+			printf("%s", p[x].cmd[y]);
 	}
 	else
 		printf("%s: command not found\n", p[x].cmd[y - 1]);
-	close(c->fd1);
-	free_all(c, p);
+	// close(c->fd1);
+	// free_all(c, p);
 }
 
 void	ft_pwd(t_cmds *p, t_pipe *c)
@@ -91,7 +104,7 @@ void	ft_pwd(t_cmds *p, t_pipe *c)
 		}
 	}
 	waitpid(i, NULL, 0);
-	free_all(c, p);
+	// free_all(c, p);
 	return ;
 }
 
@@ -115,7 +128,7 @@ void	ft_env(t_cmds *p, t_pipe *c)
 	}
 	if (c->fd1 > 2)
 		close(c->fd1);
-	free_all(c, p);
+	// free_all(c, p);
 }
 
 void	ft_cd(t_cmds *p, int x, int y, t_pipe *c)
@@ -125,7 +138,7 @@ void	ft_cd(t_cmds *p, int x, int y, t_pipe *c)
 	c->fd1 = check_exec_rederict(p, c);
 	if (chdir(p[x].cmd[y]) < 0)
 		printf("%s: No such file or directory\n", p[x].cmd[y]);
-	free_all(c, p);
+	// free_all(c, p);
 	if (c->fd1 > 2)
 		close(c->fd1);
 	return ;
@@ -147,15 +160,21 @@ void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 		while (tmp)
 		{
 			if (p[0].red_len > 0)
+			{
 				ft_putstr_fd(tmp->content, c->fd1);
+			}
 			else
+			{
 				printf("declare -x %s\n", (char *)tmp->content);
+			}
 			tmp = tmp->next;
 		}
 	}
 	if (c->fd1 > 2)
 		close(c->fd1);
-	free_all(c, p);
+	// free_strings(p[0].cmd);
+	// p[0].cmd = NULL;
+	// free_all(c, p);
 }
 
 void	ft_unset(t_cmds *p, int i, int j, t_pipe *c)

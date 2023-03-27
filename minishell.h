@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/25 18:23:26 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/26 21:48:27 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,4 +167,6 @@ int		check_exec_rederict(t_cmds *p, t_pipe *c);
 void	free_and_exit_2(t_pipe *c, t_cmds *p);
 void	write_in_fd(t_cmds *p, int x, int y, t_pipe *c);
 int		check_input_redirect(t_cmds *p, t_pipe *c);
+int		check_heredoc(t_cmds *p, t_pipe *c);
+void	exec_heredoc(t_cmds *p, t_pipe *c);
 #endif
