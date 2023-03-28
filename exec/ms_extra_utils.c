@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/15 21:09:57 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:53:19 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	found_first(char **m_env, int k, t_pipe *p)
 	f = 0;
 	c = 0;
 	j = 0;
-	(void)k;
+	// (void)k;
 	k = p->env_count;
 	while (m_env[i])
 	{
@@ -63,8 +63,14 @@ int	found_first(char **m_env, int k, t_pipe *p)
 				k--;
 			}
 			if (m_env[f] != NULL)
+			{
 				if (!m_env[f + 1])
 					return (i);
+			}
+			else
+			{
+				return (i);
+			}
 		}
 		i++;
 	}

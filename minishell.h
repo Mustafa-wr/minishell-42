@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/26 21:48:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/28 01:13:00 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct t_pipe
 	int			fd[2][2];
 	int			fd1;
 	int			fd2;
+	char		tmpfile[11];
 }	t_pipe;
 
 /***************      parse_tool          ****************/

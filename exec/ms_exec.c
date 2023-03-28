@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/27 04:15:46 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/27 04:42:30 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	check_builtin(t_cmds *p, t_pipe *c, t_vars *vars)
 	if (p[x].cmd)
 	{
 		if (ft_strncmp(p[x].cmd[0], "exit", 4) == 0)
+		{
+			// printf("eftxit\n");
 			return (free_and_exit(c, p), 0);
+		}
 		else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
 			return (ft_cd(p, x, 0, c), 0);
 		else if (ft_strncmp(p[x].cmd[0], "export", 6) == 0)

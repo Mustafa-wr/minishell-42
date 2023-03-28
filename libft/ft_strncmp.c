@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:44:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/26 22:53:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/27 23:18:24 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,16 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
+static int	cut_nl(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	return (i);
+}
+
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
@@ -59,6 +69,19 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	i = 0;
 	c = ft_strlen(s1) - 1;
 	k = ft_strlen(s2) - 1;
+	if (k == 0 && cut_nl(s1) - 1 == 0)
+	{
+		// printf("case = %d\n", k);
+		if (ns1[c - 1] != ns2[k])
+		{
+			// printf("1\n");
+			return (ns1[c] - ns2[k]);
+		}
+		else
+			return (0);
+	}
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (1);
 	while (i < n && c >= 0 && k >= 0)
 	{
 		if (ns1[c] != ns2[k])
@@ -73,17 +96,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		// printf("ns1 = %c", ns2[k]);
 		return (ns1[c] - ns2[c]);
 	}
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (1);
 	return (0);
 }
-// int	main(void)
-// {
-// 	char	*s;
-// 	char	*s2;
 
-// 	s = "mk1L";
-// 	s2 = "mk1l";
-// 	printf("%d", ft_strncmp(s, s2, 4));
-// 	return (0);
-// }

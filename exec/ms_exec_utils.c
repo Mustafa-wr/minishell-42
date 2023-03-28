@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/27 04:30:56 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/27 04:33:23 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ void	last_sorting(t_pipe *p)
 	{
 		if (tmp->next)
 		{
-			// s1 = tmp->content;
-			// s2 = tmp->next->content;
 			if (strncmp_orginal(tmp->content, tmp->next->content, len_till_equal(tmp->content)) > 0)
 			{
 				str = tmp->content;
