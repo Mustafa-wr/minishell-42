@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 06:09:30 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:09:14 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,11 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 		i = 0;
 		while (i < p[j].red_len)
 		{
-			// printf("red in = %d\n", p[j].red_len);
+			// printf("red in = %s\n", p[j].outs[i].file_name);
+			// printf("flag = %d\n", p[j].outs[i].flag);
 			if (p[j].outs[i].flag == 0)
 			{
-				printf("name %s\n", p[j].outs[i].file_name);
+				// printf("name %s\n", p[j].outs[i].file_name);
 				fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);
 				if (fd < 0)
 				{
@@ -105,7 +106,7 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 			}
 			if (p[j].outs[i].flag == 0)
 			{
-				printf("p stdin = %s\n", p[j].outs[i].file_name);
+				// printf("p stdin = %s\n", p[j].outs[i].file_name);
 				if (i == p[j].red_len - 1)
 				{
 					if (fd == 0)

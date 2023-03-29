@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/26 22:26:54 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:27:17 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_env(t_cmds *p, t_pipe *c)
 	{
 		if (p[0].red_len > 0)
 		{
-			ft_putstr_fd(tmp->content, c->fd1);
+			ft_putstr_fd(tmp->content, c->fd1, 1);
 		}
 		else
 			printf("%s\n", (char *)tmp->content);
@@ -161,7 +161,7 @@ void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 		{
 			if (p[0].red_len > 0)
 			{
-				ft_putstr_fd(tmp->content, c->fd1);
+				ft_putstr_fd(tmp->content, c->fd1, 1);
 			}
 			else
 			{

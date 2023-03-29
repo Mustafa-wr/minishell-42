@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/26 02:50:21 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 01:36:00 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		read = readline("minishell$ ");
+		read = readline("bash-3.3$");
 		if (!read)
 			return (free_and_exit_2(&pipe, cmds), printf("exit\n"), 0);
 		if (ms_main_helper(&pipe, cmds, read))

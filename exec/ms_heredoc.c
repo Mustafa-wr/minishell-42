@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 19:44:06 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 03:40:12 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:39:48 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 	int		k = 0;
 	int		tmp = 0;
 	char	*line;
-	char	*s;
+	// char	*s;
 
 	(void)p;
 	c->fd1 = 0;
@@ -52,42 +52,53 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 	char *m = "h";
 	// printf("m = %s\n", m);
 	heredoc_len(c, p);
-	printf("r l = %d\n", p[i].red_len);
-	s = p[i].outs[k].file_name;
-	printf("s = %s\n", s);
-	usleep(111);
+	// printf("cmd  = %s\n", p[i].cmd[0]);
+	// printf("del  = %s\n", p[i].outs[0].file_name);
+	// s = p[0].outs[k].file_name;
+	// printf("s = %s\n", s);
+	// usleep(111);
 	while (k < p[i].red_len)
 	{
-		tmp = open(m, O_RDWR | O_TRUNC | O_CREAT, 0644);
-		if (tmp < 0)
+		if (p[i].outs[k].flag == 3)
 		{
-			printf("error\n");
-			exit(1);
-		}
-		// printf("tmp = %d\n", tmp);
-		write(1, "> ", 2);
-		line = get_next_line(0);
-		while (ft_strncmp(line, s, ft_strlen(p[i].outs[k].file_name)) != 0)
-		{
-			ft_putstr_fd(line, tmp);
+			tmp = open(m, O_RDWR | O_TRUNC | O_CREAT, 0644);
+			if (tmp < 0)
+			{
+				printf("error\n");
+				exit(1);
+			}
+			// printf("tmp = %d\n", tmp);
 			write(1, "> ", 2);
-			free(line);
 			line = get_next_line(0);
-			if (!line)
+			while (1)
+			{
+				if(strcmp(line, ft_strjoin(p[i].outs[k].file_name, "\n")) == 0)
+				{
+					p[i].outs[k].flag = 0;
+					// printf("fn before = %s\n", p[i].outs[k].file_name);
+					p[i].outs[k].file_name = ft_strdup(m);
+					// printf("fn = %s\n", p[i].outs[k].file_name);
+					// printf("flag = %d\n", p[i].outs[k].flag);
+					break ;
+				}
+				ft_putstr_fd(line, tmp, 0);
+				write(1, "> ", 2);
+				free(line);
+				line = get_next_line(0);
+				if (!line)
+					break ;
+			}
+			if (line)
+				free(line);
+			if (k == p[i].red_len - 1)
 				break ;
-			// len++;
-			// if (len == p[i].red_len)
-			// 	break ;
+			k++;
+			close(tmp);
 		}
-		if (line)
-			free(line);
-		k++;
-		close(tmp);
 	}
 	close(tmp);
-	tmp = open (m, O_RDONLY, 0644);
-	write(1, "bye\n", 4);
-	return (tmp);
+	// tmp = open (m, O_RDONLY, 0644);
+	return (0);
 	// }
 }
 

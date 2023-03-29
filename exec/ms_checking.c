@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 01:18:17 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 05:57:41 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/29 23:08:51 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,46 +39,40 @@ void	input_red(t_cmds *p, t_pipe *c)
 	{
 		if (check_heredoc(p, c) == 1)
 		{
-			printf("fff\n");
-			c->fd1 = exec_heredoc(p, c, 0);
+			exec_heredoc(p, c, 0);
+		}
+		c->fd1 = check_input_redirect(p, c);
+		if (c->fd1 > 2)
+		{
 			dup2(c->fd1, STDIN_FILENO);
 			close(c->fd1);
-		}
-		else
-		{
-			c->fd1 = check_input_redirect(p, c);
-			if (c->fd1 > 2)
-			{
-				dup2(c->fd1, STDIN_FILENO);
-				close(c->fd1);
-			}
 		}
 	}
 }
 
-void	output_red(t_cmds *p, t_pipe *c, char *cmd)
-{
-	if (p[0].outs[p[0].red_len - 1].flag == 1)
-	{
-		c->fd2 = check_exec_rederict(p, c);
-		if (c->fd2 > 2)
-		{
-			if (cmd)
-			{
-				dup2(c->fd2, STDOUT_FILENO);
-				close(c->fd2);
-			}
-		}
-	}
-	if ((!cmd && !p[0].cmd)
-		|| (cmd == NULL && p[0].red_len > 0 && !p[0].cmd[0]))
-	{
-		free_and_exit(c, p);
-	}
-	else if (cmd == NULL && !p[0].cmd)
-	{
-		write(2, &p[0].cmd[0], ft_strlen(p[0].cmd[0]));
-		write(2, "command not found :\n", 22);
-		free_and_exit(c, p);
-	}
-}
+// void	output_red(t_cmds *p, t_pipe *c, char *cmd)
+// {
+// 	if (p[0].outs[p[0].red_len - 1].flag == 1)
+// 	{
+// 		c->fd2 = check_exec_rederict(p, c);
+// 		if (c->fd2 > 2)
+// 		{
+// 			if (cmd)
+// 			{
+// 				dup2(c->fd2, STDOUT_FILENO);
+// 					close(c->fd2);
+// 			}
+// 		}
+// 	}
+// 	if ((!cmd && !p[0].cmd)
+// 		|| (cmd == NULL && p[0].red_len > 0 && !p[0].cmd[0]))
+// 	{
+// 		free_and_exit(c, p);
+// 	}
+// 	else if (cmd == NULL && !p[0].cmd)
+// 	{
+// 		write(2, &p[0].cmd[0], ft_strlen(p[0].cmd[0]));
+// 		write(2, "command not found :\n", 22);
+// 		free_and_exit(c, p);
+// 	}
+// }
