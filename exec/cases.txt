@@ -5,6 +5,10 @@ ECHO   "gfeyjgf"
 Echo   "gfeyjgf"
 ECho   "gfeyjgf"
 ECHo   "gfeyjgf"
+echo > z.txt (permissions)
+echo 
+echo "'"$USER"'"
+
 
 
 
@@ -42,3 +46,4 @@ ls | <i wc | cat > f
 <i <f <g cat >s
 <i <f <g cat >s
 kllkl>lkjlkj
+chmod 000 and play with redierction && shlvl

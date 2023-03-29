@@ -21,13 +21,14 @@ SRCS =	parsing/ms_parse.c					\
 		exec/ms_multiple_pipes_utils.c      \
 		exec/ms_builtins_utils.c            \
 		exec/ms_redierction.c               \
-		exec/ms_heredoc.c      
+		exec/ms_heredoc.c                   \
+		exec/ms_checking.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include #-fsanitize=address
+CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -fsanitize=address
 
 all : $(NAME)
 

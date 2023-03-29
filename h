@@ -1,2 +1,15 @@
-tukka
-
+Makefile
+check_leaks.sh
+exec
+h
+l
+libft
+m
+minishell
+minishell.h
+ms_free_functions.c
+ms_free_functions.o
+parsing
+tt.c
+valgrind_readline_leaks_ignore.txt
+z.txt

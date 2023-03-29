@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/26 22:27:28 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/29 00:45:09 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,18 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 		{
 			if (j == 0)
 			{
+				if (check_heredoc(p, c) == 1)
+				{
+					// printf("fff\n");
+					c->fd1 = exec_heredoc(p, c, j);
+					dup2(c->fd1, STDIN_FILENO);
+					close(c->fd1);
+				}
 				c->fd2 = check_input_redirect(p, c);
 				if (c->fd2 > 2)
 				{
-					dup2(c->fd2, STDIN_FILENO);
+					if (check_heredoc(p, c) == 0)
+						dup2(c->fd2, STDIN_FILENO);
 					close(c->fd2);
 				}
 				dup2(c->fd[0][1], STDOUT_FILENO);
@@ -52,9 +60,17 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 			}
 			else if (j == p->cmd_len - 1)
 			{
+				if (check_heredoc(p, c) == 1)
+				{
+					// printf("bb\n");
+					c->fd1 = exec_heredoc(p, c, j);
+					dup2(c->fd1, STDIN_FILENO);
+					close(c->fd1);
+				}
 				if (i % 2 == 0 && j == 1)
 				{
-					dup2(c->fd[0][0], STDIN_FILENO);
+					if (check_heredoc(p, c) == 0)
+						dup2(c->fd[0][0], STDIN_FILENO);
 					close(c->fd[0][1]);
 					close(c->fd[0][0]);
 					close(c->fd[1][1]);
@@ -62,13 +78,15 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				}
 				else if (i % 2 == 1)
 				{
-					dup2(c->fd[0][0], STDIN_FILENO);
+					if (check_heredoc(p, c) == 0)
+						dup2(c->fd[0][0], STDIN_FILENO);
 					close(c->fd[0][1]);
 					close(c->fd[0][0]);
 				}
 				else
 				{
-					dup2(c->fd[1][0], STDIN_FILENO);
+					if (check_heredoc(p, c) == 0)
+						dup2(c->fd[1][0], STDIN_FILENO);
 					close(c->fd[1][1]);
 					close(c->fd[1][0]);
 				}
@@ -91,15 +109,29 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				{
 					if (p[j].red_len > 0)
 					{
+						if (check_heredoc(p, c) == 1)
+						{
+							printf("fff\n");
+							c->fd1 = exec_heredoc(p, c, j);
+							// close(c->fd1);
+							// c->fd1 = open()
+							// printf("tmfd = %d\n", c->fd1);
+							dup2(c->fd1, STDIN_FILENO);
+							close(c->fd1);
+						}
 						c->fd2 = check_input_redirect(p, c);
 						if (c->fd2 > 2)
 						{
 							printf("red1\n");
-							dup2(c->fd2, STDIN_FILENO);
+							if (check_heredoc(p, c) == 0)
+								dup2(c->fd2, STDIN_FILENO);
 							close(c->fd2);
 						}
 						else
-							dup2(c->fd[0][0], STDIN_FILENO);
+						{
+							if (check_heredoc(p, c) == 0)
+								dup2(c->fd[0][0], STDIN_FILENO);
+						}
 						c->fd2 = check_exec_rederict(p, c);
 						// printf("flag = %s\n", p[j].outs[1].file_name);
 						if (c->fd2 > 2)
@@ -121,14 +153,28 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				}
 				else
 				{
+					if (check_heredoc(p, c) == 1)
+					{
+						printf("fff\n");
+						c->fd1 = exec_heredoc(p, c, j);
+						// close(c->fd1);
+						// c->fd1 = open()
+						// printf("tmfd = %d\n", c->fd1);
+						dup2(c->fd1, STDIN_FILENO);
+						close(c->fd1);
+					}
 					c->fd2 = check_input_redirect(p, c);
 						if (c->fd2 > 2)
 						{
-							dup2(c->fd2, STDIN_FILENO);
+							if (check_heredoc(p, c) == 0)
+								dup2(c->fd2, STDIN_FILENO);
 							close(c->fd2);
 						}
 						else
-							dup2(c->fd[1][0], STDIN_FILENO);
+						{
+							if (check_heredoc(p, c) == 0)
+								dup2(c->fd[1][0], STDIN_FILENO);
+						}
 						c->fd2 = check_exec_rederict(p, c);
 						if (c->fd2 > 2)
 						{

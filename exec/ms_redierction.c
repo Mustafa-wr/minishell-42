@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/27 04:00:58 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/29 06:09:30 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,42 +19,29 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 
 	i = 0;
 	int j = 0;
-	// (void)c;
 	c->fd1 = 0;
-	// if (p->red_len == 0)
-	// 	return (0);
-	// else
-	// 	return (1);
-	// printf("len_red = %d\n", p->red_len);
 	while (j < p->cmd_len)
 	{
 		i = 0;
 		while (i < p[j].red_len)
 		{
-			// if (p[j].outs[i].flag == 0)
-			// {
-			// 	// printf("jhjhhjh");
-			// 	fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);
-			// 	if (fd < 0)
-			// 	{
-			// 		perror("no such file or dir\n");
-			// 		free_and_exit(c, p);
-			// 	}
-			// }
-			// else
-			// {
 			if (p[j].outs[i].flag == 1)
+			{
 				fd = open(p[j].outs[i].file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			// }
+				if (fd < 0)
+				{
+					perror("open");
+					return (0);
+				}
+			}
 			if (p[j].outs[i].flag == 1)
 			{
 				if (i == p[j].red_len - 1)
 				{
-					// printf("p in = %s\n", p[j].outs[i].file_name);
-					// printf("fd in = %d\n", fd);
+					printf("p in = %s\n", p[j].outs[i].file_name);
 					if (fd == 0)
 					{
-						// close(fd);
+						close(fd);
 						return (0);
 					}
 					return (fd);
@@ -116,15 +103,19 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 					free_and_exit(c, p);
 				}
 			}
-			if (p[j].outs[i + 1].flag != 0)
+			if (p[j].outs[i].flag == 0)
 			{
 				printf("p stdin = %s\n", p[j].outs[i].file_name);
-				if (fd == 0)
+				if (i == p[j].red_len - 1)
 				{
-					close(fd);
-					return (0);
+					if (fd == 0)
+					{
+						printf("close\n");
+						close(fd);
+						return (0);
+					}
+					return (fd);
 				}
-				return (fd);
 			}
 			i++;
 			close(fd);

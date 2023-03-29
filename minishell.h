@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/28 01:13:00 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/29 05:57:59 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ typedef struct t_pipe
 	int			fd1;
 	int			fd2;
 	char		tmpfile[11];
+	int			heredoc_len;
+	char		*cmd_exec;
+	t_list		*tmpp;
+	t_list		*tmp2;
+	t_list		*tmp3;
 }	t_pipe;
 
 /***************      parse_tool          ****************/
@@ -169,5 +174,10 @@ void	free_and_exit_2(t_pipe *c, t_cmds *p);
 void	write_in_fd(t_cmds *p, int x, int y, t_pipe *c);
 int		check_input_redirect(t_cmds *p, t_pipe *c);
 int		check_heredoc(t_cmds *p, t_pipe *c);
-void	exec_heredoc(t_cmds *p, t_pipe *c);
+int		exec_heredoc(t_cmds *p, t_pipe *c, int i);
+void	heredoc_len(t_pipe *c, t_cmds *p);
+int		heredoc_redierction(t_cmds *p, t_pipe *c, char *s);
+int		check_to_add(t_pipe *c, t_cmds *p, int i, int j);
+void	input_red(t_cmds *p, t_pipe *c);
+void	output_red(t_cmds *p, t_pipe *c, char *cmd);
 #endif

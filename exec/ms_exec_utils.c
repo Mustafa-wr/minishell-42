@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/27 04:33:23 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:40:39 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,20 @@ char	*check_with_access(char **path, char *str)
 	char	*join;
 
 	i = 0;
-	while (path[i] != NULL)
+	join = NULL;
+	if (path)
 	{
-		join = ft_strjoin(path[i], str);
-		if (access(join, X_OK) != -1)
+		while (path[i] != NULL)
 		{
-			return (free(str), join);
+			join = ft_strjoin(path[i], str);
+			if (access(join, X_OK) != -1)
+			{
+				return (free(str), join);
+			}
+			i++;
+			free(join);
+			join = NULL;
 		}
-		i++;
-		free(join);
-		join = NULL;
 	}
 	return (free(join), free(str), NULL);
 }
