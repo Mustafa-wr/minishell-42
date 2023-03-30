@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/29 16:19:00 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:48:45 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct t_pipe
 	char		tmpfile[11];
 	int			heredoc_len;
 	char		*cmd_exec;
+	int			t;
 	t_list		*tmpp;
 	t_list		*tmp2;
 	t_list		*tmp3;

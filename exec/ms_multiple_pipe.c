@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 23:27:57 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 06:56:46 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				cmd_exec = check_command_existence(p[j].cmd[0], c->m_path);
 				if (execve(cmd_exec, p[j].cmd, NULL) < 0)
 				{
-					perror("error_execve");
+					write(2, p[0].cmd[0], ft_strlen(p[0].cmd[0]));
+					write(2, ": command not found\n", 21);
 					free(cmd_exec);
 					closing_fds(c);
 					free_and_exit(c, p);
@@ -76,6 +77,7 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 						dup2(c->fd[0][0], STDIN_FILENO);
 						close(c->fd[0][1]);
 						close(c->fd[0][0]);
+						// closing_fds(c);
 					}
 					else
 					{
@@ -93,7 +95,8 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				cmd_exec = check_command_existence(p[j].cmd[0], c->m_path);
 				if (execve(cmd_exec, p[j].cmd, NULL) < 0)
 				{
-					perror("error_execve");
+					write(2, p[0].cmd[0], ft_strlen(p[0].cmd[0]));
+					write(2, ": command not found\n", 21);
 					free(cmd_exec);
 					closing_fds(c);
 					free_and_exit(c, p);
@@ -130,6 +133,8 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 					{
 						dup2(c->fd[0][0], STDIN_FILENO);
 						dup2(c->fd[1][1], STDOUT_FILENO);
+						close(c->fd[0][0]);
+						close(c->fd[1][1]); 
 					}
 				}
 				else
@@ -165,7 +170,8 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				cmd_exec = check_command_existence(p[j].cmd[0], c->m_path);
 				if (execve(cmd_exec, p[j].cmd, NULL) < 0)
 				{
-					perror("error_execve");
+					write(2, p[0].cmd[0], ft_strlen(p[0].cmd[0]));
+					write(2, ": command not found\n", 21);
 					free(cmd_exec);
 					closing_fds(c);
 					free_and_exit(c, p);

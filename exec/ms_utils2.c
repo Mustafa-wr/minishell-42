@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:36:08 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 07:05:29 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 23:16:35 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	get_env(t_pipe *p, char **envp)
 		i++;
 	}
 	p->env_count = i;
-	printf("i = %d\n", i);
+	// printf("i = %d\n", i);
 }
 
 // void	ms_redirection(t_pipe *p)

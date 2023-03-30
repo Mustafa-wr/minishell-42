@@ -49,3 +49,4 @@ kllkl>lkjlkj
 chmod 000 and play with redierction && shlvl
 <a|> sadjgh >>wdf
 <a sadjgh > wdf
+redierction

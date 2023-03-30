@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 19:44:06 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 21:39:48 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 06:40:36 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 	char *m = "h";
 	// printf("m = %s\n", m);
 	heredoc_len(c, p);
-	// printf("cmd  = %s\n", p[i].cmd[0]);
-	// printf("del  = %s\n", p[i].outs[0].file_name);
-	// s = p[0].outs[k].file_name;
-	// printf("s = %s\n", s);
-	// usleep(111);
 	while (k < p[i].red_len)
 	{
 		if (p[i].outs[k].flag == 3)
@@ -96,7 +91,8 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 			close(tmp);
 		}
 	}
-	close(tmp);
+	// if (tmp != 0)
+		close(tmp);
 	// tmp = open (m, O_RDONLY, 0644);
 	return (0);
 	// }

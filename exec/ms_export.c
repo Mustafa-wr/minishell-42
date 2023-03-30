@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/25 03:26:25 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 05:58:33 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,16 @@ void	unset_cmp(t_cmds *p, t_list *lst, int i, int j)
 	t_list	*tmp;
 
 	tmp = lst;
+	tmp2 = tmp;
 	while (tmp)
 	{
 		if (strncmp_orginal(tmp->content, p[i].cmd[j + 1],
 				len_till_equal(p[i].cmd[j + 1])) == 0)
 		{
 			tmp3 = tmp->next;
+			tmp2->next = tmp3;
 			free(tmp->content);
 			free(tmp);
-			tmp2->next = tmp3;
 			return ;
 		}
 		tmp2 = tmp;

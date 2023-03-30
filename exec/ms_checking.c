@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 01:18:17 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 23:08:51 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 23:14:24 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,44 +35,52 @@
 
 void	input_red(t_cmds *p, t_pipe *c)
 {
+	c->t = 0;
 	if (p[0].outs[0].flag == 0 || p[0].outs[0].flag == 3)
 	{
 		if (check_heredoc(p, c) == 1)
 		{
 			exec_heredoc(p, c, 0);
 		}
-		c->fd1 = check_input_redirect(p, c);
-		if (c->fd1 > 2)
+		c->t = check_input_redirect(p, c);
+		// printf("c = %d\n", c->t);
+		if (c->t > 2)
 		{
-			dup2(c->fd1, STDIN_FILENO);
-			close(c->fd1);
+			if (dup2(c->t, STDIN_FILENO) == -1)
+			{
+				printf("kkkk\n");
+				exit(EXIT_FAILURE);
+			}
+			close(c->t);
 		}
 	}
 }
 
-// void	output_red(t_cmds *p, t_pipe *c, char *cmd)
-// {
-// 	if (p[0].outs[p[0].red_len - 1].flag == 1)
-// 	{
-// 		c->fd2 = check_exec_rederict(p, c);
-// 		if (c->fd2 > 2)
-// 		{
-// 			if (cmd)
-// 			{
-// 				dup2(c->fd2, STDOUT_FILENO);
-// 					close(c->fd2);
-// 			}
-// 		}
-// 	}
-// 	if ((!cmd && !p[0].cmd)
-// 		|| (cmd == NULL && p[0].red_len > 0 && !p[0].cmd[0]))
-// 	{
-// 		free_and_exit(c, p);
-// 	}
-// 	else if (cmd == NULL && !p[0].cmd)
-// 	{
-// 		write(2, &p[0].cmd[0], ft_strlen(p[0].cmd[0]));
-// 		write(2, "command not found :\n", 22);
-// 		free_and_exit(c, p);
-// 	}
-// }
+void	output_red(t_cmds *p, t_pipe *c, char *cmd)
+{
+	// if (p[0].outs[p[0].red_len - 1].flag == 1)
+	// {
+		c->fd2 = check_exec_rederict(p, c);
+		// printf("out = %d\n", c->fd2);
+		if (c->fd2 > 2)
+		{
+			if (cmd)
+			{
+				dup2(c->fd2, STDOUT_FILENO);
+				close(c->fd2);
+			}
+		}
+		return ;
+	// }
+	if ((!cmd && !p[0].cmd)
+		|| (cmd == NULL && p[0].red_len > 0 && !p[0].cmd[0]))
+	{
+		free_and_exit(c, p);
+	}
+	else if (cmd == NULL && !p[0].cmd)
+	{
+		write(2, &p[0].cmd[0], ft_strlen(p[0].cmd[0]));
+		write(2, "command not found :\n", 22);
+		free_and_exit(c, p);
+	}
+}

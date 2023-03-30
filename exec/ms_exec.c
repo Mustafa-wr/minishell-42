@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 23:11:29 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/31 01:09:21 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,33 +112,7 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 		if (p[0].red_len > 0)
 		{
 			input_red(p, c);
-			// printf("hi\n");
-			if (p[0].outs[p[0].red_len - 1].flag == 1)
-			{
-				c->fd2 = check_exec_rederict(p, c);
-				if (c->fd2 > 2)
-				{
-					// if (c->cmd_exec)
-					// {
-					// printf("en\n");
-					dup2(c->fd2, STDOUT_FILENO);
-					close(c->fd2);
-					// printf("en2\n");
-					// }
-				}
-			}
-			if ((!c->cmd_exec && !p[0].cmd)
-				|| (c->cmd_exec == NULL && p[0].red_len > 0 && !p[0].cmd[0]))
-			{
-				free_and_exit(c, p);
-			}
-			else if (c->cmd_exec == NULL && !p[0].cmd)
-			{
-				write(2, &p[0].cmd[0], ft_strlen(p[0].cmd[0]));
-				write(2, "command not found :\n", 22);
-				free_and_exit(c, p);
-			}
-			// output_red(p, c, c->cmd_exec);
+			output_red(p, c, c->cmd_exec);
 		}
 		if (!c->cmd_exec && !p[0].cmd)
 		{
@@ -152,6 +126,16 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 			free_and_exit(c, p);
 		}
 	}
-	waitpid(i, NULL, 0);
+	int	status;
+	// int	n;
+	waitpid(i, &status, 0);
+	if (WIFEXITED(status))
+	{
+			g_exit_code = WEXITSTATUS(status);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		g_exit_code = WTERMSIG(status);
+	}
 	free(c->cmd_exec);
 }

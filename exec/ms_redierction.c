@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 18:09:14 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/30 23:15:05 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 	int		fd;
 
 	i = 0;
+	fd = 0;
 	int j = 0;
 	c->fd1 = 0;
 	while (j < p->cmd_len)
@@ -27,28 +28,35 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 		{
 			if (p[j].outs[i].flag == 1)
 			{
-				fd = open(p[j].outs[i].file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+				fd = open(p[j].outs[i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				if (fd < 0)
 				{
-					perror("open");
+					perror("no such file or dir\n");
 					return (0);
 				}
 			}
-			if (p[j].outs[i].flag == 1)
+			else if (p[j].outs[i].flag == 2)
 			{
-				if (i == p[j].red_len - 1)
+				fd = open(p[j].outs[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+				if (fd < 0)
 				{
-					printf("p in = %s\n", p[j].outs[i].file_name);
-					if (fd == 0)
-					{
-						close(fd);
-						return (0);
-					}
-					return (fd);
+					perror("no such file or dir\n");
+					return (0);
 				}
 			}
+			if (i == p[j].red_len - 1 && fd > 2)
+				return (fd);
+			if (p[j].outs[i].flag == 1 && (p[j].outs[i + 1].flag != 1 || p[j].outs[i + 1].flag != 2))
+			{
+				if (fd == 0)
+				{
+					close(fd);
+					return (0);
+				}
+				return (fd);
+			}
 			i++;
-			if (fd != 0)
+			if (fd > 2)
 				close(fd);
 		}
 		j++;
@@ -85,18 +93,14 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 
 	i = 0;
 	int j = 0;
-	c->fd1 = 0;
-	// printf("cmd_red = %d\n", p->cmd_len);
+	fd = 0;
 	while (j < p->cmd_len)
 	{
 		i = 0;
 		while (i < p[j].red_len)
 		{
-			// printf("red in = %s\n", p[j].outs[i].file_name);
-			// printf("flag = %d\n", p[j].outs[i].flag);
 			if (p[j].outs[i].flag == 0)
 			{
-				// printf("name %s\n", p[j].outs[i].file_name);
 				fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);
 				if (fd < 0)
 				{
@@ -104,22 +108,22 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 					free_and_exit(c, p);
 				}
 			}
-			if (p[j].outs[i].flag == 0)
+			if (i == p[j].red_len - 1 && fd > 2)
 			{
-				// printf("p stdin = %s\n", p[j].outs[i].file_name);
-				if (i == p[j].red_len - 1)
+				return (fd);
+			}
+			if (p[j].outs[i + 1].flag != 0)
+			{
+				if (fd == 0)
 				{
-					if (fd == 0)
-					{
-						printf("close\n");
-						close(fd);
-						return (0);
-					}
-					return (fd);
+					close(fd);
+					return (0);
 				}
+				return (fd);
 			}
 			i++;
-			close(fd);
+			if (fd > 2)
+				close(fd);
 		}
 		j++;
 	}
