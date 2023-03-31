@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/30 06:56:46 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/31 23:52:33 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 		{
 			if (j == 0)
 			{
-				// printf("tukkaa\n");
 				c->fd2 = check_input_redirect(p, c);
 				if (c->fd2 > 2)
 				{
+					printf("input\n");
 					dup2(c->fd2, STDIN_FILENO);
 					close(c->fd2);
 				}
@@ -61,6 +61,7 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				c->fd2 = check_input_redirect(p, c);
 				if (c->fd2 > 2)
 				{
+					printf("input\n");
 					dup2(c->fd2, STDIN_FILENO);
 					close(c->fd2);
 				}
@@ -68,7 +69,6 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				{
 					if (i % 2 == 0 && j == 1)
 					{
-						// if (check_heredoc(p, c) == 0)
 						dup2(c->fd[0][0], STDIN_FILENO);
 						closing_fds(c);
 					}
@@ -89,7 +89,11 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 				c->fd1 = check_exec_rederict(p, c);
 				if (c->fd1 > 2)
 				{
-					dup2(c->fd1, STDOUT_FILENO);
+					if (dup2(c->fd1, STDOUT_FILENO) == -1)
+					{
+						printf("same shit\n");
+						exit(0);
+					}
 					close(c->fd1);
 				}
 				cmd_exec = check_command_existence(p[j].cmd[0], c->m_path);
@@ -134,7 +138,7 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 						dup2(c->fd[0][0], STDIN_FILENO);
 						dup2(c->fd[1][1], STDOUT_FILENO);
 						close(c->fd[0][0]);
-						close(c->fd[1][1]); 
+						close(c->fd[1][1]);
 					}
 				}
 				else
@@ -205,6 +209,4 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 		wait(NULL);
 		k++;
 	}
-	// free_all(c, p);
-	// free_strings(c->m_path);
 }

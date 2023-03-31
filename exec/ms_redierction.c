@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/30 23:15:05 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/31 23:57:55 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 	c->fd1 = 0;
 	while (j < p->cmd_len)
 	{
+		printf("3\n");
 		i = 0;
 		while (i < p[j].red_len)
 		{
+			printf("4\n");
 			if (p[j].outs[i].flag == 1)
 			{
 				fd = open(p[j].outs[i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				if (fd < 0)
 				{
-					perror("no such file or dir\n");
-					return (0);
+					perror("open");
+					free_and_exit(c, p);
 				}
 			}
 			else if (p[j].outs[i].flag == 2)
@@ -40,12 +42,15 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 				fd = open(p[j].outs[i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 				if (fd < 0)
 				{
-					perror("no such file or dir\n");
-					return (0);
+					perror("open");
+					free_and_exit(c, p);
 				}
 			}
 			if (i == p[j].red_len - 1 && fd > 2)
+			{
+				printf("f = %s\n", p[j].outs[i].file_name);
 				return (fd);
+			}
 			if (p[j].outs[i].flag == 1 && (p[j].outs[i + 1].flag != 1 || p[j].outs[i + 1].flag != 2))
 			{
 				if (fd == 0)
@@ -53,6 +58,7 @@ int	check_exec_rederict(t_cmds *p, t_pipe *c)
 					close(fd);
 					return (0);
 				}
+				printf("f = %s\n", p[j].outs[i].file_name);
 				return (fd);
 			}
 			i++;
@@ -97,8 +103,10 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 	while (j < p->cmd_len)
 	{
 		i = 0;
+		printf("1\n");
 		while (i < p[j].red_len)
 		{
+			printf("2\n");
 			if (p[j].outs[i].flag == 0)
 			{
 				fd = open(p[j].outs[i].file_name, O_RDONLY, 0644);
@@ -110,6 +118,7 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 			}
 			if (i == p[j].red_len - 1 && fd > 2)
 			{
+				printf("p[j] = %s\n", p[j].outs[i].file_name);
 				return (fd);
 			}
 			if (p[j].outs[i + 1].flag != 0)

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 21:28:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/31 22:21:19 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	fill_export_list(t_pipe *p)
 		tmp = tmp->next;
 		i++;
 	}
-	// ft_lstadd_back(&p->m_export, NULL);
 }
 
 void	fill_tmp_env(t_pipe *c)

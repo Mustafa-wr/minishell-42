@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/31 01:09:21 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/31 23:41:08 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	ms_exec(t_cmds *p, t_pipe *c)
 {
-	t_vars	vars;
-
-	vars.i = 0;
 	if (p[0].cmd)
 	{
-		if (check_builtin(p, c, &vars) == 1)
+		if (check_builtin(p, c) == 1)
 		{
 			check_other(p, c);
 		}
@@ -27,12 +24,11 @@ void	ms_exec(t_cmds *p, t_pipe *c)
 	}
 }
 
-int	check_builtin(t_cmds *p, t_pipe *c, t_vars *vars)
+int	check_builtin(t_cmds *p, t_pipe *c)
 {
 	int		x;
 
 	x = 0;
-	(void)vars;
 	if (p[x].cmd && p->cmd_len == 1)
 	{
 		if (ft_strncmp(p[x].cmd[0], "exit", 4) == 0)
@@ -127,15 +123,18 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 		}
 	}
 	int	status;
-	// int	n;
 	waitpid(i, &status, 0);
 	if (WIFEXITED(status))
 	{
-			g_exit_code = WEXITSTATUS(status);
+		g_exit_code = WEXITSTATUS(status);
+		if (g_exit_code == 1)
+			g_exit_code = 127;
+		else
+			g_exit_code = 0;
 	}
 	else if (WIFSIGNALED(status))
 	{
-		g_exit_code = WTERMSIG(status);
+		g_exit_code = WTERMSIG(status) + 128;
 	}
 	free(c->cmd_exec);
 }

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/30 21:48:45 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/03/31 23:37:24 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
 int		found_first(char **m_env, int k, t_pipe *p);
 void	fill_export_list(t_pipe *p);
 void	fill_tmp_env(t_pipe *c);
-int		check_builtin(t_cmds *p, t_pipe *c, t_vars *vars);
+int		check_builtin(t_cmds *p, t_pipe *c);
 int		check_for_redirction(t_cmds *p, t_pipe *c);
 int		count_cmds(char ***str);
 void	check_other(t_cmds *p, t_pipe *c);
@@ -181,4 +181,7 @@ int		heredoc_redierction(t_cmds *p, t_pipe *c, char *s);
 int		check_to_add(t_pipe *c, t_cmds *p, int i, int j);
 void	input_red(t_cmds *p, t_pipe *c);
 void	output_red(t_cmds *p, t_pipe *c, char *cmd);
+void	echo_new_line(t_cmds *p, int x, int y, t_pipe *c);
+void	echo_flag(t_cmds *p, int x, int y, t_pipe *c);
+int		heredoc_condition(int fd);
 #endif

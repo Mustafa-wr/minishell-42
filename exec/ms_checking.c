@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 01:18:17 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/30 23:14:24 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/01 00:05:35 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,41 @@ void	input_red(t_cmds *p, t_pipe *c)
 		{
 			exec_heredoc(p, c, 0);
 		}
-		c->t = check_input_redirect(p, c);
-		// printf("c = %d\n", c->t);
-		if (c->t > 2)
+		else
 		{
-			if (dup2(c->t, STDIN_FILENO) == -1)
+			c->t = check_input_redirect(p, c);
+			if (c->t > 2)
 			{
-				printf("kkkk\n");
-				exit(EXIT_FAILURE);
+				if (dup2(c->t, STDIN_FILENO) == -1)
+				{
+					printf("kkkk\n");
+					exit(EXIT_FAILURE);
+				}
+				close(c->t);
 			}
-			close(c->t);
 		}
 	}
 }
 
 void	output_red(t_cmds *p, t_pipe *c, char *cmd)
 {
-	// if (p[0].outs[p[0].red_len - 1].flag == 1)
-	// {
+	if (p[0].outs[p[0].red_len - 1].flag == 1)
+	{
 		c->fd2 = check_exec_rederict(p, c);
-		// printf("out = %d\n", c->fd2);
 		if (c->fd2 > 2)
 		{
 			if (cmd)
 			{
-				dup2(c->fd2, STDOUT_FILENO);
+				if (dup2(c->fd2, STDOUT_FILENO) == -1)
+				{
+					printf("same shit\n");
+					exit(EXIT_FAILURE);
+				}
 				close(c->fd2);
 			}
 		}
 		return ;
-	// }
+	}
 	if ((!cmd && !p[0].cmd)
 		|| (cmd == NULL && p[0].red_len > 0 && !p[0].cmd[0]))
 	{
@@ -83,4 +88,59 @@ void	output_red(t_cmds *p, t_pipe *c, char *cmd)
 		write(2, "command not found :\n", 22);
 		free_and_exit(c, p);
 	}
+}
+
+void	echo_new_line(t_cmds *p, int x, int y, t_pipe *c)
+{
+	while (p[x].cmd[y])
+	{
+		if (p[x].red_len == 0)
+			printf("%s ", p[x].cmd[y]);
+		else
+		{
+			write_in_fd(p, x, y, c);
+			write(c->fd1, "\n", 1);
+			close(c->fd1);
+			return ;
+		}
+		y++;
+	}
+	printf("\n");
+}
+
+void	echo_flag(t_cmds *p, int x, int y, t_pipe *c)
+{
+	y += 1;
+	if (!p[x].cmd[y])
+		return ;
+	while (p[x].cmd[y + 1])
+	{
+		if (c->fd1 > 2)
+		{
+			write_in_fd(p, x, y, c);
+			close(c->fd1);
+			return ;
+		}
+		else
+			printf("%s ", p[x].cmd[y]);
+		y++;
+	}
+	if (c->fd1 > 2)
+	{
+		write_in_fd(p, x, y, c);
+		close(c->fd1);
+		return ;
+	}
+	else
+		printf("%s", p[x].cmd[y]);
+}
+
+int	heredoc_condition(int fd)
+{
+	if (fd == 0)
+	{
+		close(fd);
+		return (0);
+	}
+	return (fd);
 }
