@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 01:18:17 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/01 00:05:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/01 04:51:30 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,17 @@
 void	input_red(t_cmds *p, t_pipe *c)
 {
 	c->t = 0;
-	if (p[0].outs[0].flag == 0 || p[0].outs[0].flag == 3)
+	if (check_heredoc(p, c) == 1)
+		exec_heredoc(p, c, 0);
+	c->t = check_input_redirect(p, c);
+	if (c->t > 2)
 	{
-		if (check_heredoc(p, c) == 1)
+		if (dup2(c->t, STDIN_FILENO) == -1)
 		{
-			exec_heredoc(p, c, 0);
+			printf("kkkk\n");
+			exit(EXIT_FAILURE);
 		}
-		else
-		{
-			c->t = check_input_redirect(p, c);
-			if (c->t > 2)
-			{
-				if (dup2(c->t, STDIN_FILENO) == -1)
-				{
-					printf("kkkk\n");
-					exit(EXIT_FAILURE);
-				}
-				close(c->t);
-			}
-		}
+		close(c->t);
 	}
 }
 

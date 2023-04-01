@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/31 23:37:24 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/01 02:47:59 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct t_pipe
 	t_list		*m_export;
 	char		**tmp;
 	int			i;
+	int			k;
 	int			j;
 	int			b;
 	int			pid;
@@ -184,4 +185,8 @@ void	output_red(t_cmds *p, t_pipe *c, char *cmd);
 void	echo_new_line(t_cmds *p, int x, int y, t_pipe *c);
 void	echo_flag(t_cmds *p, int x, int y, t_pipe *c);
 int		heredoc_condition(int fd);
+void	sec_cmd(t_pipe *c, int i, int j);
+void	close_first_pipe(t_cmds *p, t_pipe *c);
+void	close_second_pipe(t_pipe *c);
+void	third_cmd(t_cmds *p, t_pipe *c, int j);
 #endif

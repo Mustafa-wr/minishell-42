@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 19:44:06 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/31 23:37:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/01 00:30:34 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	check_heredoc(t_cmds *p, t_pipe *c)
 		while (i < p[j].red_len)
 		{
 			if (p[j].outs[i].flag == 3)
-			{
-				printf("heredoc\n");
 				return (1);
-			}
 			i++;
 		}
 		j++;
@@ -63,7 +60,7 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 			line = get_next_line(0);
 			while (1)
 			{
-				if(strcmp(line, ft_strjoin(p[i].outs[k].file_name, "\n")) == 0)
+				if (strcmp(line, ft_strjoin(p[i].outs[k].file_name, "\n")) == 0)
 				{
 					p[i].outs[k].flag = 0;
 					p[i].outs[k].file_name = ft_strdup(m);
@@ -80,9 +77,9 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 				free(line);
 			if (k == p[i].red_len - 1)
 				break ;
-			k++;
 			close(tmp);
 		}
+		k++;
 	}
 	close(tmp);
 	return (0);
