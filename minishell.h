@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/01 02:47:59 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 02:56:54 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 
 extern int	g_exit_code;
 
@@ -127,12 +128,12 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp);
 
 void	ms_exec(t_cmds *p, t_pipe *c);
 void	ft_echo(t_cmds *p, int x, int y, t_pipe *c);
-void	ft_pwd(t_cmds *p, t_pipe *c);
-void	ft_env(t_cmds *p, t_pipe *c);
+void	ft_pwd(t_cmds *p, t_pipe *c, int fd);
+void	ft_env(t_cmds *p, t_pipe *c, int fd);
 void	get_env(t_pipe *p, char **envp);
 void	ft_cd(t_cmds *p, int x, int y, t_pipe *c);
-void	ft_export(t_pipe *c, t_cmds *p, int i, int j);
-void	ft_unset(t_cmds *p, int i, int j, t_pipe *c);
+void	ft_export(t_pipe *c, t_cmds *p, int i, int fd);
+void	ft_unset(t_cmds *p, int i, int fd, t_pipe *c);
 int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
 int		found_first(char **m_env, int k, t_pipe *p);
 void	fill_export_list(t_pipe *p);
@@ -189,4 +190,8 @@ void	sec_cmd(t_pipe *c, int i, int j);
 void	close_first_pipe(t_cmds *p, t_pipe *c);
 void	close_second_pipe(t_pipe *c);
 void	third_cmd(t_cmds *p, t_pipe *c, int j);
+void	ft_exit(t_pipe *c, t_cmds *p);
+int		builtins_pipes(t_cmds *p, t_pipe *c, int fd, int j);
+void	update_pwd(t_pipe *c, char *str, char *p, int k);
+void	update_export(t_pipe *c, char *str, char *p, int k);
 #endif

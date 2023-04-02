@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:23:13 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/29 21:25:49 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/01 23:27:59 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef struct s_list
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
-int		ft_isdigit(int c);
+int		ft_isdigit(int f);
+int		ft_isexportable(char *str, int len);
 int		ft_isprint(int c);
 size_t	ft_strlen(const char *s);
 char	*ft_tolower(char *str);

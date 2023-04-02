@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/31 22:19:34 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 04:39:33 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,31 @@ void	ft_echo(t_cmds *p, int x, int y, t_pipe *c)
 		echo_new_line(p, x, y, c);
 	else if (check_for_flag(p[x].cmd[y]) == 0)
 		echo_flag(p, x, y, c);
+	g_exit_code = 0;
 }
 
-void	ft_pwd(t_cmds *p, t_pipe *c)
+void	ft_pwd(t_cmds *p, t_pipe *c, int fd)
 {
-	int		i;
+	// int		i;
+	(void)fd;
+	char	*pwd;
 
 	(void)c;
-	i = fork();
-	if (i == 0)
+	pwd = NULL;
+	pwd = getcwd(p[0].cmd[1], 1024);
+	if (pwd != NULL)
+		printf("%s\n", pwd);
+	else
 	{
-		if (p[0].red_len > 0)
-		{
-			c->fd1 = check_exec_rederict(p, c);
-			dup2(c->fd1, STDOUT_FILENO);
-			close(c->fd1);
-		}
-		if (execve("/bin/pwd", p[0].cmd, 0) < 0)
-		{
-			perror("not found");
-			return ;
-		}
+		perror("pwd");
+		g_exit_code = 1;
 	}
-	waitpid(i, NULL, 0);
-	return ;
+	// if (pwd)
+	// 	free(pwd);
+	g_exit_code = 1;
 }
 
-void	ft_env(t_cmds *p, t_pipe *c)
+void	ft_env(t_cmds *p, t_pipe *c, int fd)
 {
 	t_list	*tmp;
 
@@ -68,7 +66,9 @@ void	ft_env(t_cmds *p, t_pipe *c)
 	c->fd1 = check_exec_rederict(p, c);
 	while (tmp)
 	{
-		if (p[0].red_len > 0)
+		if (fd > 2)
+			ft_putstr_fd(tmp->content, fd, 1);
+		else if (p[0].red_len > 0)
 		{
 			ft_putstr_fd(tmp->content, c->fd1, 1);
 		}
@@ -78,6 +78,7 @@ void	ft_env(t_cmds *p, t_pipe *c)
 	}
 	if (c->fd1 > 2)
 		close(c->fd1);
+	g_exit_code = 0;
 }
 
 void	ft_cd(t_cmds *p, int x, int y, t_pipe *c)
@@ -85,20 +86,28 @@ void	ft_cd(t_cmds *p, int x, int y, t_pipe *c)
 	(void)c;
 	y += 1;
 	c->fd1 = check_exec_rederict(p, c);
+	update_pwd(c, getcwd(NULL, 1024), "OLDPWD", 1);
+	update_export(c, getcwd(NULL, 1024), "OLDPWD", 1);
 	if (chdir(p[x].cmd[y]) < 0)
+	{
 		printf("%s: No such file or directory\n", p[x].cmd[y]);
+		g_exit_code = 1;
+	}
 	if (c->fd1 > 2)
 		close(c->fd1);
-	return ;
+	update_pwd(c, getcwd(NULL, 1024), "PWD", 0);
+	update_export(c, getcwd(NULL, 1024), "PWD", 0);
+	g_exit_code = 0;
 }
 
-void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
+void	ft_export(t_pipe *c, t_cmds *p, int i, int fd)
 {
+	(void)fd;
 	c->tmp = NULL;
 	c->tmpp = c->m_export;
 	c->fd1 = check_exec_rederict(p, c);
-	j += 1;
-	if (p[i].cmd[j])
+	c->j = 1;
+	if (p[i].cmd[c->j])
 	{
 		insert_the_node(p, c);
 	}
@@ -116,13 +125,18 @@ void	ft_export(t_pipe *c, t_cmds *p, int i, int j)
 			}
 			c->tmpp = c->tmpp->next;
 		}
+		g_exit_code = 0;
 	}
 	if (c->fd1 > 2)
 		close(c->fd1);
 }
 
-void	ft_unset(t_cmds *p, int i, int j, t_pipe *c)
+void	ft_unset(t_cmds *p, int i, int fd, t_pipe *c)
 {
+	int j;
+
+	j = 0;
+	(void)fd;
 	c->fd1 = check_exec_rederict(p, c);
 	if (!p[i].cmd[j + 1])
 		return ;

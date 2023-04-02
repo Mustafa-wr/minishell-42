@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/29 03:10:10 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/01 06:41:25 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,15 @@ void	insert_the_node(t_cmds *p, t_pipe *c)
 	while (p[i].cmd[j])
 	{
 		if (ft_strncmp(p[i].cmd[j], "=", 1) != 0
-			&& ft_isdigit(p[i].cmd[j][0]) == 0)
+			&& ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 0)
 			add_to_export(p, c, i, j);
+		else if (ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 1 || ft_strncmp(p[i].cmd[j], "=", 1) == 0)
+		{
+			write (2, p[i].cmd[j], ft_strlen(p[i].cmd[j]));
+			write(2, ": not a valid identifier\n", 25);
+			g_exit_code = 1;
+			// return ;
+		}
 		j++;
 	}
 }

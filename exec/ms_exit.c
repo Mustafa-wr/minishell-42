@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:03:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/31 22:20:25 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 03:13:58 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_and_exit(t_pipe *c, t_cmds *p)
 	if (c->m_path != NULL)
 		free_strings(c->m_path);
 	free_all(c, p);
-	exit(1);
+	exit(g_exit_code);
 }
 
 void	free_and_exit_2(t_pipe *c, t_cmds *p)
@@ -53,4 +53,21 @@ void	free_and_exit_2(t_pipe *c, t_cmds *p)
 		free_strings(c->tmp_env);
 	if (c->m_path != NULL)
 		free_strings(c->m_path);
+}
+
+void	ft_exit(t_pipe *c, t_cmds *p)
+{
+
+	if (p[0].cmd[1])
+		g_exit_code = ft_atoi(p[0].cmd[1]);
+	if (c->m_env)
+		free_list(&c->m_env);
+	if (c->m_export)
+		free_list(&c->m_export);
+	if (c->tmp_env)
+		free_strings(c->tmp_env);
+	if (c->m_path != NULL)
+		free_strings(c->m_path);
+	free_all(c, p);
+	exit(g_exit_code);
 }

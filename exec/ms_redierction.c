@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/01 00:38:20 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 03:09:56 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ int	check_input_redirect(t_cmds *p, t_pipe *c)
 				c->fd1 = open(p[c->j].outs[c->i].file_name, O_RDONLY, 0644);
 				if (c->fd1 < 0)
 				{
-					perror("no such file or dir\n");
+					perror("open");
+					g_exit_code = 1;
 					free_and_exit(c, p);
 				}
 			}

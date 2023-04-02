@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 01:18:17 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/01 04:51:30 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/01 06:09:35 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ void	echo_new_line(t_cmds *p, int x, int y, t_pipe *c)
 	while (p[x].cmd[y])
 	{
 		if (p[x].red_len == 0)
-			printf("%s ", p[x].cmd[y]);
+		{
+			printf("%s", p[x].cmd[y]);
+			if (p[x].cmd[y + 1])
+				printf(" ");
+		}
 		else
 		{
 			write_in_fd(p, x, y, c);

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/01 05:13:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 04:29:32 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_builtin(t_cmds *p, t_pipe *c)
 	if (p[x].cmd && p->cmd_len == 1)
 	{
 		if (ft_strncmp(p[x].cmd[0], "exit", 4) == 0)
-			return (free_and_exit(c, p), 0);
+			return (ft_exit(c, p), 0);
 		else if (ft_strncmp(p[x].cmd[0], "cd", 2) == 0)
 			return (ft_cd(p, x, 0, c), 0);
 		else if (ft_strncmp(p[x].cmd[0], "export", 6) == 0)
@@ -45,9 +45,9 @@ int	check_builtin(t_cmds *p, t_pipe *c)
 			if (ft_strncmp(p[x].cmd[0], "echo", 4) == 0)
 				return (ft_echo(p, x, 0, c), 0);
 			else if (ft_strncmp(p[x].cmd[0], "pwd", 3) == 0)
-				return (ft_pwd(p, c), 0);
+				return (ft_pwd(p, c, 0), 0);
 			else if (ft_strncmp(p[x].cmd[0], "env", 3) == 0)
-				return (ft_env(p, c), 0);
+				return (ft_env(p, c, 0), 0);
 		}
 	}
 	return (1);
@@ -110,16 +110,19 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 			input_red(p, c);
 			output_red(p, c, c->cmd_exec);
 		}
-		if (!c->cmd_exec && !p[0].cmd)
+		if (!c->cmd_exec)
 		{
-			write(2, "command not found :\n", 22);
+			write(2, p[0].cmd[0], ft_strlen(p[0].cmd[0]));
+			if (p[0].cmd[0])
+				write(2, ": command not found\n", 21);
+			g_exit_code = 127;
 			free_and_exit(c, p);
 		}
 		else if (execve(c->cmd_exec, p[0].cmd, c->tmp_env) < 0)
 		{
-			write(2, p[0].cmd[0], ft_strlen(p[0].cmd[0]));
-			write(2, ": command not found\n", 21);
+			perror("execve : is directory");
 			free_and_exit(c, p);
+			g_exit_code = 126;
 		}
 	}
 	int	status;
@@ -127,10 +130,10 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 	if (WIFEXITED(status))
 	{
 		g_exit_code = WEXITSTATUS(status);
-		if (g_exit_code == 1)
-			g_exit_code = 127;
-		else
-			g_exit_code = 0;
+		// if (g_exit_code == 1)
+		// 	g_exit_code = 127;
+		// else
+		// 	g_exit_code = 0;
 	}
 	else if (WIFSIGNALED(status))
 	{
