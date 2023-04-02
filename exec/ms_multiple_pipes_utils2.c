@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 19:45:28 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/02 03:06:44 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 19:27:42 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,40 @@ int	builtins_pipes(t_cmds *p, t_pipe *c, int fd, int j)
 	}
 	// write(2, "im out \n", 9);
 	return (1);
+}
+
+int	input_check(t_cmds *p, t_pipe *c)
+{
+	c->i = 0;
+	c->j = 0;
+	while (c->j < p->cmd_len)
+	{
+		c->i = 0;
+		while (c->i < p[c->j].red_len)
+		{
+			if (p[c->j].outs[c->i].flag == 0 || p[c->j].outs[c->i].flag == 3)
+				return (1);
+			c->i++;
+		}
+		c->j++;
+	}
+	return (0);
+}
+
+int	output_check(t_cmds *p, t_pipe *c)
+{
+	c->i = 0;
+	c->j = 0;
+	while (c->j < p->cmd_len)
+	{
+		c->i = 0;
+		while (c->i < p[c->j].red_len)
+		{
+			if (p[c->j].outs[c->i].flag == 1 || p[c->j].outs[c->i].flag == 2)
+				return (1);
+			c->i++;
+		}
+		c->j++;
+	}
+	return (0);
 }

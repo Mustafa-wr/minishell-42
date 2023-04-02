@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/02 01:25:53 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/03 03:39:27 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	first_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
-	c->fd2 = check_input_redirect(p, c);
+	// if (input_check(p, c) == 1)
+	c->fd2 = check_input_redirect(p, c, 1, v->j);
 	if (c->fd2 > 2)
 	{
 		if (dup2(c->fd2, STDIN_FILENO) == -1)
@@ -27,12 +28,12 @@ static void	first_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 	if (dup2(c->fd[0][1], STDOUT_FILENO) == -1)
 	{
 		printf("error1\n");
-			exit(0);
-	}
-	if (builtins_pipes(p, c, c->fd[0][1], v->j) == 0)
 		exit(0);
+	}
 	close(c->fd[0][1]);
 	close(c->fd[0][0]);
+	if (builtins_pipes(p, c, c->fd[0][1], v->j) == 0)
+		exit(0);
 	c->cmd_exec = check_command_existence(p[v->j].cmd[0], c->m_path);
 	if (execve(c->cmd_exec, p[v->j].cmd, NULL) < 0)
 	{
@@ -40,6 +41,7 @@ static void	first_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 		write(2, ": command not found\n", 21);
 		free(c->cmd_exec);
 		closing_fds(c);
+		g_exit_code = 127;
 		free_and_exit(c, p);
 	}
 }
@@ -90,11 +92,13 @@ static void	second_cmd(t_pipe *c, t_vars *v)
 }
 static void	third2_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
-	c->fd2 = check_input_redirect(p, c);
+	// if (input_check(p, c) == 1)
+	c->fd2 = check_input_redirect(p, c, 1, v->j);
 	second_cmd(c, v);
 	if (builtins_pipes(p, c, c->fd[0][1], v->j) == 0)
 		exit(0);
-	c->fd1 = check_exec_rederict(p, c);
+	c->fd1 = check_exec_rederict(p, c, 1, v->j);
+	// printf("fd = %d\n", c->fd1);
 	if (c->fd1 > 2)
 	{
 		if (dup2(c->fd1, STDOUT_FILENO) == -1)
@@ -111,6 +115,7 @@ static void	third2_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 		write(2, ": command not found\n", 21);
 		free(c->cmd_exec);
 		closing_fds(c);
+		g_exit_code = 127;
 		free_and_exit(c, p);
 	}		
 }
@@ -118,7 +123,7 @@ static void	fourth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
 	if (p[v->j].red_len > 0)
 	{
-		c->fd2 = check_input_redirect(p, c);
+		c->fd2 = check_input_redirect(p, c, 1, v->j);
 		if (c->fd2 > 2)
 		{
 			if (dup2(c->fd2, STDIN_FILENO) == -1)
@@ -136,7 +141,7 @@ static void	fourth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 				exit(0);
 			}
 		}
-		c->fd2 = check_exec_rederict(p, c);
+		c->fd2 = check_exec_rederict(p, c, 1, v->j);
 		if (c->fd2 > 2)
 		{
 			if (dup2(c->fd2, STDOUT_FILENO) == -1)
@@ -171,9 +176,10 @@ static void	fourth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 		close(c->fd[1][1]);
 	}
 }
-static void	fifth_cmd(t_pipe *c, t_cmds *p)
+static void	fifth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
-	c->fd2 = check_input_redirect(p, c);
+	// if (input_check(p, c) == 1)
+		c->fd2 = check_input_redirect(p, c, 1, v->j);
 	if (c->fd2 > 2)
 	{
 		if (dup2(c->fd2, STDIN_FILENO) == -1)
@@ -191,7 +197,7 @@ static void	fifth_cmd(t_pipe *c, t_cmds *p)
 				exit(0);
 		}
 	}
-	c->fd2 = check_exec_rederict(p, c);
+	c->fd2 = check_exec_rederict(p, c, 1, v->j);
 	if (c->fd2 > 2)
 	{
 		if (dup2(c->fd2, STDOUT_FILENO) == -1)
@@ -212,9 +218,9 @@ static void	fifth_cmd(t_pipe *c, t_cmds *p)
 }
 static void	sixth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
+	closing_fds(c);
 	if (builtins_pipes(p, c, c->fd[0][1], v->j) == 0)
 		exit(0);
-	closing_fds(c);
 	c->cmd_exec = check_command_existence(p[v->j].cmd[0], c->m_path);
 	if (execve(c->cmd_exec, p[v->j].cmd, NULL) < 0)
 	{
@@ -222,6 +228,7 @@ static void	sixth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 		write(2, ": command not found\n", 21);
 		free(c->cmd_exec);
 		closing_fds(c);
+		g_exit_code = 127;
 		free_and_exit(c, p);
 	}
 }
@@ -259,7 +266,7 @@ static void	before_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 			if (v->i % 2 == 1)
 				fourth_cmd(c, p, v);
 			else
-				fifth_cmd(c, p);
+				fifth_cmd(c, p, v);
 			sixth_cmd(c, p, v);
 		}
 	}
@@ -278,17 +285,13 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 {
 	t_vars v;
 	init1(&v);
+	// c->fd2 = 0;
+	// c->fd1 = 0;
 	c->cmd_exec = NULL;
 	while (v.j < p->cmd_len)
 	{
 		if (v.i % 2 == 0 || v.i == 0)
-		{
-			if (pipe(c->fd[0]) == -1)
-			{
-				printf("pipeerror\n");
-				exit(0);
-			}
-		}
+			pipe(c->fd[0]);
 		else if (v.i % 2 == 1)
 			pipe(c->fd[1]);
 		if (check_heredoc(p, c) == 1)

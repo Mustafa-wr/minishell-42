@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 01:18:17 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/01 06:09:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 21:48:42 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,29 @@
 void	input_red(t_cmds *p, t_pipe *c)
 {
 	c->t = 0;
-	if (check_heredoc(p, c) == 1)
-		exec_heredoc(p, c, 0);
-	c->t = check_input_redirect(p, c);
-	if (c->t > 2)
+	if (input_check(p, c) == 1)
 	{
-		if (dup2(c->t, STDIN_FILENO) == -1)
+		if (check_heredoc(p, c) == 1)
+			exec_heredoc(p, c, 0);
+		c->t = check_input_redirect(p, c, 1, 0);
+		if (c->t > 2)
 		{
-			printf("kkkk\n");
-			exit(EXIT_FAILURE);
+			if (dup2(c->t, STDIN_FILENO) == -1)
+			{
+				printf("kkkk\n");
+				exit(EXIT_FAILURE);
+			}
+			close(c->t);
 		}
-		close(c->t);
 	}
 }
 
 void	output_red(t_cmds *p, t_pipe *c, char *cmd)
 {
-	if (p[0].outs[p[0].red_len - 1].flag == 1)
+	if (output_check(p, c) == 1)
 	{
-		c->fd2 = check_exec_rederict(p, c);
+		c->fd2 = check_exec_rederict(p, c, 1, 0);
+		printf("c = %d\n", c->fd2);
 		if (c->fd2 > 2)
 		{
 			if (cmd)
@@ -80,6 +84,7 @@ void	output_red(t_cmds *p, t_pipe *c, char *cmd)
 		write(2, "command not found :\n", 22);
 		free_and_exit(c, p);
 	}
+
 }
 
 void	echo_new_line(t_cmds *p, int x, int y, t_pipe *c)
@@ -135,7 +140,7 @@ int	heredoc_condition(int fd)
 {
 	if (fd == 0)
 	{
-		close(fd);
+		// close(fd);
 		return (0);
 	}
 	return (fd);

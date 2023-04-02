@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/31 21:33:51 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/03 00:05:52 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	get_env(&pipe, envp);
 	fill_export(&pipe);
+	g_exit_code = 0;
 	pipe.m_path = NULL;
 	while (1)
 	{

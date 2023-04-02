@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/02 04:29:32 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/02 23:54:57 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,16 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 	i = fork();
 	if (i == 0)
 	{
+		// if (ft_strchr(p[0].cmd[0], '.')  && ft_strchr(p[0].cmd[0], '/'))
+		// {
+		// 	c->fd1 = open(p[0].cmd[0], O_);
+		// 	if (c->fd1 < 0)
+		// 	{
+		// 		g_exit_code = 126;
+		// 		perror("Permission denied");
+		// 		free_and_exit(c, p);
+		// 	}
+		// }
 		if (p[0].red_len > 0)
 		{
 			input_red(p, c);
@@ -121,8 +131,8 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 		else if (execve(c->cmd_exec, p[0].cmd, c->tmp_env) < 0)
 		{
 			perror("execve : is directory");
-			free_and_exit(c, p);
 			g_exit_code = 126;
+			free_and_exit(c, p);
 		}
 	}
 	int	status;

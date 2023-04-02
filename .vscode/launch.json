@@ -1,4 +1,5 @@
 {
+	"version": "0.2.0",
 	"configurations": [
 
 	{
@@ -11,7 +12,8 @@
 		"cwd": "${fileDirname}",
 		"environment": [],
 		"externalConsole": true,
-		"MIMode": "lldb"
+		"MIMode": "lldb",
+		"preLaunchTask": "C/C++: gcc build active file" 
 	}
 	]
 }
