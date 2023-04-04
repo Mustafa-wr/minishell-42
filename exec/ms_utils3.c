@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/01 06:41:25 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/04 04:16:47 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 			if (strncmp_orginal(c->tmpp->content, p[0].cmd[j],
 				ft_strlen(c->tmpp->content)) > 0)
 			{
-				// printf("hi\n");
 				c->tmp2 = ft_lstnew(ft_strdup(p[0].cmd[j]));
 				c->tmp2->next = c->tmpp;
 				if (i != 0)
@@ -38,7 +37,6 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 				if (i == 0)
 					c->m_export = c->tmp2;
 				break ;
-				// return (0);
 			}
 			c->tmp3 = c->tmpp;
 			c->tmpp = c->tmpp->next;
@@ -60,17 +58,16 @@ void	insert_the_node(t_cmds *p, t_pipe *c)
 
 	i = 0;
 	j = 1;
-	while (p[i].cmd[j])
+	while (p[i].cmd[j] != NULL)
 	{
-		if (ft_strncmp(p[i].cmd[j], "=", 1) != 0
+		if (ft_strcmp(p[i].cmd[j], "=") != 0
 			&& ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 0)
-			add_to_export(p, c, i, j);
-		else if (ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 1 || ft_strncmp(p[i].cmd[j], "=", 1) == 0)
+				add_to_export(p, c, i, j);
+		else if (ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 1 || ft_strcmp(p[i].cmd[j], "=") == 0)
 		{
+			g_exit_code = 1;
 			write (2, p[i].cmd[j], ft_strlen(p[i].cmd[j]));
 			write(2, ": not a valid identifier\n", 25);
-			g_exit_code = 1;
-			// return ;
 		}
 		j++;
 	}
@@ -78,24 +75,15 @@ void	insert_the_node(t_cmds *p, t_pipe *c)
 
 int	check_if_exist(t_cmds *p, int i, int j, t_pipe *c)
 {
-	// int		counter;
 	int		len;
 	t_list	*t_e;
 
-	// counter = 0;
-	// printf("p[i].cmd[j + 1] = %s\n", p->args[i][j]);
-	// if (p->args[i][j + 1] == NULL)
-	// 	return (1);
 	len = len_till_equal(p[i].cmd[j]);
-	// printf("len = %d", len);
 	t_e = c->m_export;
 	while (t_e)
 	{
-		if (strncmp_orginal(t_e->content, p[i].cmd[j], len) == 0)
-		{
-			// printf("out\n");
+		if (ft_strncmp(t_e->content, p[i].cmd[j], len) == 0)
 			return (0);
-		}
 		t_e = t_e->next;
 	}
 	return (1);

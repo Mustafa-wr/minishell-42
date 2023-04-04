@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 19:44:06 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/01 00:30:34 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:23:05 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 	int		tmp;
 	char	*line;
 	char	*m;
+	char	*q;
 
 	c->fd1 = 0;
+	q = NULL;
 	m = "h";
 	k = 0;
 	tmp = 0;
@@ -60,16 +62,20 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 			line = get_next_line(0);
 			while (1)
 			{
-				if (strcmp(line, ft_strjoin(p[i].outs[k].file_name, "\n")) == 0)
+				q = ft_strjoin(p[i].outs[k].file_name, "\n");
+				if (ft_strcmp(line, q) == 0)
 				{
 					p[i].outs[k].flag = 0;
+					free(p[i].outs[k].file_name);
 					p[i].outs[k].file_name = ft_strdup(m);
+					free(q);
 					break ;
 				}
 				ft_putstr_fd(line, tmp, 0);
 				write(1, "> ", 2);
 				free(line);
 				line = get_next_line(0);
+				free(q);
 				if (!line)
 					break ;
 			}

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/03 00:05:52 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/04 06:21:05 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,14 @@ int	main(int ac, char **av, char **envp)
 	fill_export(&pipe);
 	g_exit_code = 0;
 	pipe.m_path = NULL;
+	pipe.fdin = 0;
+	pipe.fdout = 0;
 	while (1)
 	{
+		// dup(0);
+		// dup(1);
+		pipe.fdin = dup(0);
+		pipe.fdout = dup(1);
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
 		read = readline("bash-3.3$ ");
@@ -97,6 +103,10 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		files_saving(&pipe, &cmds);
 		ms_exec(cmds, &pipe);
+		dup2(pipe.fdin, STDIN_FILENO);
+		dup2(pipe.fdout, STDOUT_FILENO);
+		close(pipe.fdin);
+		close(pipe.fdout);
 		add_history(read);
 	}
 }

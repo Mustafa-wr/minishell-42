@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/02 23:54:57 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/03 23:30:17 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,32 @@ int	check_for_redirction(t_cmds *p, t_pipe *c)
 void	normal_exec(t_cmds *p, t_pipe *c)
 {
 	int		i;
-
+	struct stat fs;
+	if (!ft_strchr(p[0].cmd[0], '.') && ft_strchr(p[0].cmd[0], '/'))
+	{
+		if (stat(p[0].cmd[0], &fs) != 0)
+		{
+			perror("stat");
+			g_exit_code = 126;
+			return ;
+		}
+	}
+	else if (ft_strchr(p[0].cmd[0], '.') && ft_strchr(p[0].cmd[0], '/'))
+	{
+		if (stat(p[0].cmd[0], &fs) != 0)
+		{
+			perror("stat");
+			g_exit_code = 127;
+			return ;
+		}
+	}
 	c->cmd_exec = check_command_existence(p[0].cmd[0], c->m_path);
 	i = fork();
 	if (i == 0)
 	{
-		// if (ft_strchr(p[0].cmd[0], '.')  && ft_strchr(p[0].cmd[0], '/'))
-		// {
-		// 	c->fd1 = open(p[0].cmd[0], O_);
-		// 	if (c->fd1 < 0)
-		// 	{
-		// 		g_exit_code = 126;
-		// 		perror("Permission denied");
-		// 		free_and_exit(c, p);
-		// 	}
-		// }
 		if (p[0].red_len > 0)
 		{
-			input_red(p, c);
+			// input_red(p, c);
 			output_red(p, c, c->cmd_exec);
 		}
 		if (!c->cmd_exec)

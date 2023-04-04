@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/30 05:58:33 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:38:35 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,10 @@ void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 	}
 	if (tmp2->content != tmp->content)
 		tmp2->next = tmp3;
+	free(tmp->content);
+	free(tmp);
 	if (k == 0)
-	{
 		c->m_export = tmp3;
-		free(tmp->content);
-		free(tmp);
-	}
 }
 
 char	*env_index(int index, t_list *env)
@@ -108,12 +106,14 @@ void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
 	}
 	if (tmp2->content != tmp->content)
 		tmp2->next = tmp3;
-	if (k == 0)
+	if (tmp)
 	{
-		c->m_export = tmp3;
 		free(tmp->content);
 		free(tmp);
+		tmp = NULL;
 	}
+	if (k == 0)
+		c->m_export = tmp3;
 }
 
 void	unset_cmp(t_cmds *p, t_list *lst, int i, int j)

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 21:40:34 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/31 22:21:19 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:48:46 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	strncmp_orginal(const char *s1, const char *s2, unsigned int n)
 	unsigned char	*ns1;
 	unsigned char	*ns2;
 
-	ns1 = (unsigned char *)s1;
-	ns2 = (unsigned char *)s2;
 	i = 0;
 	if (!s1 || !s2)
 		return (1);
+	ns1 = (unsigned char *)s1;
+	ns2 = (unsigned char *)s2;
 	while (i < n && ns1[i] != '\0' && ns2[i] != '\0')
 	{
 		if (ns1[i] != ns2[i])
@@ -45,7 +45,6 @@ int	found_first(char **m_env, int k, t_pipe *p)
 	f = 0;
 	c = 0;
 	j = 0;
-	// (void)k;
 	k = p->env_count;
 	while (m_env[i])
 	{
@@ -68,9 +67,7 @@ int	found_first(char **m_env, int k, t_pipe *p)
 					return (i);
 			}
 			else
-			{
 				return (i);
-			}
 		}
 		i++;
 	}

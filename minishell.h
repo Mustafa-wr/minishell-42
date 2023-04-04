@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/02 21:42:04 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/04 06:19:10 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef struct t_pipe
 	t_list		*tmpp;
 	t_list		*tmp2;
 	t_list		*tmp3;
+	int			fdin;
+	int			fdout;
 }	t_pipe;
 
 /***************      parse_tool          ****************/
@@ -172,7 +174,7 @@ int		check_executable(t_pipe *c, t_cmds *p);
 int		increase_shlvl_value(char *str);
 void	change_shlv(t_cmds *p, t_pipe *c, t_list *lst);
 void	get_path(char **str, t_pipe *c);
-int		check_exec_rederict(t_cmds *p, t_pipe *c, int pm, int j);
+int		check_exec_redirect(t_cmds *p, t_pipe *c, int pm, int j);
 void	free_and_exit_2(t_pipe *c, t_cmds *p);
 void	write_in_fd(t_cmds *p, int x, int y, t_pipe *c);
 int		check_input_redirect(t_cmds *p, t_pipe *c, int pm, int j);
