@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:00:16 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/04 06:38:21 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/05 00:50:55 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,21 @@
 static void	first_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
 	if (p[v->j].red_len > 0)
-	{
-		printf("red1\n");
 		check_exec_redirect(p, c, 1, v->j);
-	}
-	if (dup2(c->fd[0][1], STDOUT_FILENO) == -1)
-	{
-		printf("error1\n");
-		// exit(0);
-	}
-	close(c->fd[0][1]);
-	close(c->fd[0][0]);
 	if (builtins_pipes(p, c, c->fd[0][1], v->j) == 0)
 	{
 		close(c->fd[0][1]);
 		close(c->fd[0][0]);
 		free_and_exit(c, p);
 	}
+	if (dup2(c->fd[0][1], STDOUT_FILENO) == -1)
+	{
+		// dup2(c->fd[0][1], STDOUT_FILENO);
+		printf("error1\n");
+	}
+	close(c->fd[0][1]);
+	close(c->fd[0][0]);
+	// printf("here\n");
 	c->cmd_exec = check_command_existence(p[v->j].cmd[0], c->m_path);
 	if (!c->cmd_exec)
 	{
@@ -49,18 +47,20 @@ static void	first_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 		free_and_exit(c, p);
 	}
 }
-static void	second_cmd(t_pipe *c, t_vars *v)
+static void	second_cmd(t_pipe *c, t_vars *v, t_cmds *p)
 {
-	if (v->i % 2 == 0 && v->j == 1)
+	if (v->i % 2 == 0 && v->j == 1 && input_check(p, c, v->j) == 0)
 	{
 		if (dup2(c->fd[0][0], STDIN_FILENO) == -1)
 		{
 			printf("error3\n");
 			exit(0);
 		}
-		closing_fds(c);
+			close(c->fd[0][0]);
+			close(c->fd[0][1]);
+		// closing_fds(c);
 	}
-	else if (v->i % 2 == 1)
+	else if (v->i % 2 == 1 && input_check(p, c, v->j) == 0)
 	{
 		if (dup2(c->fd[0][0], STDIN_FILENO) == -1)
 		{
@@ -72,10 +72,11 @@ static void	second_cmd(t_pipe *c, t_vars *v)
 	}
 	else
 	{
-		if (dup2(c->fd[1][0], STDIN_FILENO) == -1)
+		if (input_check(p, c, v->j) == 0)
 		{
-			printf("error4\n");
-			exit(0);
+			dup2(c->fd[1][0], STDIN_FILENO);
+			// printf("error4\n");
+			// exit(0);
 		}
 		close(c->fd[1][1]);
 		close(c->fd[1][0]);
@@ -83,12 +84,10 @@ static void	second_cmd(t_pipe *c, t_vars *v)
 }
 static void	third2_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
+	// printf("jj = %d\n", v->j);
 	if (p[v->j].red_len > 0)
-	{
-		printf("red2\n");
 		check_exec_redirect(p, c, 1, v->j);
-	}
-	second_cmd(c, v);
+	second_cmd(c, v, p);
 	if (builtins_pipes(p, c, 1, v->j) == 0)
 	{
 		closing_fds(c);
@@ -100,6 +99,11 @@ static void	third2_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 		g_exit_code = 127;
 		closing_fds(c);
 		free_and_exit(c, p);
+	}
+	else
+	{
+		close(c->fdin);
+		close(c->fdout);
 	}
 	if (execve(c->cmd_exec, p[v->j].cmd, NULL) < 0)
 	{
@@ -114,14 +118,10 @@ static void	third2_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 static void	fourth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 {
 	if (p[v->j].red_len > 0)
-	{
-		printf("red3\n");
 		check_exec_redirect(p, c, 1, v->j);
-	}
-	if (dup2(c->fd[0][0], STDIN_FILENO) == -1)
+	else if (input_check(p, c, v->j) == 0)
 	{
-		// printf("error6\n");
-		// exit(0);
+		dup2(c->fd[0][0], STDIN_FILENO);
 		if (dup2(c->fd[1][1], STDOUT_FILENO) == -1)
 		{
 			printf("error8\n");
@@ -130,10 +130,11 @@ static void	fourth_cmd(t_pipe *c, t_cmds *p, t_vars *v)
 	}
 	else
 	{
-		if (dup2(c->fd[0][0], STDIN_FILENO) == -1)
+		if (input_check(p, c, v->j) == 0)
 		{
-				printf("error9\n");
-				exit(0);
+			dup2(c->fd[0][0], STDIN_FILENO);
+			printf("error9\n");
+			exit(0);
 		}
 		if (dup2(c->fd[1][1], STDOUT_FILENO) == -1)
 		{
@@ -241,6 +242,7 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 	t_vars v;
 	init1(&v);
 	c->cmd_exec = NULL;
+	c->cr = 1;
 	while (v.j < p->cmd_len)
 	{
 		if (v.i % 2 == 0 || v.i == 0)
@@ -262,6 +264,7 @@ void	multiple_pipes(t_cmds *p, t_pipe *c)
 		wait(NULL);
 		v.h++;
 	}
+	c->cr = 0;
 }
 
 

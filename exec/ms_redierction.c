@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/03 22:08:41 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/04 22:58:04 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ int	check_exec_redirect(t_cmds *p, t_pipe *c, int pm, int j)
 			{
 				perror("open");
 				g_exit_code = 1;
-				if (pm == 1)
+				if (pm == 1 && c->ch != 1)
 					free_and_exit(c, p);
+				else if (c->ch == 1)
+					exit_once(p, c);
 				else
 					return (-1);
 			}
@@ -113,8 +115,10 @@ int	check_exec_redirect(t_cmds *p, t_pipe *c, int pm, int j)
 			{
 				perror("open");
 				g_exit_code = 1;
-				if (pm == 1)
+				if (pm == 1 && c->ch != 1)
 					free_and_exit(c, p);
+				else if (c->ch == 1)
+					exit_once(p, c);
 				else
 					return (-1);
 			}
@@ -127,8 +131,10 @@ int	check_exec_redirect(t_cmds *p, t_pipe *c, int pm, int j)
 			{
 				perror("open");
 				g_exit_code = 1;
-				if (pm == 1)
+				if (pm == 1 && c->ch != 1)
 					free_and_exit(c, p);
+				else if (c->ch == 1)
+					exit_once(p, c);
 				else
 					return (-1);
 			}

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/03 23:30:17 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/04 19:56:11 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 {
 	int		i;
 	struct stat fs;
+
+	c->ch = 1;
 	if (!ft_strchr(p[0].cmd[0], '.') && ft_strchr(p[0].cmd[0], '/'))
 	{
 		if (stat(p[0].cmd[0], &fs) != 0)
@@ -124,10 +126,7 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 	if (i == 0)
 	{
 		if (p[0].red_len > 0)
-		{
-			// input_red(p, c);
 			output_red(p, c, c->cmd_exec);
-		}
 		if (!c->cmd_exec)
 		{
 			write(2, p[0].cmd[0], ft_strlen(p[0].cmd[0]));
@@ -158,4 +157,5 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 		g_exit_code = WTERMSIG(status) + 128;
 	}
 	free(c->cmd_exec);
+	c->ch = 0;
 }

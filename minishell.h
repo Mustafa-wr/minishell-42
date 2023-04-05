@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/04 06:19:10 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/04 22:41:11 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct t_pipe
 	int			k;
 	int			j;
 	int			b;
+	int			ch;
 	int			pid;
 	int			fd[2][2];
 	int			fd1;
@@ -101,6 +102,7 @@ typedef struct t_pipe
 	t_list		*tmp3;
 	int			fdin;
 	int			fdout;
+	int			cr;
 }	t_pipe;
 
 /***************      parse_tool          ****************/
@@ -196,6 +198,13 @@ void	ft_exit(t_pipe *c, t_cmds *p);
 int		builtins_pipes(t_cmds *p, t_pipe *c, int fd, int j);
 void	update_pwd(t_pipe *c, char *str, char *p, int k);
 void	update_export(t_pipe *c, char *str, char *p, int k);
-int		input_check(t_cmds *p, t_pipe *c);
+int		input_check(t_cmds *p, t_pipe *c, int j);
 int		output_check(t_cmds *p, t_pipe *c);
+void	exit_once(t_cmds *p, t_pipe *c);
+void	ft_echo_p(t_cmds *p, int x, int pm, t_pipe *c);
+void	ft_unset_p(t_cmds *p, int i, int fd, t_pipe *c);
+void	ft_export_p(t_pipe *c, t_cmds *p, int i, int fd);
+void	ft_cd_p(t_cmds *p, int x, int pm, t_pipe *c);
+void	ft_pwd_p(t_cmds *p, t_pipe *c, int pm);
+void	ft_env_p(t_cmds *p, t_pipe *c, int pm);
 #endif

@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/04 06:21:05 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/05 00:56:16 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,20 @@ int	main(int ac, char **av, char **envp)
 	pipe.m_path = NULL;
 	pipe.fdin = 0;
 	pipe.fdout = 0;
+	pipe.ch = 0;
+	pipe.cr = 0;
 	while (1)
 	{
-		// dup(0);
-		// dup(1);
-		pipe.fdin = dup(0);
-		pipe.fdout = dup(1);
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		read = readline("bash-3.3$ ");
+		read = readline("\x1B[31mbash-3.3$\e[0m ");
 		if (!read)
 			return (free_and_exit_2(&pipe, cmds), printf("exit\n"), 0);
 		if (ms_main_helper(&pipe, cmds, read))
 			continue ;
 		files_saving(&pipe, &cmds);
+		pipe.fdin = dup(0);
+		pipe.fdout = dup(1);
 		ms_exec(cmds, &pipe);
 		dup2(pipe.fdin, STDIN_FILENO);
 		dup2(pipe.fdout, STDOUT_FILENO);

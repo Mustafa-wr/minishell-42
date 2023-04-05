@@ -51,10 +51,9 @@ chmod 000 and play with redierction && shlvl
 <a sadjgh > wdf
 redierction
 
-
+ls | >|
+ls | >d | >k | ''
+ls | >d | echo '' | export a= | cat
 
 inshallah 
-pwd
-cd
-if i have time i will do the oldpwd shit
-builtins in pipes
+fd leaks

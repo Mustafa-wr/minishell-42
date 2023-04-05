@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:03:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/04 06:41:06 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/05 00:40:07 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_and_exit(t_pipe *c, t_cmds *p)
 		free_strings(c->m_path);
 	free_all(c, p);
 	// printf("g = %d\n", g_exit_code);
-	closing_fds(c);
+	// closing_fds(c);
 	close(c->fdin);
 	close(c->fdout);
 	exit(g_exit_code);
@@ -57,6 +57,9 @@ void	free_and_exit_2(t_pipe *c, t_cmds *p)
 		free_strings(c->tmp_env);
 	if (c->m_path != NULL)
 		free_strings(c->m_path);
+
+	close(c->fdout);
+	close(c->fdin);
 }
 
 static int	check_exit(t_cmds *p, int k)
@@ -100,8 +103,8 @@ void	ft_exit(t_pipe *c, t_cmds *p)
 		free_strings(c->tmp_env);
 	if (c->m_path != NULL)
 		free_strings(c->m_path);
-	free_all(c, p);
 	close(c->fdin);
 	close(c->fdout);
+	free_all(c, p);
 	exit(g_exit_code);
 }
