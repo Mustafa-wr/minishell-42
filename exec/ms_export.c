@@ -6,7 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/06 18:18:24 by mradwan          ###   ########.fr       */
+=======
+/*   Updated: 2023/03/14 00:27:51 by abdamoha         ###   ########.fr       */
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +37,7 @@ void	ch_t_val(t_cmds *p, int i, int j, t_vars *v)
 		if (strncmp_orginal(v->tmp->content, p[i].cmd[j],
 				len_till_equal(p[i].cmd[j])) == 0)
 		{
+<<<<<<< HEAD
 			v->tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
 			v->tmp3->next = v->tmp->next;
 			if (v->tmp2->content != v->tmp->content)
@@ -62,6 +67,20 @@ void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 		free(v.tmp->content);
 		free(v.tmp);
 	}
+=======
+			tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
+			tmp3->next = tmp->next;
+			tmp2->next = tmp3;
+			free(tmp->content);
+			free(tmp);
+			break ;
+		}
+		tmp2 = tmp;
+		tmp = tmp->next;
+		k++;
+	}
+	tmp2->next = tmp3;
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 }
 
 // void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
@@ -123,6 +142,7 @@ void	ch_the_env(t_cmds *p, int i, int j, t_vars *v)
 		if (strncmp_orginal(v->tmp->content, p[i].cmd[j],
 				len_till_equal(p[i].cmd[j])) == 0)
 		{
+<<<<<<< HEAD
 			v->tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
 			v->tmp3->next = v->tmp->next;
 			if (v->tmp2->content != v->tmp->content)
@@ -152,6 +172,19 @@ void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
 		free(v.tmp->content);
 		free(v.tmp);
 	}
+=======
+			tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
+			tmp3->next = tmp->next;
+			tmp2->next = tmp3;
+			free(tmp->content);
+			free(tmp);
+			break ;
+		}
+		tmp2 = tmp;
+		tmp = tmp->next;
+		k++;
+	}
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 }
 
 // void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
@@ -205,9 +238,15 @@ void	unset_cmp(t_list *lst, char *str)
 		if (strncmp_orginal(tmp->content, str, len_till_equal(str)) == 0)
 		{
 			tmp3 = tmp->next;
+<<<<<<< HEAD
 			tmp2->next = tmp3;
 			free(tmp->content);
 			free(tmp);
+=======
+			free(tmp->content);
+			free(tmp);
+			tmp2->next = tmp3;
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 			return ;
 		}
 		tmp2 = tmp;

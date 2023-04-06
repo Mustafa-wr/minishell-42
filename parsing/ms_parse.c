@@ -6,7 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/06 19:40:32 by mradwan          ###   ########.fr       */
+=======
+/*   Updated: 2023/03/14 17:43:47 by mradwan          ###   ########.fr       */
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +107,11 @@ int	main(int ac, char **av, char **envp)
 		signal(SIGQUIT, SIG_IGN);
 		read = readline("\x1B[31mbash-3.3$\e[0m ");
 		if (!read)
+<<<<<<< HEAD
 			return (free_and_exit_2(&pipe, cmds), printf("exit\n"), 0);
+=======
+			return (free_list(&pipe.m_env), printf("exit\n"), 0);
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 		if (ms_main_helper(&pipe, cmds, read))
 			continue ;
 		files_saving(&pipe, &cmds);

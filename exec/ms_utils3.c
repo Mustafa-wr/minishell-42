@@ -6,7 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/06 19:12:47 by mradwan          ###   ########.fr       */
+=======
+/*   Updated: 2023/03/14 00:39:16 by abdamoha         ###   ########.fr       */
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +49,32 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 		return (changing_the_value(p, i, j, c), changing_the_env_v(p, i, j, c));
 	if (strncmp_orginal(p[0].cmd[j], "=", 1) != 0)
 	{
+<<<<<<< HEAD
 		while (c->tmpp)
 		{
 			if (strncmp_orginal(c->tmpp->content, p[0].cmd[j] , \
 				ft_strlen(c->tmpp->content)) > 0)
 			{	
 				add_to_ex(p, c, &i, j);
+=======
+		// printf("change the value\n");
+		changing_the_value(p, i, j, c);
+		changing_the_env_v(p, i, j, c);
+		return ;
+	}
+	if (strncmp_orginal(p[k].cmd[j], "=", 1) != 0)
+	{
+		while (tmp)
+		{
+			if (strncmp_orginal(tmp->content, p[k].cmd[j],
+					ft_strlen(tmp->content)) > 0)
+			{
+				tmp2 = ft_lstnew(ft_strdup(p[k].cmd[j]));
+				tmp2->next = tmp;
+				tmp3->next = tmp2;
+				c->env_count += 1;
+				ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[k].cmd[j])));
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 				break ;
 			}
 			c->tmp3 = c->tmpp;
@@ -68,10 +92,17 @@ void	insert_the_node(t_cmds *p, t_pipe *c)
 
 	i = 0;
 	j = 1;
+<<<<<<< HEAD
 	while (p[i].cmd[j] != NULL)
 	{
 		if (ft_strcmp(p[i].cmd[j], "=") != 0
 			&& ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 0)
+=======
+	while (p[i].cmd[j])
+	{
+		// printf("p = %s\n", p[i].cmd[j]);
+		if (ft_strncmp(p[i].cmd[j], "=", 1) != 0)
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 			add_to_export(p, c, i, j);
 		else if (ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 1 \
 			|| ft_strcmp(p[i].cmd[j], "=") == 0)

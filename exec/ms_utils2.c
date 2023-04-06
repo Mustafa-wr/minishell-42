@@ -6,7 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:36:08 by abdamoha          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/06 19:13:21 by mradwan          ###   ########.fr       */
+=======
+/*   Updated: 2023/03/14 07:05:29 by abdamoha         ###   ########.fr       */
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +33,7 @@ void	get_env(t_pipe *p, char **envp)
 		i++;
 	}
 	p->env_count = i;
+	printf("i = %d\n", i);
 }
 
 void	fill_export(t_pipe *c)
@@ -56,6 +61,7 @@ void	fill_export(t_pipe *c)
 	last_sorting(c);
 }
 
+<<<<<<< HEAD
 static int	env_count(t_pipe *c)
 {
 	int		i;
@@ -75,6 +81,8 @@ static int	env_count(t_pipe *c)
 	return (i);
 }
 
+=======
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 void	update_env(t_pipe *c)
 {
 	t_list	*tmp;
@@ -83,7 +91,10 @@ void	update_env(t_pipe *c)
 	i = 0;
 	tmp = c->m_env;
 	free_strings(c->tmp_env);
+<<<<<<< HEAD
 	c->env_count = env_count(c);
+=======
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 	c->tmp_env = malloc((c->env_count + 1) * sizeof(char *));
 	while (tmp)
 	{
@@ -92,5 +103,8 @@ void	update_env(t_pipe *c)
 		i++;
 	}
 	c->tmp_env[i] = NULL;
+<<<<<<< HEAD
 	i = 0;
+=======
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 }

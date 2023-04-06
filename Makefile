@@ -20,6 +20,7 @@ SRCS =	parsing/ms_parse.c					\
 		exec/ms_exit.c                      \
 		exec/ms_multiple_pipe.c             \
 		exec/ms_multiple_pipes_utils.c      \
+<<<<<<< HEAD
 		exec/ms_builtins_utils.c            \
 		exec/ms_redierction.c               \
 		exec/ms_heredoc.c                   \
@@ -28,6 +29,9 @@ SRCS =	parsing/ms_parse.c					\
 		exec/ms_update_values.c             \
 		exec/ms_builtins_pipes_exec.c		\
 		exec/ms_built_pipe_u.c
+=======
+		exec/ms_builtins_utils.c   
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 
 OBJS = $(SRCS:.c=.o)
 

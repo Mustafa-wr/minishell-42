@@ -6,7 +6,11 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:03:59 by abdamoha          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/06 18:13:30 by mradwan          ###   ########.fr       */
+=======
+/*   Updated: 2023/03/14 01:56:05 by abdamoha         ###   ########.fr       */
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +51,7 @@ void	free_and_exit(t_pipe *c, t_cmds *p)
 void	free_and_exit_2(t_pipe *c, t_cmds *p)
 {
 	(void)p;
+<<<<<<< HEAD
 	if (c->m_env)
 		free_list(&c->m_env);
 	if (c->m_export)
@@ -102,6 +107,12 @@ void	ft_exit(t_pipe *c, t_cmds *p)
 		free_strings(c->m_path);
 	close(c->fdin);
 	close(c->fdout);
+=======
+	free_list(&c->m_env);
+	free_list(&c->m_export);
+	free_strings(c->tmp_env);
+	free_strings(c->m_path);
+>>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 	free_all(c, p);
 	exit(g_exit_code);
 }
