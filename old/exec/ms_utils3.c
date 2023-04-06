@@ -6,13 +6,13 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/07 01:15:12 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/06 19:12:47 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_to_ex(t_cmds *p, t_pipe *c, int i, int j)
+void	add_to_ex(t_cmds *p, t_pipe *c, int *i, int j)
 {
 	c->tmp2 = ft_lstnew(ft_strdup(p[0].cmd[j]));
 	c->tmp2->next = c->tmpp;
@@ -50,7 +50,7 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 			if (strncmp_orginal(c->tmpp->content, p[0].cmd[j] , \
 				ft_strlen(c->tmpp->content)) > 0)
 			{	
-				add_to_ex(p, c, i, j);
+				add_to_ex(p, c, &i, j);
 				break ;
 			}
 			c->tmp3 = c->tmpp;
@@ -60,45 +60,6 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 		add_to_e2(p, c, j);
 	}
 }
-
-// void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
-// {
-// 	c->tmp2 = NULL;
-// 	c->tmpp = c->m_export;
-// 	c->tmp3 = c->tmpp;
-// 	if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 0)
-// 		return ;
-// 	else if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 1)
-// 		return (changing_the_value(p, i, j, c), changing_the_env_v(p, i, j, c));
-// 	if (strncmp_orginal(p[0].cmd[j], "=", 1) != 0)
-// 	{
-// 		while (c->tmpp)
-// 		{
-// 			if (strncmp_orginal(c->tmpp->content, p[0].cmd[j],
-// 				ft_strlen(c->tmpp->content)) > 0)
-// 			{
-// 				c->tmp2 = ft_lstnew(ft_strdup(p[0].cmd[j]));
-// 				c->tmp2->next = c->tmpp;
-// 				if (i != 0)
-// 					c->tmp3->next = c->tmp2;
-// 				c->env_count += 1;
-// 				ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[0].cmd[j])));
-// 				if (i == 0)
-// 					c->m_export = c->tmp2;
-// 				break ;
-// 			}
-// 			c->tmp3 = c->tmpp;
-// 			c->tmpp = c->tmpp->next;
-// 			i++;
-// 		}
-// 		if (!c->tmpp)
-// 		{
-// 			ft_lstadd_back(&c->m_export, ft_lstnew(ft_strdup(p[0].cmd[j])));
-// 			ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[0].cmd[j])));
-// 			c->env_count += 1;
-// 		}
-// 	}
-// }
 
 void	insert_the_node(t_cmds *p, t_pipe *c)
 {

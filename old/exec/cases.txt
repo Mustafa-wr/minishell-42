@@ -1,0 +1,59 @@
+
+/***************** echo ********************/
+
+ECHO   "gfeyjgf"
+Echo   "gfeyjgf"
+ECho   "gfeyjgf"
+ECHo   "gfeyjgf"
+echo > z.txt (permissions)
+echo 
+echo "'"$USER"'"
+
+
+
+
+/******************   export          ****************/
+
+export t = hjhdjhdg
+/will add the string after the = sign but it will print a error/
+
+
+
+/******************   unset          ****************/
+
+from both env and export
+
+
+/******************   debug tools         ****************/
+
+1-set -x 
+2-strace
+
+/******************   env        ****************/
+(optional)
+1-SHLVL
+2-PWD
+
+/***************** pipes && redierction **************/
+
+ls | <i wc > f | cat > g
+ls | <i wc | cat > f
+> ""
+<"">""
+<''>''
+<f <g <i cat
+<f <g <i cat >1 >2 >3 >4
+<i <f <g cat >s
+<i <f <g cat >s
+kllkl>lkjlkj
+chmod 000 and play with redierction && shlvl
+<a|> sadjgh >>wdf
+<a sadjgh > wdf
+redierction
+
+ls | >|
+ls | >d | >k | ''
+ls | >d | echo '' | export a= | cat
+
+inshallah 
+fd leaks

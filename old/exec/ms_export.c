@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/07 01:03:33 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/06 18:18:24 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 	ch_t_val(p, i, j, &v);
 	if (v.tmp2->content != v.tmp->content)
 		v.tmp2->next = v.tmp3;
-	free(v.tmp->content);
-	free(v.tmp);
 	if (v.k == 0)
+	{
 		c->m_export = v.tmp3;
+		free(v.tmp->content);
+		free(v.tmp);
+	}
 }
 
 // void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
@@ -144,14 +146,12 @@ void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
 	ch_the_env(p, i, j, &v);
 	if (v.tmp2->content != v.tmp->content)
 		v.tmp2->next = v.tmp3;
-	if (v.tmp)
+	if (v.k == 0)
 	{
+		c->m_export = v.tmp3;
 		free(v.tmp->content);
 		free(v.tmp);
-		v.tmp = NULL;
 	}
-	if (v.k == 0)
-		c->m_export = v.tmp3;
 }
 
 // void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
