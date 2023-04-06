@@ -6,11 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/04/06 18:57:42 by mradwan          ###   ########.fr       */
-=======
-/*   Updated: 2023/03/14 17:40:19 by mradwan          ###   ########.fr       */
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,11 +162,7 @@ int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
 int		found_first(char **m_env, int k, t_pipe *p);
 void	fill_export_list(t_pipe *p);
 void	fill_tmp_env(t_pipe *c);
-<<<<<<< HEAD
 int		check_builtin(t_cmds *p, t_pipe *c);
-=======
-int		check_builtin(t_cmds *p, t_pipe *c, t_vars *vars);
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 int		check_for_redirction(t_cmds *p, t_pipe *c);
 int		count_cmds(char ***str);
 void	check_other(t_cmds *p, t_pipe *c);
@@ -203,7 +195,6 @@ void	update_env(t_pipe *c);
 int		check_executable(t_pipe *c, t_cmds *p);
 int		increase_shlvl_value(char *str);
 void	change_shlv(t_cmds *p, t_pipe *c, t_list *lst);
-<<<<<<< HEAD
 void	get_path(char **str, t_pipe *c);
 int		check_exec_redirect(t_cmds *p, t_pipe *c, int pm, int j);
 void	free_and_exit_2(t_pipe *c, t_cmds *p);
@@ -246,8 +237,5 @@ void	fifth_cmd(t_pipe *c, t_cmds *p, t_vars *v);
 void	sixth_cmd(t_pipe *c, t_cmds *p, t_vars *v);
 void	closing_pipe(t_pipe *c, t_cmds *p, t_vars *v);
 void	before_cmd(t_pipe *c, t_cmds *p, t_vars *v);
-=======
-char	**get_path(char **str);
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 
 #endif

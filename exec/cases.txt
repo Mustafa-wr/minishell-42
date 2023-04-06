@@ -32,7 +32,6 @@ from both env and export
 /******************   env        ****************/
 (optional)
 1-SHLVL
-<<<<<<< HEAD
 2-PWD
 
 /***************** pipes && redierction **************/
@@ -58,6 +57,3 @@ ls | >d | echo '' | export a= | cat
 
 inshallah 
 fd leaks
-=======
-2-PWD
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508

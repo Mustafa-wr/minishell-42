@@ -6,11 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 20:27:44 by abdamoha          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/04/06 18:05:11 by mradwan          ###   ########.fr       */
-=======
-/*   Updated: 2023/03/14 00:54:19 by abdamoha         ###   ########.fr       */
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +48,6 @@ void	ft_pwd(t_cmds *p, t_pipe *c, int pm)
 
 void	ft_env(t_cmds *p, t_pipe *c, int pm)
 {
-<<<<<<< HEAD
 	t_list	*tmp;
 
 	(void)p;
@@ -64,24 +59,6 @@ void	ft_env(t_cmds *p, t_pipe *c, int pm)
 	{
 		printf("%s\n", (char *)tmp->content);
 		tmp = tmp->next;
-=======
-	// int		i;
-	t_list	*tmp;
-
-	// i = 0;
-	(void)p;
-	(void)c;
-	tmp = c->m_env;
-	// printf("c = %d\n", c->env_count);
-	// exit(0);
-	while (tmp)
-	{
-		// if (!tmp->content)
-		// 	i++;
-		printf("%s\n", (char *)tmp->content);
-		tmp = tmp->next;
-		// i++;
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 	}
 	g_exit_code = 0;
 }
@@ -108,7 +85,6 @@ void	ft_cd(t_cmds *p, int x, int pm, t_pipe *c)
 
 void	ft_export(t_pipe *c, t_cmds *p, int i, int fd)
 {
-<<<<<<< HEAD
 	(void)fd;
 	c->tmp = NULL;
 	c->tmpp = c->m_export;
@@ -116,33 +92,15 @@ void	ft_export(t_pipe *c, t_cmds *p, int i, int fd)
 		check_exec_redirect(p, c, 0, 0);
 	c->j = 1;
 	if (p[i].cmd[c->j])
-=======
-	int	k = 0;
-	t_list	*tmp;
-
-	tmp = c->m_export;
-	j += 1;
-	if (p[i].cmd[j])
-	{
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 		insert_the_node(p, c);
 	else
 	{
 		while (c->tmpp)
 		{
-<<<<<<< HEAD
 			printf("declare -x %s\n", (char *)c->tmpp->content);
 			c->tmpp = c->tmpp->next;
 		}
 		g_exit_code = 0;
-=======
-			if (tmp->content != NULL)
-				printf("declare -x %s\n", (char *)tmp->content);
-			tmp = tmp->next;
-			k++;
-		}
-		printf("i = %d\n", k);
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 	}
 }
 

@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_builtins_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 07:20:21 by abdamoha          #+#    #+#             */
 /*   Updated: 2023/04/06 17:52:33 by mradwan          ###   ########.fr       */
-=======
-/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 07:20:21 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/03/14 08:45:41 by abdamoha         ###   ########.fr       */
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +30,6 @@ int	check_executable(t_pipe *c, t_cmds *p)
 	return (0);
 }
 
-<<<<<<< HEAD
 void	ch_shlv(t_vars *v)
 {
 	while (v->tmp)
@@ -111,44 +103,6 @@ void	change_shlv(t_cmds *p, t_pipe *c, t_list *lst)
 // 		free(s);
 // }
 
-=======
-void	change_shlv(t_cmds *p, t_pipe *c, t_list *lst)
-{
-	int		k;
-	char	*s;
-	t_list	*tmp;
-	t_list	*tmp2;
-	t_list	*tmp3;
-
-	k = 0;
-	s = NULL;
-	tmp = lst;
-	tmp2 = tmp;
-	tmp3 = NULL;
-	(void)p;
-	(void)c;
-	while (tmp)
-	{
-		if (strncmp_orginal(tmp->content, "SHLVL=",
-				len_till_equal("SHLVL=")) == 0)
-		{
-			s = ft_itoa(increase_shlvl_value(tmp->content));
-			tmp3 = ft_lstnew(ft_strjoin("SHLVL=", s));
-			tmp3->next = tmp->next;
-			tmp2->next = tmp3;
-			free(tmp->content);
-			free(tmp);
-			break ;
-		}
-		tmp2 = tmp;
-		tmp = tmp->next;
-		k++;
-	}
-	if (s)
-		free(s);
-}
-
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 int	increase_shlvl_value(char *str)
 {
 	int	i;
@@ -157,7 +111,6 @@ int	increase_shlvl_value(char *str)
 	return (ft_atoi(str + i) + 1);
 }
 
-<<<<<<< HEAD
 void	get_path(char **str, t_pipe *c)
 {
 	char	*s;
@@ -165,18 +118,10 @@ void	get_path(char **str, t_pipe *c)
 
 	i = 0;
 	s = NULL;
-=======
-char	**get_path(char **str)
-{
-	int	i;
-
-	i = 0;
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 	while (str[i])
 	{
 		if (strncmp_orginal("PATH=", str[i], 5) == 0)
 		{
-<<<<<<< HEAD
 			s = str[i] + 5;
 			c->m_path = ft_split(s, ':');
 			return ;
@@ -184,11 +129,4 @@ char	**get_path(char **str)
 		i++;
 	}
 	return ;
-=======
-			return (ft_split(str[i] + 5, ':'));
-		}
-		i++;
-	}
-	return (NULL);
->>>>>>> 09eb4cff4c04190af80726221878a5b3423b8508
 }
