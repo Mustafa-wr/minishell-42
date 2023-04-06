@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 19:44:06 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/03 20:23:05 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 07:28:12 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	exec_heredoc(t_cmds *p, t_pipe *c, int i)
 			while (1)
 			{
 				q = ft_strjoin(p[i].outs[k].file_name, "\n");
-				if (ft_strcmp(line, q) == 0)
+				if (ft_strcmp_heredoc(line, q) == 0)
 				{
 					p[i].outs[k].flag = 0;
 					free(p[i].outs[k].file_name);

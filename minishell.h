@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/04 22:41:11 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 06:21:31 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef struct t_pipe
 	int			fdin;
 	int			fdout;
 	int			cr;
+	int			p_f1;
+	int			p_f2;
 }	t_pipe;
 
 /***************      parse_tool          ****************/
@@ -168,7 +170,7 @@ char	*env_index(int index, t_list *tmp);
 void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c);
 void	free_list(t_list **lst);
 void	free_and_exit(t_pipe *c, t_cmds *p);
-void	unset_cmp(t_cmds *p, t_list *lst, int i, int j);
+void	unset_cmp(t_list *lst, char *str);
 void	multiple_pipes(t_cmds *p, t_pipe *c);
 void	closing_fds(t_pipe *c);
 void	update_env(t_pipe *c);
@@ -207,4 +209,6 @@ void	ft_export_p(t_pipe *c, t_cmds *p, int i, int fd);
 void	ft_cd_p(t_cmds *p, int x, int pm, t_pipe *c);
 void	ft_pwd_p(t_cmds *p, t_pipe *c, int pm);
 void	ft_env_p(t_cmds *p, t_pipe *c, int pm);
+void	check_and_exit(t_pipe *c);
+int		ft_strcmp_heredoc(char *s1, char *s2);
 #endif

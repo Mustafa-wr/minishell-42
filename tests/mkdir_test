@@ -11,5 +11,6 @@ sleep 0.6
 rm -rf /home/vscode/src/hello
 sleep 0.6
 cd .. 
+pwd
 sleep 0.6
 cd ..

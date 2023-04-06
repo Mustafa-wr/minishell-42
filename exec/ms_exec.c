@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/04 19:56:11 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 01:07:12 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,14 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 			if (p[0].cmd[0])
 				write(2, ": command not found\n", 21);
 			g_exit_code = 127;
+			free(c->cmd_exec);
 			free_and_exit(c, p);
 		}
 		else if (execve(c->cmd_exec, p[0].cmd, c->tmp_env) < 0)
 		{
 			perror("execve : is directory");
 			g_exit_code = 126;
+			free(c->cmd_exec);
 			free_and_exit(c, p);
 		}
 	}
@@ -157,5 +159,6 @@ void	normal_exec(t_cmds *p, t_pipe *c)
 		g_exit_code = WTERMSIG(status) + 128;
 	}
 	free(c->cmd_exec);
+	c->cmd_exec = NULL;
 	c->ch = 0;
 }

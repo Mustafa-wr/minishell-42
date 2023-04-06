@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 20:52:02 by mradwan           #+#    #+#             */
-/*   Updated: 2023/02/10 16:38:14 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/06 07:27:51 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,44 @@
 // 	return (NULL);
 // }
 
-static void	mu(char *str, char const *s2, int i)
-{
-	int	n;
+// static void	mu(char *str, char const *s2, int i)
+// {
+// 	int	n;
 
-	n = 0;
-	while (s2[n] != '\0')
-	{
-		str[i] = s2[n];
-		i++;
-		n++;
-	}
-	str[i] = '\0';
-}
+// 	n = 0;
+// 	while (s2[n] != '\0')
+// 	{
+// 		str[i] = s2[n];
+// 		i++;
+// 		n++;
+// 	}
+// 	str[i] = '\0';
+// }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
-	size_t	i;
-	size_t	len;
+	int		i;
+	int		j;
 
+	if (!s1 && !s2)
+		return (NULL);
 	i = 0;
-	if (s1 != NULL && s2 != NULL)
-	{
-		len = ft_strlen(s1) + ft_strlen(s2);
-		str = malloc(sizeof(char) * len + 1);
-		if (!str)
-			return (NULL);
+	j = 0;
+	str = malloc((ft_strlen(s1) + ft_strlen(s2)) * sizeof(char) + 1);
+	if (!str)
+		return (NULL);
+	if (s1 != NULL)
 		while (s1[i] != '\0')
-		{
-			str[i] = s1[i];
-			i++;
-		}
-		mu(str, s2, i);
-		return (str);
-	}
-	return (0);
+			str[j++] = s1[i++];
+	i = 0;
+	if (s2 != NULL)
+		while ((s2[i] != '\0'))
+			str[j++] = s2[i++];
+	str[j] = '\0';
+	if (*str == '\0')
+		return (NULL);
+	return (str);
 }
 
 /*

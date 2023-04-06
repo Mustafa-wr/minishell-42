@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:32:17 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/01 23:29:00 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 05:39:43 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ int	ft_isexportable(char *str, int len)
 	int		i;
 
 	i = 0;
+	(void)len;
 	if (str)
 	{
+		if (ft_isdigit(str[0]) || (!ft_isalpha(str[0]) && str[0] != '_'))
+			return (1);
+		i++;
 		while (str[i] && i < len)
 		{
-			if (((ft_isalpha(str[i]) == 0) && str[i] != '_')
-			|| str[i] == '-' || str[i] == '+' || (str[0] >= '0' && str[0] <= '9'))
+			if (!ft_isalnum(str[i]) && str[i] != '_')
 			{
 				return (1);
 			}

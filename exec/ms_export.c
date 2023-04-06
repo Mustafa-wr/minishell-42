@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/03 20:38:35 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 05:52:38 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
 		c->m_export = tmp3;
 }
 
-void	unset_cmp(t_cmds *p, t_list *lst, int i, int j)
+void	unset_cmp(t_list *lst, char *str)
 {
 	t_list	*tmp3;
 	t_list	*tmp2;
@@ -126,8 +126,7 @@ void	unset_cmp(t_cmds *p, t_list *lst, int i, int j)
 	tmp2 = tmp;
 	while (tmp)
 	{
-		if (strncmp_orginal(tmp->content, p[i].cmd[j + 1],
-				len_till_equal(p[i].cmd[j + 1])) == 0)
+		if (strncmp_orginal(tmp->content, str, len_till_equal(str)) == 0)
 		{
 			tmp3 = tmp->next;
 			tmp2->next = tmp3;

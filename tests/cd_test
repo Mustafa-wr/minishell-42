@@ -58,3 +58,14 @@ sleep 0.1
 cd / | echo "something"
 sleep 0.1
 cd .. | pwd
+cd ..
+sleep 0.6
+cd ..
+sleep 0.6
+cd ..
+sleep 0.6
+cd ..
+sleep 0.6
+cd ..
+sleep 0.6
+env -i

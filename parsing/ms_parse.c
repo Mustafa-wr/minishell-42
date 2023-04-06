@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/05 00:56:16 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:27:08 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	main(int ac, char **av, char **envp)
 	pipe.fdout = 0;
 	pipe.ch = 0;
 	pipe.cr = 0;
+	pipe.p_f1 = 0;
+	pipe.p_f2 = 0;
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);

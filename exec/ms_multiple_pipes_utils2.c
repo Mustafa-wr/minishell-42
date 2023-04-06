@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 19:45:28 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/04 22:40:55 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 01:07:52 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,24 @@ void	exit_once(t_cmds *p, t_pipe *c)
 		free_strings(c->tmp_env);
 	if (c->m_path != NULL)
 		free_strings(c->m_path);
+	if (c->cmd_exec)
+		free(c->cmd_exec);
 	free_all(c, p);
 	close(c->fdin);
 	close(c->fdout);
 	exit(g_exit_code);
+}
+
+void	check_and_exit(t_pipe *c)
+{
+	if (c->p_f1 == 1)
+	{
+		close(c->fd[0][0]);
+		close(c->fd[0][1]);
+	}
+	if (c->p_f2 == 1)
+	{
+		close(c->fd[1][0]);
+		close(c->fd[1][1]);
+	}
 }

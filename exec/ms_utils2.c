@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 02:36:08 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/05 15:48:49 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 04:37:13 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,25 @@ void	fill_export(t_pipe *c)
 	last_sorting(c);
 }
 
+static int	env_count(t_pipe *c)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	tmp = c->m_env;
+	if (c->m_env && tmp)
+	{
+		while (tmp)
+		{
+			i++;
+			if (tmp)
+				tmp = tmp->next;
+		}
+	}
+	return (i);
+}
+
 void	update_env(t_pipe *c)
 {
 	t_list	*tmp;
@@ -144,6 +163,7 @@ void	update_env(t_pipe *c)
 	i = 0;
 	tmp = c->m_env;
 	free_strings(c->tmp_env);
+	c->env_count = env_count(c);
 	c->tmp_env = malloc((c->env_count + 1) * sizeof(char *));
 	while (tmp)
 	{
@@ -152,4 +172,12 @@ void	update_env(t_pipe *c)
 		i++;
 	}
 	c->tmp_env[i] = NULL;
+	i = 0;
+// 	char **s = c->tmp_env;
+// 	while (s[i])
+// 	{
+// 		printf("%c   ", s[i][0]);
+// 		i++;
+// 	}
 }
+

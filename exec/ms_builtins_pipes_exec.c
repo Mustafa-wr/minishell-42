@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 21:23:49 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/04 21:37:21 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 04:43:53 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,20 @@ void	ft_unset_p(t_cmds *p, int i, int fd, t_pipe *c)
 	(void)fd;
 	if (!p[i].cmd[j + 1])
 		return ;
-	unset_cmp(p, c->m_env, i, j);
-	unset_cmp(p, c->m_export, i, j);
+	j = 1;
+	while (p[i].cmd[j])
+	{
+		if (ft_isalpha_str(p[i].cmd[j]) == 0)
+		{
+			unset_cmp(c->m_env, p[i].cmd[j]);
+			unset_cmp(c->m_export, p[i].cmd[j]);
+		}
+		else
+		{
+			write(2, p[i].cmd[j], ft_strlen(p[i].cmd[j]));
+			write (2, " : not a valid identifier\n", 26);
+		}
+		j++;
+	}
 	c->env_count -= 1;
-	if (c->fd1 > 2)
-		close(c->fd1);
 }

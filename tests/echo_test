@@ -16,6 +16,23 @@ echo stop barking
 sleep 0.6
 echo "bonjour"
 sleep 0.6
+echo "'"$USER"'"
+touch z.txt
+sleep 0.6
+chmod 000 z.txt
+sleep 0.6
+echo ''> z.txt
+sleep 0.6
+echo 42> z.txt
+sleep 0.6
+echo "i hope u pass this tester" > z.txt
+sleep 0.6
+echo "No u can't"> z.txt
+sleep 0.6
+echo "tukka"> a >z.txt
+sleep 0.6
+echo "ahmed hassan"> z.txt
+sleep 0.6
 echo bonjour
 sleep 0.6
 echo 'bonjour'

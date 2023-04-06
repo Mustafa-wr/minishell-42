@@ -6,7 +6,7 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/04 04:16:47 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/06 05:56:46 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	check_if_exist(t_cmds *p, int i, int j, t_pipe *c)
 	t_e = c->m_export;
 	while (t_e)
 	{
-		if (ft_strncmp(t_e->content, p[i].cmd[j], len) == 0)
+		if (strncmp_orginal(t_e->content, p[i].cmd[j], len) == 0)
 			return (0);
 		t_e = t_e->next;
 	}

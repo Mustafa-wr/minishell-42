@@ -37,3 +37,22 @@ ls -la > tmp/file
 sleep 0.6
 ls -la > tmp/file 
 sleep 0.6
+ls | <i wc > f | cat > g
+sleep 0.6
+ls | <i wc | cat > f
+sleep 0.6
+ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | cat
+sleep 0.6
+ls | cat | wc | export a=123 | grep "a=123"
+sleep 0.6
+ls | cat | wc | export a=123 | grep "a=123" | cat | cat | wc
+sleep 0.6
+cat | wc
+sleep 0.6
+ps -pa | wc -l | grep '' | "" | ll | '' | echo '' | echo ''
+sleep 0.6
+ls | wc | grep "12" | wc | ls | wc | ls | cat
+sleep 0.6
+
+# source m.sh
+# echo -e "${GREEN}This message is green.${RESET}"
