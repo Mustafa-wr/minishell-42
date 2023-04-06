@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:19:26 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/04 20:39:37 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/06 19:33:09 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,9 @@ void	replace_spaces_tabs(char *str)
 
 void	remove_substr(char *s, unsigned int start, size_t len)
 {
-	// printf("start :%d\n", start);
-	// printf("len :%zu\n", len);
 	size_t	i;
 	size_t	j;
-	// /char *str;
 
-	// str = malloc(sizeof(char) * (ft_strlen(s) - (len - start)) + 2);
-	// if (!str || !s)
-	//     return (NULL);
 	i = 0;
 	j = 0;
 	while (s[i])
@@ -121,6 +115,4 @@ void	remove_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	s[j] = '\0';
-	// free(s);
-	// return (str);
 }

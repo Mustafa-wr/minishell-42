@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:53:42 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 00:19:52 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/06 19:32:57 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,7 @@ int	check_redirect(char *str)
 	vars.j = 0;
 	vars.in_d_quotes = 0;
 	vars.in_quotes = 0;
-	// while (str[vars.j])
-	// {
-		if (!redirect_helper(&str, &vars))
-			return (/*free_strings(str), */0);
-		// vars.j++;
-	// }
+	if (!redirect_helper(&str, &vars))
+		return (0);
 	return (1);
 }

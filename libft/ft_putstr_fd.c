@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 00:34:13 by mradwan           #+#    #+#             */
-/*   Updated: 2022/07/23 01:00:29 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/02 01:03:18 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd, int parameter)
 {
 	int	i;
 
@@ -22,6 +22,8 @@ void	ft_putstr_fd(char *s, int fd)
 		while (s[i] != '\0')
 			write(fd, &s[i++], 1);
 	}
+	if (parameter == 1)
+		write(fd, "\n", 1);
 }
 
 /*

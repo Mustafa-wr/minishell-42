@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+         #
+#    By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/22 18:04:04 by mradwan           #+#    #+#              #
-#    Updated: 2023/03/12 00:16:17 by mradwan          ###   ########.fr        #
+#    Updated: 2023/03/27 22:05:04 by abdamoha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,9 @@ SRCS = ft_memset.c		\
 	   ft_striteri.c	\
 	   ft_itoa.c		\
 	   ft_putendl_fd.c	\
-	   ft_strmapi.c
+	   ft_strmapi.c     \
+	   get_next_line.c  \
+	   get_next_line_utils.c 
 
 
 		

@@ -8,23 +8,32 @@ SRCS =	parsing/ms_parse.c					\
 		parsing/ms_get_cmd.c				\
 		parsing/ms_dollar_han.c				\
 		parsing/get_nv.c					\
+		parsing/signal.c					\
 		ms_free_functions.c					\
-		exec/ms_exec.c          			\
-		exec/ms_builtins.c      			\
-		exec/ms_utils2.c        			\
-		exec/ms_extra_utils.c   			\
-		exec/ms_utils3.c        			\
-		exec/ms_export.c        			\
-		exec/ms_exec_utils.c    			\
-		exec/ms_exit.c          			\
-		exec/ms_multiple_pipe.c 			\
-		exec/ms_multiple_pipes_utils.c     
+		exec/ms_exec.c                      \
+		exec/ms_builtins.c                  \
+		exec/ms_utils2.c                    \
+		exec/ms_extra_utils.c               \
+		exec/ms_utils3.c                    \
+		exec/ms_export.c                    \
+		exec/ms_exec_utils.c                \
+		exec/ms_exit.c                      \
+		exec/ms_multiple_pipe.c             \
+		exec/ms_multiple_pipes_utils.c      \
+		exec/ms_builtins_utils.c            \
+		exec/ms_redierction.c               \
+		exec/ms_heredoc.c                   \
+		exec/ms_checking.c                  \
+		exec/ms_multiple_pipes_utils2.c     \
+		exec/ms_update_values.c             \
+		exec/ms_builtins_pipes_exec.c		\
+		exec/ms_built_pipe_u.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include -fsanitize=address
+CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include #-fsanitize=address
 
 all : $(NAME)
 
@@ -40,3 +49,6 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+leaks:
+	valgrind --suppressions=$(PWD)/valgrind_readline_leaks_ignore.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell

@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 18:21:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 16:04:29 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/06 19:33:22 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,6 @@ int	check_pipes(t_pipe *pipe, char *line, t_cmds *cmds)
 		dollar_expansion(&pipe->cmds[i], pipe);
 		pipe->cmds[i] = ft_add_spaces(pipe->cmds[i]);
 		replace_spaces_tabs(pipe->cmds[i]);
-		// clean_quotes(pipe->cmds[i]);
-		// printf("%s\n", pipe->cmds[i]);
 		i++;
 	}
 	pipe->cmd_len = i;

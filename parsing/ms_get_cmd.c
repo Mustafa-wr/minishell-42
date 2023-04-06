@@ -6,7 +6,7 @@
 /*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:12:04 by mradwan           #+#    #+#             */
-/*   Updated: 2023/03/12 22:37:01 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/06 19:32:44 by mradwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,6 @@ void	utils_saving(t_pipe *pipe, t_cmds *cmds, t_vars *v)
 			clean_quotes(cmds[v->j].outs[v->xy].file_name);
 			remove_substr(pipe->cmds[v->j], v->start, v->i);
 			v->x = v->start - 1;
-			// printf("file name : %s\n", pipe->cmds[v->j]);
-			// printf("file name : %s\n", cmds[v->j].outs[v->xy].file_name);
-			// printf("flag	  : %d\n", cmds[v->j].outs[v->xy].flag);
 			v->xy++;
 		}
 	}
@@ -115,9 +112,5 @@ void	files_saving(t_pipe *pipe, t_cmds **tmp)
 		while (cmds[var.j].cmd[var.h])
 			clean_quotes(cmds[var.j].cmd[var.h++]);
 		var.h = 0;
-		// while (cmds[var.j].cmd[var.h])
-		// 	puts(cmds[var.j].cmd[var.h++]);
-		// h = 0;
-		// var.j++;
 	}
 }

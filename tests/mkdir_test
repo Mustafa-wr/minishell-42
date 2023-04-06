@@ -1,0 +1,16 @@
+mkdir hello
+sleep 0.6
+cd hello
+sleep 0.6
+mkdir yes
+sleep 0.6
+cd yes
+sleep 0.6
+pwd
+sleep 0.6
+rm -rf /home/vscode/src/hello
+sleep 0.6
+cd .. 
+pwd
+sleep 0.6
+cd ..
