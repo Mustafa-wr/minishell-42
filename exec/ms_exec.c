@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:40:39 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/06 18:21:41 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:21:48 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,89 +97,31 @@ int	check_for_redirction(t_cmds *p, t_pipe *c)
 	return (0);
 }
 
-void	normal_e(t_cmds *p, t_pipe *c)
-{
-	if (p[0].red_len > 0)
-		output_red(p, c, c->cmd_exec);
-	if (!c->cmd_exec)
-	{
-		write(2, p[0].cmd[0], ft_strlen(p[0].cmd[0]));
-		if (p[0].cmd[0])
-			write(2, ": command not found\n", 21);
-		g_exit_code = 127;
-		free(c->cmd_exec);
-		free_and_exit(c, p);
-	}
-	else if (execve(c->cmd_exec, p[0].cmd, c->tmp_env) < 0)
-	{
-		perror("execve : is directory");
-		g_exit_code = 126;
-		free(c->cmd_exec);
-		free_and_exit(c, p);
-	}
-}
-
-void	normal_e2(t_cmds *p, struct stat **fs)
-{
-	if (!ft_strchr(p[0].cmd[0], '.') && ft_strchr(p[0].cmd[0], '/'))
-	{
-		if (stat(p[0].cmd[0], *fs) != 0)
-		{
-			perror("stat");
-			g_exit_code = 127;
-			return ;
-		}
-	}
-	else if (ft_strchr(p[0].cmd[0], '.') && ft_strchr(p[0].cmd[0], '/'))
-	{
-		if (stat(p[0].cmd[0], *fs) != 0)
-		{
-			perror("stat");
-			g_exit_code = 127;
-			return ;
-		}
-	}
-}
-
 void	normal_exec(t_cmds *p, t_pipe *c)
 {
-	int			i;
-	struct stat	fs;
-	int			status;
-
 	c->ch = 1;
+	c->i = 0;
 	if (!ft_strchr(p[0].cmd[0], '.') && ft_strchr(p[0].cmd[0], '/'))
 	{
-		if (stat(p[0].cmd[0], &fs) != 0)
-		{
-			perror("stat");
-			g_exit_code = 127;
+		if (check_if_file(p) == 1)
 			return ;
-		}
 	}
 	else if (ft_strchr(p[0].cmd[0], '.') && ft_strchr(p[0].cmd[0], '/'))
-	{
-		if (stat(p[0].cmd[0], &fs) != 0)
-		{
-			perror("stat");
-			g_exit_code = 127;
+		if (check_dir(p) == 1)
 			return ;
-		}
-	}
-	// normal_e2(p, &fs);
+	if (check_heredoc(p, c) == 1)
+		exec_heredoc(p, c, 0);
 	c->cmd_exec = check_command_existence(p[0].cmd[0], c->m_path);
-	i = fork();
-	signal(SIGINT, child_sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
-	if (i == 0)
-		normal_e(p, c);
-	status = 0;
-	waitpid(i, &status, 0);
-	if (WIFEXITED(status))
-	g_exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_exit_code = get_sig_status(WTERMSIG(status));
-	free(c->cmd_exec);
-	c->cmd_exec = NULL;
-	c->ch = 0;
+	c->i = fork();
+	if (c->i == 0)
+	{
+		if (p[0].red_len > 0)
+			output_red(p, c, c->cmd_exec);
+		if (!c->cmd_exec)
+			error_in_exec(c, p);
+		else if (execve(c->cmd_exec, p[0].cmd, c->tmp_env) < 0)
+			execve_error(p, c);
+	}
+	waitpid(c->i, &c->status, 0);
+	exit_status(c);
 }

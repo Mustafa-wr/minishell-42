@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:04:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/07 01:03:33 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/25 14:21:26 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,75 +26,34 @@ int	check_for_equal(t_cmds *p, int i, int j)
 	return (0);
 }
 
-void	ch_t_val(t_cmds *p, int i, int j, t_vars *v)
-{
-	while (v->tmp)
-	{
-		if (strncmp_orginal(v->tmp->content, p[i].cmd[j],
-				len_till_equal(p[i].cmd[j])) == 0)
-		{
-			v->tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
-			v->tmp3->next = v->tmp->next;
-			if (v->tmp2->content != v->tmp->content)
-				v->tmp2->next = v->tmp3;
-			break ;
-		}
-		v->tmp2 = v->tmp;
-		v->tmp = v->tmp->next;
-		v->k++;
-	}
-}
-
 void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
 {
-	t_vars	v;
-
-	v.k = 0;
-	v.tmp = c->m_export;
-	v.tmp2 = v.tmp;
-	v.tmp3 = NULL;
-	ch_t_val(p, i, j, &v);
-	if (v.tmp2->content != v.tmp->content)
-		v.tmp2->next = v.tmp3;
-	free(v.tmp->content);
-	free(v.tmp);
-	if (v.k == 0)
-		c->m_export = v.tmp3;
+	c->k = 0;
+	c->tmpp = c->m_export;
+	c->tmp2 = c->tmpp;
+	c->tmp3 = NULL;
+	while (c->tmpp)
+	{
+		if (strncmp_orginal(c->tmpp->content, p[i].cmd[j],
+				len_till_equal(p[i].cmd[j])) == 0)
+		{
+			c->tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
+			c->tmp3->next = c->tmpp->next;
+			if (c->tmp2->content != c->tmpp->content)
+				c->tmp2->next = c->tmp3;
+			break ;
+		}
+		c->tmp2 = c->tmpp;
+		c->tmpp = c->tmpp->next;
+		c->k++;
+	}
+	if (c->tmp2->content != c->tmpp->content)
+		c->tmp2->next = c->tmp3;
+	free(c->tmpp->content);
+	free(c->tmpp);
+	if (c->k == 0)
+		c->m_export = c->tmp3;
 }
-
-// void	changing_the_value(t_cmds *p, int i, int j, t_pipe *c)
-// {
-// 	int		k;
-// 	t_list	*tmp;
-// 	t_list	*tmp2;
-// 	t_list	*tmp3;
-
-// 	k = 0;
-// 	tmp = c->m_export;
-// 	tmp2 = tmp;
-// 	tmp3 = NULL;
-// 	while (tmp)
-// 	{
-// 		if (strncmp_orginal(tmp->content, p[i].cmd[j],
-// 				len_till_equal(p[i].cmd[j])) == 0)
-// 		{
-// 			tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
-// 			tmp3->next = tmp->next;
-// 			if (tmp2->content != tmp->content)
-// 				tmp2->next = tmp3;
-// 			break ;
-// 		}
-// 		tmp2 = tmp;
-// 		tmp = tmp->next;
-// 		k++;
-// 	}
-// 	if (tmp2->content != tmp->content)
-// 		tmp2->next = tmp3;
-// 	free(tmp->content);
-// 	free(tmp);
-// 	if (k == 0)
-// 		c->m_export = tmp3;
-// }
 
 char	*env_index(int index, t_list *env)
 {
@@ -114,103 +73,57 @@ char	*env_index(int index, t_list *env)
 		return (NULL);
 }
 
-void	ch_the_env(t_cmds *p, int i, int j, t_vars *v)
-{
-	while (v->tmp)
-	{
-		if (strncmp_orginal(v->tmp->content, p[i].cmd[j],
-				len_till_equal(p[i].cmd[j])) == 0)
-		{
-			v->tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
-			v->tmp3->next = v->tmp->next;
-			if (v->tmp2->content != v->tmp->content)
-				v->tmp2->next = v->tmp3;
-			break ;
-		}
-		v->tmp2 = v->tmp;
-		v->tmp = v->tmp->next;
-		v->k++;
-	}
-}
-
 void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
 {
-	t_vars	v;
-
-	v.k = 0;
-	v.tmp = c->m_env;
-	v.tmp2 = v.tmp;
-	v.tmp3 = NULL;
-	ch_the_env(p, i, j, &v);
-	if (v.tmp2->content != v.tmp->content)
-		v.tmp2->next = v.tmp3;
-	if (v.tmp)
+	c->k = 0;
+	c->tmpp = c->m_env;
+	c->tmp2 = c->tmpp;
+	c->tmp3 = NULL;
+	while (c->tmpp)
 	{
-		free(v.tmp->content);
-		free(v.tmp);
-		v.tmp = NULL;
+		if (strncmp_orginal(c->tmpp->content, p[i].cmd[j],
+				len_till_equal(p[i].cmd[j])) == 0)
+		{
+			c->tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
+			c->tmp3->next = c->tmpp->next;
+			if (c->tmp2->content != c->tmpp->content)
+				c->tmp2->next = c->tmp3;
+			break ;
+		}
+		c->tmp2 = c->tmpp;
+		c->tmpp = c->tmpp->next;
+		c->k++;
 	}
-	if (v.k == 0)
-		c->m_export = v.tmp3;
+	if (c->tmp2->content != c->tmpp->content)
+		c->tmp2->next = c->tmp3;
+	free(c->tmpp->content);
+	free(c->tmpp);
+	if (c->k == 0)
+		c->m_env = c->tmp3;
 }
 
-// void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c)
-// {
-// 	int		k;
-// 	t_list	*tmp;
-// 	t_list	*tmp2;
-// 	t_list	*tmp3;
-
-// 	k = 0;
-// 	tmp = c->m_env;
-// 	tmp2 = tmp;
-// 	tmp3 = NULL;
-// 	while (tmp)
-// 	{
-// 		if (strncmp_orginal(tmp->content, p[i].cmd[j],
-// 				len_till_equal(p[i].cmd[j])) == 0)
-// 		{
-// 			tmp3 = ft_lstnew(ft_strdup(p[i].cmd[j]));
-// 			tmp3->next = tmp->next;
-// 			if (tmp2->content != tmp->content)
-// 				tmp2->next = tmp3;
-// 			break ;
-// 		}
-// 		tmp2 = tmp;
-// 		tmp = tmp->next;
-// 		k++;
-// 	}
-// 	if (tmp2->content != tmp->content)
-// 		tmp2->next = tmp3;
-// 	if (tmp)
-// 	{
-// 		free(tmp->content);
-// 		free(tmp);
-// 		tmp = NULL;
-// 	}
-// 	if (k == 0)
-// 		c->m_export = tmp3;
-// }
-
-void	unset_cmp(t_list *lst, char *str)
+void	unset_cmp(t_list **lst, char *str, t_pipe *c)
 {
-	t_list	*tmp3;
-	t_list	*tmp2;
-	t_list	*tmp;
-
-	tmp = lst;
-	tmp2 = tmp;
-	while (tmp)
+	c->tmpp = (*lst);
+	c->tmp2 = c->tmpp;
+	while (c->tmpp)
 	{
-		if (strncmp_orginal(tmp->content, str, len_till_equal(str)) == 0)
+		if (strncmp_orginal(c->tmpp->content, str, len_till_equal(str)) == 0)
 		{
-			tmp3 = tmp->next;
-			tmp2->next = tmp3;
-			free(tmp->content);
-			free(tmp);
+			if (c->tmp2->content == c->tmpp->content)
+				(*lst) = (*lst)->next;
+			else if (c->tmpp->next)
+			{
+				c->tmp3 = c->tmpp->next;
+				c->tmp2->next = c->tmp3;
+			}
+			else
+				c->tmp2->next = NULL;
+			free(c->tmpp->content);
+			free(c->tmpp);
 			return ;
 		}
-		tmp2 = tmp;
-		tmp = tmp->next;
+		c->tmp2 = c->tmpp;
+		c->tmpp = c->tmpp->next;
 	}
 }

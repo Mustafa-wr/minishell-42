@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_builtins_pipes_exec.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 21:23:49 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/06 17:50:39 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/27 12:53:40 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	ft_echo_p(t_cmds *p, int x, int pm, t_pipe *c)
 	int	y;
 
 	y = 1;
+	g_exit_code = 0;
 	(void)pm;
-	if (!p[x].cmd[y] || !p[x].cmd[y][0])
+	if ((!p[x].cmd[y] || !p[x].cmd[y][0]))
 		write (1, "\n", 1);
 	else if (check_for_flag(p[x].cmd[y]) && !p[x].cmd[y - 1][4])
 		echo_new_line(p, x, y, c);
@@ -74,7 +75,7 @@ void	ft_cd_p(t_cmds *p, int x, int pm, t_pipe *c)
 		g_exit_code = 1;
 	}
 	else
-		g_exit_code = 0;	
+		g_exit_code = 0;
 	update_pwd(c, getcwd(NULL, 1024), "PWD", 0);
 	update_export(c, getcwd(NULL, 1024), "PWD", 0);
 }

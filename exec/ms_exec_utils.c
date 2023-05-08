@@ -6,33 +6,36 @@
 /*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:20:54 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/06 02:47:27 by abdamoha         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:22:45 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// char	**check_env_for_path(t_list *env)
-// {
-// 	int		i;
-// 	char	*s;
-// 	t_list	*tmp;
+void	ft_unset(t_cmds *p, int i, int fd, t_pipe *c)
+{
+	int	j;
 
-// 	i = 0;
-// 	s = NULL;
-// 	tmp = env;
-// 	while (tmp)
-// 	{
-// 		if (strncmp_orginal("PATH=", tmp->content, 5) == 0)
-// 		{
-// 			s = tmp->content + 5;
-// 			return (ft_split(s, ':'));
-// 		}
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+	j = 0;
+	(void)fd;
+	if (p->red_len > 0 && c->cr != 1)
+		check_exec_redirect(p, c, 0, 0);
+	if (!p[i].cmd[j + 1])
+		return ;
+	j = 1;
+	while (p[i].cmd[j])
+	{
+		if (ft_isalpha_str(p[i].cmd[j]) == 0)
+		{
+			unset_cmp(&c->m_env, p[i].cmd[j], c);
+			unset_cmp(&c->m_export, p[i].cmd[j], c);
+		}
+		else
+			print_error(i, j, p);
+		j++;
+	}
+	c->env_count -= 1;
+}
 
 char	*check_command_existence(char *av, char **path)
 {
@@ -105,22 +108,25 @@ char	*backslash_case(char *av, int i)
 
 void	last_sorting(t_pipe *p)
 {
-	t_list	*tmp;
 	char	*str;
 
-	tmp = p->m_export;
-	while (tmp)
+	p->i = 0;
+	p->j = 0;
+	str = NULL;
+	while (p->i < p->env_count - 1)
 	{
-		if (tmp->next)
+		p->j = 0;
+		while (p->j < p->env_count - 1 - p->i)
 		{
-			if (strncmp_orginal(tmp->content, tmp->next->content,
-					len_till_equal(tmp->content)) > 0)
+			if (strncmp_orginal(p->tmp_env[p->j], p->tmp_env[p->j + 1],
+					len_till_equal(p->tmp_env[p->j])) > 0)
 			{
-				str = tmp->content;
-				tmp->content = tmp->next->content;
-				tmp->next->content = str;
+				str = p->tmp_env[p->j];
+				p->tmp_env[p->j] = p->tmp_env[p->j + 1];
+				p->tmp_env[p->j + 1] = str;
 			}
+			p->j++;
 		}
-		tmp = tmp->next;
+		p->i++;
 	}
 }

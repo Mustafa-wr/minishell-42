@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_free_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:36:16 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/06 19:42:10 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/25 12:41:48 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,31 @@ void	free_strings(char **av)
 	}
 }
 
-static void	free_helper(t_cmds *cmd, int i, int j)
+static void	free_condition(int i, int j, t_cmds *cmd)
 {
-	if (cmd[i].red_len > 0)
-	{
-		while (++j < cmd[i].red_len)
-		{
-			if (cmd[i].outs[j].file_name)
-			{
-				free(cmd[i].outs[j].file_name);
-				cmd[i].outs[j].file_name = NULL;
-			}
-		}
-		if (cmd[i].outs)
-		{
-			free(cmd[i].outs);
-			cmd[i].outs = NULL;
-		}
-	}
+	free(cmd[i].outs[j].file_name);
+	cmd[i].outs[j].file_name = NULL;
 }
 
 void	free_all(t_pipe *pipe, t_cmds *cmd)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	j = -1;
-	while (++i < pipe->cmd_len)
+	pipe->i = -1;
+	pipe->j = -1;
+	while (++pipe->i < pipe->cmd_len)
 	{
-		j = -1;
-		free_helper(cmd, i, j);
-		free_strings(cmd[i].cmd);
+		pipe->j = -1;
+		if (cmd[pipe->i].red_len > 0)
+		{
+			while (++pipe->j < cmd[pipe->i].red_len)
+				if (cmd[pipe->i].outs[pipe->j].file_name)
+					free_condition(pipe->i, pipe->j, cmd);
+			if (cmd[pipe->i].outs)
+			{
+				free(cmd[pipe->i].outs);
+				cmd[pipe->i].outs = NULL;
+			}
+		}
+		free_strings(cmd[pipe->i].cmd);
 	}
 	free_strings(pipe->cmds);
 	pipe->cmds = NULL;

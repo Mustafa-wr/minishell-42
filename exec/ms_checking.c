@@ -3,47 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ms_checking.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 01:18:17 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/06 18:05:46 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:49:30 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// int	check_to_add(t_pipe *c, t_cmds *p, int i, int j)
-// {
-// 	printf("c = %s\n", c->tmpp->content);
-// 	printf("2 = %s\n", p[0].cmd[j]);
-// 	if (strncmp_orginal(c->tmpp->content, p[0].cmd[j],
-// 			ft_strlen(c->tmpp->content)) > 0)
-// 	{
-// 		// printf("hi\n");
-// 		c->tmp2 = ft_lstnew(ft_strdup(p[0].cmd[j]));
-// 		c->tmp2->next = c->tmpp;
-// 		if (i != 0)
-// 			c->tmp3->next = c->tmp2;
-// 		c->env_count += 1;
-// 		ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[0].cmd[j])));
-// 		if (i == 0)
-// 			c->m_export = c->tmp2;
-// 		// return (0);
-// 	}
-// 	// return (1);
-// }
-
-void	input_red(t_cmds *p, t_pipe *c)
-{
-	(void)p;
-	(void)c;
-}
-
 void	output_red(t_cmds *p, t_pipe *c, char *cmd)
 {
 	(void)cmd;
-	if (check_heredoc(p, c) == 1)
-		exec_heredoc(p, c, 0);
 	check_exec_redirect(p, c, 1, 0);
 }
 
@@ -79,4 +50,10 @@ int	heredoc_condition(int fd)
 	if (fd == 0)
 		return (0);
 	return (fd);
+}
+
+void	print_error(int i, int j, t_cmds *p)
+{
+	write(2, p[i].cmd[j], ft_strlen(p[i].cmd[j]));
+	write (2, " : not a valid identifier\n", 26);
 }

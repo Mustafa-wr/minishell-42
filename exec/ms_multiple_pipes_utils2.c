@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_multiple_pipes_utils2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 19:45:28 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/06 19:15:11 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/11 00:26:47 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,14 @@ int	input_check(t_cmds *p, t_pipe *c, int j)
 	return (0);
 }
 
-int	output_check(t_cmds *p, t_pipe *c)
+int	output_check(t_cmds *p, t_pipe *c, int j)
 {
 	c->i = 0;
-	c->j = 0;
-	while (c->j < p->cmd_len)
+	while (c->i < p[j].red_len)
 	{
-		c->i = 0;
-		while (c->i < p[c->j].red_len)
-		{
-			if (p[c->j].outs[c->i].flag == 1 || p[c->j].outs[c->i].flag == 2)
-				return (1);
-			c->i++;
-		}
-		c->j++;
+		if (p[j].outs[c->i].flag == 1 || p[j].outs[c->i].flag == 2)
+			return (1);
+		c->i++;
 	}
 	return (0);
 }

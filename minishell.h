@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:51:56 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/06 18:57:42 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/27 21:03:53 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ typedef struct s_vars
 {
 	int		i;
 	int		j;
+	int		c;
+	int		k;
+	int		f;
 	int		h;
+	int		d;
 	int		empty;
 	int		space_found;
 	int		quote_char;
@@ -46,21 +50,15 @@ typedef struct s_vars
 	int		start;
 	int		len;
 	int		xy;
-	t_list	*tmp;
-	t_list	*tmp2;
-	t_list	*tmp3;
-	int		c;
-	int		f;
 	int		in_d_quotes;
-	char	*s;
-	int		k;
 	int		in_quotes;
 	int		pid;
-	int		tmpp;
-	char	*line;
+	char	*cmd_exec;
 	char	*m;
 	char	*q;
-	char	*cmd_exec;
+	int		tmp;
+	char	*line;
+	char	*e_f;
 }	t_vars;
 
 enum e_types
@@ -116,6 +114,9 @@ typedef struct t_pipe
 	int			cr;
 	int			p_f1;
 	int			p_f2;
+	int			status;
+	int			d_t_m;
+	int			e_fd;
 }	t_pipe;
 
 /***************      parse_tool          ****************/
@@ -123,13 +124,6 @@ char	*my_getenv(const char *name, t_pipe *pipe);
 int		is_space(char *str);
 char	*ft_add_spaces(char *str);
 void	replace_spaces_tabs(char *str);
-
-/***************         signals          ****************/
-void	child_sigint_handler(int sig);
-void	handle_sigint(int sig);
-void	sigquit_handler(int sig);
-int		get_sig_status(int sig_no);
-void	hdoc_sigint_handler(int sig);
 
 /***************      pipes_parse         ****************/
 int		check_pipes(t_pipe *pipe, char *line, t_cmds *cmds);
@@ -146,7 +140,21 @@ void	free_all(t_pipe *pipe, t_cmds *cmd);
 
 /***************      quotes_parse        ****************/
 void	clean_quotes(char *str);
+void	handle_sigint(int sig);
 void	files_saving(t_pipe *pipe, t_cmds **tmp);
+
+
+
+
+/***************      main-utils        ****************/
+int		ms_main_helper(t_pipe *pipe, t_cmds *cmds, char *read);
+void	main_helper(t_pipe *pipe, t_cmds *cmds);
+void	main_init(t_pipe *pipe);
+
+
+
+
+
 
 /***************      exec_part       ****************/
 
@@ -159,7 +167,7 @@ void	ft_cd(t_cmds *p, int x, int y, t_pipe *c);
 void	ft_export(t_pipe *c, t_cmds *p, int i, int fd);
 void	ft_unset(t_cmds *p, int i, int fd, t_pipe *c);
 int		strncmp_orginal(const char *s1, const char *s2, unsigned int n);
-int		found_first(char **m_env, int k, t_pipe *p);
+int		found_first(char **m_env, t_pipe *p);
 void	fill_export_list(t_pipe *p);
 void	fill_tmp_env(t_pipe *c);
 int		check_builtin(t_cmds *p, t_pipe *c);
@@ -188,7 +196,7 @@ char	*env_index(int index, t_list *tmp);
 void	changing_the_env_v(t_cmds *p, int i, int j, t_pipe *c);
 void	free_list(t_list **lst);
 void	free_and_exit(t_pipe *c, t_cmds *p);
-void	unset_cmp(t_list *lst, char *str);
+void	unset_cmp(t_list **lst, char *str, t_pipe *c);
 void	multiple_pipes(t_cmds *p, t_pipe *c);
 void	closing_fds(t_pipe *c);
 void	update_env(t_pipe *c);
@@ -210,16 +218,16 @@ void	output_red(t_cmds *p, t_pipe *c, char *cmd);
 void	echo_new_line(t_cmds *p, int x, int y, t_pipe *c);
 void	echo_flag(t_cmds *p, int x, int y, t_pipe *c);
 int		heredoc_condition(int fd);
-void	sec_cmd(t_pipe *c, int i, int j);
+void	second_cmd(t_pipe *c, t_vars *v, t_cmds *p);
 void	close_first_pipe(t_cmds *p, t_pipe *c);
 void	close_second_pipe(t_pipe *c);
-void	third_cmd(t_cmds *p, t_pipe *c, int j);
+void	third2_cmd(t_pipe *c, t_cmds *p, t_vars *v);
 void	ft_exit(t_pipe *c, t_cmds *p);
 int		builtins_pipes(t_cmds *p, t_pipe *c, int fd, int j);
 void	update_pwd(t_pipe *c, char *str, char *p, int k);
 void	update_export(t_pipe *c, char *str, char *p, int k);
 int		input_check(t_cmds *p, t_pipe *c, int j);
-int		output_check(t_cmds *p, t_pipe *c);
+int		output_check(t_cmds *p, t_pipe *c, int j);
 void	exit_once(t_cmds *p, t_pipe *c);
 void	ft_echo_p(t_cmds *p, int x, int pm, t_pipe *c);
 void	ft_unset_p(t_cmds *p, int i, int fd, t_pipe *c);
@@ -229,13 +237,32 @@ void	ft_pwd_p(t_cmds *p, t_pipe *c, int pm);
 void	ft_env_p(t_cmds *p, t_pipe *c, int pm);
 void	check_and_exit(t_pipe *c);
 int		ft_strcmp_heredoc(char *s1, char *s2);
-void	second_cmd(t_pipe *c, t_vars *v, t_cmds *p);
-void	first_cmd(t_pipe *c, t_cmds *p, t_vars *v);
-void	third2_cmd(t_pipe *c, t_cmds *p, t_vars *v);
-void	fourth_cmd(t_pipe *c, t_cmds *p, t_vars *v);
-void	fifth_cmd(t_pipe *c, t_cmds *p, t_vars *v);
+void	print_error(int i, int j, t_cmds *p);
+void	error_in_exec(t_pipe *c, t_cmds *p);
+void	execve_error(t_cmds *p, t_pipe *c);
+void	exit_status(t_pipe *c);
+int		check_if_file(t_cmds *p);
+int		check_dir(t_cmds *p);
+void	export_add(t_pipe *c, int i, int j, t_cmds *p);
+int		env_count(t_pipe *c);
+void	init_export(t_vars *v, t_pipe *p);
 void	sixth_cmd(t_pipe *c, t_cmds *p, t_vars *v);
 void	closing_pipe(t_pipe *c, t_cmds *p, t_vars *v);
+void	first_cmd(t_pipe *c, t_cmds *p, t_vars *v);
+void	fourth_cmd(t_pipe *c, t_cmds *p, t_vars *v);
+void	fifth_cmd(t_pipe *c, t_cmds *p, t_vars *v);
 void	before_cmd(t_pipe *c, t_cmds *p, t_vars *v);
+void	exit_code_pipes(t_pipe *c, t_vars *v);
+void	init1(t_vars *v, t_pipe *c);
+void	wait_pipes(t_vars *v, t_pipe *c, t_cmds *p);
+void	child_exit(t_cmds *p, int j, t_pipe *c, int fd);
+void	export_last(t_pipe *c, t_cmds *p, int j);
+int		heredoc_exec(t_cmds *p, t_vars *v, int i, t_pipe *c);
+void	break_condition(t_cmds *p, int i, t_vars *v);
+char	*create_file(t_pipe *c);
+int		exit_exit_code(t_cmds *p);
+int		check_exit(t_cmds *p, int k);
+void	loop_heredoc(t_pipe *c, t_cmds *p, t_vars *v, int i);
+void	last_exit_e(t_vars *v, t_cmds *p, t_pipe *c);
 
 #endif

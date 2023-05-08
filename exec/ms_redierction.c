@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redierction.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 06:50:12 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/06 19:14:06 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/11 02:34:49 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,62 @@ void	write_in_fd(t_cmds *p, int x, int y, t_pipe *c)
 	}
 }
 
+static int	open_read(t_pipe *c, int pm, t_cmds *p, int j)
+{
+	c->fd1 = open(p[j].outs[c->i].file_name, O_RDONLY, 0644);
+	if (c->fd1 < 0)
+	{
+		perror("open");
+		g_exit_code = 1;
+		if (pm == 1 && c->ch != 1)
+			free_and_exit(c, p);
+		else if (c->ch == 1)
+			exit_once(p, c);
+		else
+			return (-1);
+	}
+	dup2(c->fd1, STDIN_FILENO);
+	return (0);
+}
+
+static int	open_out(t_pipe *c, int pm, t_cmds *p, int j)
+{
+	c->fd1 = open(p[j].outs[c->i].file_name,
+			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (c->fd1 < 0)
+	{
+		perror("open");
+		g_exit_code = 1;
+		if (pm == 1 && c->ch != 1)
+			free_and_exit(c, p);
+		else if (c->ch == 1)
+			exit_once(p, c);
+		else
+			return (-1);
+	}
+	dup2(c->fd1, STDOUT_FILENO);
+	return (0);
+}
+
+static int	open_append(t_pipe *c, int pm, t_cmds *p, int j)
+{
+	c->fd1 = open(p[j].outs[c->i].file_name,
+			O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (c->fd1 < 0)
+	{
+		perror("open");
+		g_exit_code = 1;
+		if (pm == 1 && c->ch != 1)
+			free_and_exit(c, p);
+		else if (c->ch == 1)
+			exit_once(p, c);
+		else
+			return (-1);
+	}
+	dup2(c->fd1, STDOUT_FILENO);
+	return (0);
+}
+
 int	check_exec_redirect(t_cmds *p, t_pipe *c, int pm, int j)
 {
 	c->i = 0;
@@ -42,51 +98,18 @@ int	check_exec_redirect(t_cmds *p, t_pipe *c, int pm, int j)
 	{
 		if (p[j].outs[c->i].flag == 0)
 		{
-			c->fd1 = open(p[j].outs[c->i].file_name, O_RDONLY, 0644);
-			if (c->fd1 < 0)
-			{
-				perror("open");
-				g_exit_code = 1;
-				if (pm == 1 && c->ch != 1)
-					free_and_exit(c, p);
-				else if (c->ch == 1)
-					exit_once(p, c);
-				else
-					return (-1);
-			}
-			dup2(c->fd1, STDIN_FILENO);
+			if (open_read(c, pm, p, j) == -1)
+				return (-1);
 		}
 		else if (p[j].outs[c->i].flag == 1)
 		{
-			c->fd1 = open(p[j].outs[c->i].file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (c->fd1 < 0)
-			{
-				perror("open");
-				g_exit_code = 1;
-				if (pm == 1 && c->ch != 1)
-					free_and_exit(c, p);
-				else if (c->ch == 1)
-					exit_once(p, c);
-				else
-					return (-1);
-			}
-			dup2(c->fd1, STDOUT_FILENO);
+			if (open_out(c, pm, p, j) == -1)
+				return (-1);
 		}
 		else if (p[j].outs[c->i].flag == 2)
 		{
-			c->fd1 = open(p[j].outs[c->i].file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (c->fd1 < 0)
-			{
-				perror("open");
-				g_exit_code = 1;
-				if (pm == 1 && c->ch != 1)
-					free_and_exit(c, p);
-				else if (c->ch == 1)
-					exit_once(p, c);
-				else
-					return (-1);
-			}
-			dup2(c->fd1, STDOUT_FILENO);
+			if (open_append(c, pm, p, j) == -1)
+				return (-1);
 		}
 		if (c->fd1 > 2)
 			close(c->fd1);

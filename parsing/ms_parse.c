@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 21:52:45 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/06 19:40:32 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/27 21:08:42 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ms_main_helper(t_pipe *pipe, t_cmds *cmds, char *read)
 	return (0);
 }
 
-static void	main_helper(t_pipe *pipe, t_cmds *cmds)
+void	main_helper(t_pipe *pipe, t_cmds *cmds)
 {
 	pipe->fdin = dup(0);
 	pipe->fdout = dup(1);
@@ -73,7 +73,7 @@ static void	main_helper(t_pipe *pipe, t_cmds *cmds)
 	close(pipe->fdout);
 }
 
-static void	main_init(t_pipe *pipe)
+void	main_init(t_pipe *pipe)
 {
 	pipe->m_path = NULL;
 	pipe->fdin = 0;
@@ -82,32 +82,5 @@ static void	main_init(t_pipe *pipe)
 	pipe->cr = 0;
 	pipe->p_f1 = 0;
 	pipe->p_f2 = 0;
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	t_pipe	pipe;
-	t_cmds	*cmds;
-	char	*read;
-
-	(void)av;
-	(void)ac;
-	cmds = NULL;
-	get_env(&pipe, envp);
-	fill_export(&pipe);
-	g_exit_code = 0;
-	main_init(&pipe);
-	while (1)
-	{
-		signal(SIGINT, handle_sigint);
-		signal(SIGQUIT, SIG_IGN);
-		read = readline("\x1B[31mbash-3.3$\e[0m ");
-		if (!read)
-			return (free_and_exit_2(&pipe, cmds), printf("exit\n"), 0);
-		if (ms_main_helper(&pipe, cmds, read))
-			continue ;
-		files_saving(&pipe, &cmds);
-		main_helper(&pipe, cmds);
-		add_history(read);
-	}
+	pipe->e_fd = 0;
 }

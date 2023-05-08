@@ -8,7 +8,8 @@ SRCS =	parsing/ms_parse.c					\
 		parsing/ms_get_cmd.c				\
 		parsing/ms_dollar_han.c				\
 		parsing/get_nv.c					\
-		parsing/signal.c					\
+		parsing/signal.c                    \
+		minishell.c         				\
 		ms_free_functions.c					\
 		exec/ms_exec.c                      \
 		exec/ms_builtins.c                  \
@@ -26,14 +27,17 @@ SRCS =	parsing/ms_parse.c					\
 		exec/ms_checking.c                  \
 		exec/ms_multiple_pipes_utils2.c     \
 		exec/ms_update_values.c             \
-		exec/ms_builtins_pipes_exec.c		\
-		exec/ms_built_pipe_u.c
+		exec/ms_builtins_pipes_exec.c       \
+		exec/ms_errors.c                    \
+		exec/ms_multiple_pipes_f.c          \
+		exec/ms_heredoc2.c                  \
+		exec/utils4.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include #-fsanitize=address
+CFLAGS = -g3 -Wall -Wextra -Werror -I/usr/local/Cellar/readline/8.1/include
 
 all : $(NAME)
 
@@ -49,6 +53,3 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-leaks:
-	valgrind --suppressions=$(PWD)/valgrind_readline_leaks_ignore.txt --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell

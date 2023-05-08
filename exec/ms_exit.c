@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 18:03:59 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/06 18:13:30 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/27 21:06:34 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	free_list(t_list **lst)
 
 void	free_and_exit(t_pipe *c, t_cmds *p)
 {
+	if (c->e_fd > 2)
+		close(c->e_fd);
 	if (c->m_env)
 		free_list(&c->m_env);
 	if (c->m_export)
@@ -59,7 +61,7 @@ void	free_and_exit_2(t_pipe *c, t_cmds *p)
 	close(c->fdin);
 }
 
-static int	check_exit(t_cmds *p, int k)
+int	check_exit(t_cmds *p, int k)
 {
 	int	i;
 
@@ -76,22 +78,22 @@ static int	check_exit(t_cmds *p, int k)
 			}
 		}
 		else
-			if (ft_atoi(p[0].cmd[1]) > INT_MAX || \
-				ft_atoi(p[0].cmd[1]) < INT_MIN)
+		{
+			if (ft_atoi(p[0].cmd[1]) > INT_MAX
+				|| ft_atoi(p[0].cmd[1]) < INT_MIN)
 				return (1);
+		}
 	}
 	return (0);
 }
 
 void	ft_exit(t_pipe *c, t_cmds *p)
 {
-	if (check_exit(p, 0) == 0 || check_exit(p, 1) == 1)
+	if (p[0].cmd[1])
 	{
-		write(2, "numeric argument required\n", 26);
-		g_exit_code = 255;
+		if (exit_exit_code(p) == 0)
+			return ;
 	}
-	else if (p[0].cmd[1])
-		g_exit_code = ft_atoi(p[0].cmd[1]);
 	if (c->m_env)
 		free_list(&c->m_env);
 	if (c->m_export)

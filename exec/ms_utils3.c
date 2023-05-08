@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_utils3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 20:14:04 by abdamoha          #+#    #+#             */
-/*   Updated: 2023/04/07 01:15:12 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/27 12:52:13 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	add_to_ex(t_cmds *p, t_pipe *c, int i, int j)
-{
-	c->tmp2 = ft_lstnew(ft_strdup(p[0].cmd[j]));
-	c->tmp2->next = c->tmpp;
-	if (i != 0)
-		c->tmp3->next = c->tmp2;
-	c->env_count += 1;
-	ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[0].cmd[j])));
-	if (i == 0)
-		c->m_export = c->tmp2;
-}
-
-void	add_to_e2(t_cmds *p, t_pipe *c, int j)
-{
-	if (!c->tmpp)
-	{
-		ft_lstadd_back(&c->m_export, ft_lstnew(ft_strdup(p[0].cmd[j])));
-		ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[0].cmd[j])));
-		c->env_count += 1;
-	}
-}
 
 void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 {
@@ -47,58 +25,20 @@ void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
 	{
 		while (c->tmpp)
 		{
-			if (strncmp_orginal(c->tmpp->content, p[0].cmd[j] , \
-				ft_strlen(c->tmpp->content)) > 0)
-			{	
-				add_to_ex(p, c, i, j);
+			if (strncmp_orginal(c->tmpp->content, p[0].cmd[j],
+					ft_strlen(c->tmpp->content)) > 0)
+			{
+				export_add(c, i, j, p);
 				break ;
 			}
 			c->tmp3 = c->tmpp;
 			c->tmpp = c->tmpp->next;
 			i++;
 		}
-		add_to_e2(p, c, j);
+		if (!c->tmpp)
+			export_last(c, p, j);
 	}
 }
-
-// void	add_to_export(t_cmds *p, t_pipe *c, int i, int j)
-// {
-// 	c->tmp2 = NULL;
-// 	c->tmpp = c->m_export;
-// 	c->tmp3 = c->tmpp;
-// 	if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 0)
-// 		return ;
-// 	else if (check_if_exist(p, i, j, c) == 0 && check_for_equal(p, i, j) == 1)
-// 		return (changing_the_value(p, i, j, c), changing_the_env_v(p, i, j, c));
-// 	if (strncmp_orginal(p[0].cmd[j], "=", 1) != 0)
-// 	{
-// 		while (c->tmpp)
-// 		{
-// 			if (strncmp_orginal(c->tmpp->content, p[0].cmd[j],
-// 				ft_strlen(c->tmpp->content)) > 0)
-// 			{
-// 				c->tmp2 = ft_lstnew(ft_strdup(p[0].cmd[j]));
-// 				c->tmp2->next = c->tmpp;
-// 				if (i != 0)
-// 					c->tmp3->next = c->tmp2;
-// 				c->env_count += 1;
-// 				ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[0].cmd[j])));
-// 				if (i == 0)
-// 					c->m_export = c->tmp2;
-// 				break ;
-// 			}
-// 			c->tmp3 = c->tmpp;
-// 			c->tmpp = c->tmpp->next;
-// 			i++;
-// 		}
-// 		if (!c->tmpp)
-// 		{
-// 			ft_lstadd_back(&c->m_export, ft_lstnew(ft_strdup(p[0].cmd[j])));
-// 			ft_lstadd_back(&c->m_env, ft_lstnew(ft_strdup(p[0].cmd[j])));
-// 			c->env_count += 1;
-// 		}
-// 	}
-// }
 
 void	insert_the_node(t_cmds *p, t_pipe *c)
 {
@@ -112,7 +52,8 @@ void	insert_the_node(t_cmds *p, t_pipe *c)
 		if (ft_strcmp(p[i].cmd[j], "=") != 0
 			&& ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 0)
 			add_to_export(p, c, i, j);
-		else if (ft_isexportable(p[i].cmd[j], len_till_equal(p[i].cmd[j])) == 1 \
+		else if (ft_isexportable(p[i].cmd[j],
+				len_till_equal(p[i].cmd[j])) == 1
 			|| ft_strcmp(p[i].cmd[j], "=") == 0)
 		{
 			g_exit_code = 1;
@@ -158,6 +99,8 @@ int	check_for_flag(char *str)
 
 	i = 0;
 	j = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '-' || str[i] == 'n')

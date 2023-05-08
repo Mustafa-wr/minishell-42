@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_dollar_han.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradwan <mradwan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdamoha <abdamoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 17:11:33 by mradwan           #+#    #+#             */
-/*   Updated: 2023/04/06 19:32:27 by mradwan          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:20:45 by abdamoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	dollar_expansion(char **str, t_pipe *pipe)
 	char	*tmp;
 	char	*expanded;
 
+	if (!str || !*str)
+		return ;
 	var.len = 0;
 	expanded = NULL;
 	var.i = 0;
